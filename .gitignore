@@ -35,5 +35,5 @@ local.properties
 
 .DS_Store
 ._.DS_Store
-/virtualenvs/
-!/virtualenvs/pip-requirements.txt
+*/virtualenvs/
+!*/virtualenvs/pip-requirements.txt
