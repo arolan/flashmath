@@ -20,20 +20,20 @@ public class ResultActivity extends Activity {
 		getMenuInflater().inflate(R.menu.result, menu);
 		return true;
 	}
-	
-		//action bar menu icon
-		public void onMenu(MenuItem mi){
-			
-		}
-		
-		//view Answers
-		public void onViewAnswers(View v){
-			//AnswersActivity
-		}
-		
-		//goes back to the first questions
-		public void onTryAgain(View v){
-		
-		}
+
+	//action bar menu icon
+	public void onMenu(MenuItem mi){
+
+	}
+
+	//view Answers
+	public void onViewAnswers(View v){
+		//AnswersActivity
+	}
+
+	//goes back to the first questions
+	public void onTryAgain(View v){
+
+	}
 
 }

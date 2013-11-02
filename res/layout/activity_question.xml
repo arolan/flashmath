@@ -13,10 +13,57 @@
         android:name="com.education.flashmath.fragment.QuestionFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/btnClear"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         tools:layout="@layout/fragment_question" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnClear"
+        android:layout_alignBottom="@+id/btnClear"
+        android:layout_alignRight="@+id/fragmentForQuestion"
+        android:layout_marginRight="77dp"
+        android:onClick="onSaveQuestionAnswer"
+        android:text="Save" />
+
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="66dp"
+        android:layout_toLeftOf="@+id/btnSave"
+        android:onClick="onClearQuestionAnswer"
+        android:text="Clear" />
+
+    <Button
+        android:id="@+id/btnNextQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:onClick="onNextQuestion"
+        android:text="Next Question" />
+
+    <Button
+        android:id="@+id/btnEndQuiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnNextQuestion"
+        android:layout_toLeftOf="@+id/btnNextQuestion"
+        android:text="End Quiz" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnEndQuiz"
+        android:layout_alignBottom="@+id/btnEndQuiz"
+        android:layout_alignLeft="@+id/fragmentForQuestion"
+        android:text="1/10" />
 
 </RelativeLayout>
