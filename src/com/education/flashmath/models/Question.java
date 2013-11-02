@@ -1,8 +1,15 @@
 package com.education.flashmath.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Question {
+public class Question implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8573224643054756703L;
+	
 	private long questionId;
 	private Quiz quiz;
 	private String questionText;

@@ -1,7 +1,7 @@
 package com.education.flashmath.fragment;
 
+
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.education.flashmath.R;
 
-public class ResultFragment extends Fragment{
 
+public class ResultFragment extends android.support.v4.app.Fragment {
 	public View onCreateView(LayoutInflater inf, ViewGroup parent, Bundle savedInstanceState ){
 		return inf.inflate(R.layout.fragment_result, parent, false);	
 		
@@ -25,7 +25,5 @@ public class ResultFragment extends Fragment{
 		Button btnTryAgain = (Button)getActivity().findViewById(R.id.btnTryAgain);
 		
 	}
-	
-
 }
 

@@ -82,6 +82,9 @@ public class QuestionActivity extends FragmentActivity {
 	}
 
 	public void onNextQuestion(View v) {
+		//if user forgot to press save button and just presses next question
+		onSaveQuestionAnswer(v);
+		
 		Question q = qf.getQuestion();
 		this.questionList.remove(currentQuestionIndex);
 		this.questionList.add(currentQuestionIndex, q);
@@ -92,10 +95,19 @@ public class QuestionActivity extends FragmentActivity {
 			qf.loadNextQuestion();
 		}
 		else {
-			Intent i = new Intent(this, ResultActivity.class);
-			startActivity(i);
-			Toast.makeText(this, "End Of Quiz", Toast.LENGTH_LONG).show();
+			finalizeQuiz();
 		}
+	}
+
+	public void onEndQuiz(View v) {
+		onSaveQuestionAnswer(v);
+		finalizeQuiz();
+	}
+	private void finalizeQuiz() {
+		Intent i = new Intent(this, ResultActivity.class);
+		i.putExtra("QUESTIONS_ANSWERED", this.questionList);
+		startActivity(i);
+		Toast.makeText(this, "End Of Quiz", Toast.LENGTH_LONG).show();
 	}
 
 }
