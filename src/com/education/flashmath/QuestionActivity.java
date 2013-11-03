@@ -31,6 +31,7 @@ public class QuestionActivity extends FragmentActivity {
 	private ArrayList<Question> questionList;
 	private TextView tvQuestionProgress;
 	private Button btnVerifyAndNextQuestion;
+	private String subject;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +40,14 @@ public class QuestionActivity extends FragmentActivity {
 		
 		btnVerifyAndNextQuestion = (Button) findViewById(R.id.btnVerifyAndNextQuestion);
 		btnVerifyAndNextQuestion.setVisibility(View.VISIBLE);
+		subject = getIntent().getStringExtra("subject");
 		setupServerQuestions();
 	}
 	
 	private void setupServerQuestions() {
 		currentQuestionIndex = 0;
 		AsyncHttpClient client = new AsyncHttpClient();
-		client.get("http://flashmathapi.herokuapp.com/quizzes/fractions/", 
+		client.get("http://flashmathapi.herokuapp.com/quizzes/" + subject + "/", 
 				new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject response) {
@@ -129,6 +131,7 @@ public class QuestionActivity extends FragmentActivity {
 	private void finalizeQuiz() {
 		Intent i = new Intent(this, ResultActivity.class);
 		i.putExtra(QUESTIONS_ANSWERED_INTENT_KEY, this.questionList);
+		i.putExtra("subject", subject);
 		startActivity(i);
 		Toast.makeText(this, "End Of Quiz", Toast.LENGTH_LONG).show();
 	}
