@@ -1,17 +1,17 @@
 package com.education.flashmath.fragment;
 
-import java.util.ArrayList;
 import java.util.StringTokenizer;
+
+import si.solarb.flowlayout.FlowLayout;
+import si.solarb.flowlayout.FlowLayout.LayoutParams;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,11 +21,11 @@ import com.education.flashmath.models.Question;
 public class QuestionFragment extends Fragment{
 
 	private static final String UKNOWN_VARIABLE_PLACE_HOLDER = "@_@";
-	private static final int NUMBER_OF_ELEMENTS_PER_ROW = 4;
 	private Question question;
-	private TableLayout tlQuestion;
+	private FlowLayout flQuestion;
 	private TextView tvSectionTitle;
 	private TextView tvQuestionTitle;
+	private EditText questionField;
 	
 	public Question getQuestion() {
 		return question;
@@ -44,54 +44,40 @@ public class QuestionFragment extends Fragment{
 	}
 
 	private void setupQuestionContent() {
-		tlQuestion = (TableLayout) getActivity().findViewById(R.id.tlQuestion);
+		flQuestion = (FlowLayout) getActivity().findViewById(R.id.flQuestion);
 		
 		tvQuestionTitle.setText("Question "+this.question.getQuestionId());
 		tvSectionTitle.setText("Section "+this.question.getSectionId());
 	
 		String questionText = question.getQuestionText();
 		StringTokenizer st = new StringTokenizer(questionText);
-		
-		TableRow tr = new TableRow(getActivity());
-		
-		int numberOfTokensPerRow = 0;
+		LayoutParams params = flQuestion.new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		params.setMargins(0, 0, 5, 0);
 		
 		while(st.hasMoreTokens()) {
 			
-			if (numberOfTokensPerRow > NUMBER_OF_ELEMENTS_PER_ROW) {
-				tr.setGravity(Gravity.CENTER_HORIZONTAL);
-				tlQuestion.addView(tr);
-				tr = new TableRow(getActivity());
-				numberOfTokensPerRow = 0;
-			}
-			
 			String token = st.nextToken();
 			token.trim();
+			
 			
 			if (!token.isEmpty()) {
 
 				if (token.equals(UKNOWN_VARIABLE_PLACE_HOLDER)) {
 					EditText et = new EditText(getActivity());
-
-					et.setGravity(View.TEXT_ALIGNMENT_CENTER);
-					et.setPadding(0, 0, 10, 0);
-					tr.addView(et);
+					et.setLayoutParams(params);
+					et.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_VARIATION_NORMAL);
+					et.setTextSize(14f);
+					et.setPadding(et.getPaddingLeft(), -5, et.getPaddingRight(), et.getPaddingBottom());
+					questionField = et;
+					flQuestion.addView(et);
 				}
 				else {
 					TextView tvQuestionPart = new TextView(getActivity());
+					tvQuestionPart.setLayoutParams(params);
 					tvQuestionPart.setText(token);
-					tvQuestionPart.setPadding(0, 0, 10, 0);
-					tvQuestionPart.setGravity(View.TEXT_ALIGNMENT_CENTER);
-					tr.addView(tvQuestionPart);
+					flQuestion.addView(tvQuestionPart);
 				}
-
-				numberOfTokensPerRow++;
 			}
-		}
-		
-		if (numberOfTokensPerRow <= NUMBER_OF_ELEMENTS_PER_ROW) {
-			tr.setGravity(Gravity.CENTER_HORIZONTAL);
-			tlQuestion.addView(tr);
 		}
 	}
 
@@ -100,30 +86,14 @@ public class QuestionFragment extends Fragment{
 	}
 
 	public void clearAnswerFields() {
-		int childCount = tlQuestion.getChildCount();
-		for (int i = 0; i < childCount; i++) {
-			TableRow tr = (TableRow) tlQuestion.getChildAt(i);
-			int tableRowElementsCount = tr.getChildCount();
-			for (int j = 0; j < tableRowElementsCount; j++) {
-				View v = tr.getChildAt(j);
-				if (v.getClass() == EditText.class) {
-					((EditText) v).setText("");
-				}
-			}
+		if (questionField != null) {
+			questionField.setText("");
 		}
 	}
 
 	public void saveUserAnswersForQuestion() {
-		int childCount = tlQuestion.getChildCount();
-		for (int i = 0; i < childCount; i++) {
-			TableRow tr = (TableRow) tlQuestion.getChildAt(i);
-			int tableRowElementsCount = tr.getChildCount();
-			for (int j = 0; j < tableRowElementsCount; j++) {
-				View v = tr.getChildAt(j);
-				if (v.getClass() == EditText.class) {
-					this.question.setUserAnswer(((EditText)v).getText().toString());
-				}
-			}
+		if (questionField != null) {
+			question.setUserAnswer(questionField.getText().toString());
 		}
 		
 		Toast.makeText(getActivity(), "user answered: "+this.question.getUserAnswer(), Toast.LENGTH_LONG).show();
@@ -135,7 +105,7 @@ public class QuestionFragment extends Fragment{
 	}
 
 	private void clearQuestionContent() {
-		this.tlQuestion.removeAllViews();
+		this.flQuestion.removeAllViews();
 	}
 }
 

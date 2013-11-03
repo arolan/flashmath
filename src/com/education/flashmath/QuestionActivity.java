@@ -43,7 +43,7 @@ public class QuestionActivity extends FragmentActivity {
 		q.setCorrectAnswer("1");
 		q.setQuestionId(1);
 		q.setSectionId(3);
-		q.setQuestionText("Find the unknown number in the following problem @_@ / 5 = 20/100");
+		q.setQuestionText("Find the unknown number in the following problem @_@ /5 = 20/100");
 		
 		q.setQuiz(null);
 		
@@ -54,7 +54,7 @@ public class QuestionActivity extends FragmentActivity {
 		q.setCorrectAnswer("5");
 		q.setQuestionId(2);
 		q.setSectionId(3);
-		q.setQuestionText("Find the unknown number in the following problem @_@ / 25 = 100/500");
+		q.setQuestionText("Find the unknown number in the following problem @_@ /25 = 100/500");
 		q.setQuiz(null);
 		
 		questionList.add(q);
