@@ -112,7 +112,7 @@ public class QuestionFragment extends Fragment{
 			question.setUserAnswer(userAnswerField.getText().toString());
 		}
 		
-		Toast.makeText(getActivity(), "user answered: "+this.question.getUserAnswer(), Toast.LENGTH_LONG).show();
+//		Toast.makeText(getActivity(), "user answered: "+this.question.getUserAnswer(), Toast.LENGTH_LONG).show();
 	}
 
 	public void loadNextQuestion() {
