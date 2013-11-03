@@ -1,0 +1,92 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".SubjectActivity" >
+
+  <Button
+        android:id="@+id/button1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="45dp"
+        android:text="Adding"
+        android:tag="adding"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/btn_blue"
+        android:onClick="onButtonClick" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignBottom="@+id/button1"
+        android:layout_toRightOf="@+id/button1"
+        android:text="Subtraction"
+        android:tag="subtraction" 
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/btn_purple"
+        android:onClick="onButtonClick"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_below="@+id/button1"
+        android:text="Multiply" 
+        android:tag="multiply"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/btn_green"
+        android:onClick="onButtonClick"/>
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignRight="@+id/button3"
+        android:layout_below="@+id/button3"
+        android:text="Fraction"
+        android:tag="fraction"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/btn_pink" 
+        android:color="#764299"
+        android:onClick="onButtonClick"/>
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/button6"
+        android:layout_alignLeft="@+id/button2"
+        android:background="@drawable/btn_yellow"
+        android:tag="division"
+        android:text="Division"
+        android:textStyle="bold" 
+        android:textColor="#FFFFFF"
+        android:onClick="onButtonClick"/>
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignLeft="@+id/button4"
+        android:layout_below="@+id/button3"
+        android:background="@drawable/btn_orange"
+        android:tag="geometry"
+        android:text="Geometry"
+        android:textStyle="bold" 
+        android:textColor="#FFFFFF"
+        android:onClick="onButtonClick"/>
+
+</RelativeLayout>
