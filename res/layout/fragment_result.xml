@@ -23,7 +23,7 @@
         android:text="View Answers" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvSectionTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/ivProfile"
@@ -34,10 +34,10 @@
         android:id="@+id/tvScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView1"
-        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignBaseline="@+id/tvSectionTitle"
+        android:layout_alignBottom="@+id/tvSectionTitle"
         android:layout_marginLeft="36dp"
-        android:layout_toRightOf="@+id/textView1"
+        android:layout_toRightOf="@+id/tvSectionTitle"
         android:hint="your Score" />
 
     <TextView
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/ivProfile"
-        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignLeft="@+id/tvSectionTitle"
         android:text="Ranking" />
 
     <TextView

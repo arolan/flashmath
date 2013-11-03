@@ -11,32 +11,30 @@ public class Question implements Serializable {
 	private static final long serialVersionUID = 8573224643054756703L;
 	
 	private long questionId;
+	private long sectionId;
 	private Quiz quiz;
 	private String questionText;
-	private ArrayList<String> correctAnswers;
-	private ArrayList<String> userAnswers;
-	private ArrayList<String> unknownVariables;
+	private String correctAnswer;
+	private String userAnswer;
 	
 	
-	public ArrayList<String> getUnknownVariables() {
-		return unknownVariables;
+	public long getSectionId() {
+		return sectionId;
 	}
-	
-	public void setUnknownVariables(ArrayList<String> unknownVariables) {
-		this.unknownVariables = unknownVariables;
+	public void setSectionId(long sectionId) {
+		this.sectionId = sectionId;
 	}
-	
-	public ArrayList<String> getCorrectAnswers() {
-		return correctAnswers;
+	public String getCorrectAnswer() {
+		return correctAnswer;
 	}
-	public void setCorrectAnswers(ArrayList<String> correctAnswers) {
-		this.correctAnswers = correctAnswers;
+	public void setCorrectAnswer(String correctAnswer) {
+		this.correctAnswer = correctAnswer;
 	}
-	public ArrayList<String> getUserAnswers() {
-		return userAnswers;
+	public String getUserAnswer() {
+		return userAnswer;
 	}
-	public void setUserAnswers(ArrayList<String> userAnswers) {
-		this.userAnswers = userAnswers;
+	public void setUserAnswer(String userAnswer) {
+		this.userAnswer = userAnswer;
 	}
 	public long getQuestionId() {
 		return questionId;

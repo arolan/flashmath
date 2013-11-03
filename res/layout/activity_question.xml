@@ -55,10 +55,11 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/btnNextQuestion"
         android:layout_toLeftOf="@+id/btnNextQuestion"
+        android:onClick="onEndQuiz"
         android:text="End Quiz" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvQuestionProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/btnEndQuiz"

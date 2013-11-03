@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.education.flashmath.fragment.QuestionFragment;
@@ -17,6 +18,7 @@ public class QuestionActivity extends FragmentActivity {
 	public QuestionFragment qf;
 	private int currentQuestionIndex;
 	private ArrayList<Question> questionList;
+	private TextView tvQuestionProgress;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,8 @@ public class QuestionActivity extends FragmentActivity {
 		
 		qf = (QuestionFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentForQuestion);
 		qf.setQuestion(questionList.get(currentQuestionIndex));
-		
+		tvQuestionProgress = (TextView) findViewById(R.id.tvQuestionProgress);
+		tvQuestionProgress.setText((currentQuestionIndex+1)+"/"+this.questionList.size());
 	}
 
 	private void setupSampleQuestions() {
@@ -37,29 +40,21 @@ public class QuestionActivity extends FragmentActivity {
 		
 		Question q = new Question();
 		
-		ArrayList<String> correctAnswers = new ArrayList<String>();
-		correctAnswers.add("1");
-		q.setCorrectAnswers(correctAnswers);
+		q.setCorrectAnswer("1");
 		q.setQuestionId(1);
-		q.setQuestionText("Find the unknown number x in the following problem @'x' / 5 = 20/100");
+		q.setSectionId(3);
+		q.setQuestionText("Find the unknown number in the following problem @_@ / 5 = 20/100");
 		
-		ArrayList<String> unknownVariables = new ArrayList<String>();
-		unknownVariables.add("x");
-		q.setUnknownVariables(unknownVariables);
 		q.setQuiz(null);
 		
 		questionList.add(q);
 		
 		q = new Question();
 		
-		correctAnswers = new ArrayList<String>();
-		correctAnswers.add("5");
-		q.setCorrectAnswers(correctAnswers);
+		q.setCorrectAnswer("5");
 		q.setQuestionId(2);
-		q.setQuestionText("Find the unknown number y in the following problem @'y' / 25 = 100/500");
-		unknownVariables = new ArrayList<String>();
-		unknownVariables.add("y");
-		q.setUnknownVariables(unknownVariables);
+		q.setSectionId(3);
+		q.setQuestionText("Find the unknown number in the following problem @_@ / 25 = 100/500");
 		q.setQuiz(null);
 		
 		questionList.add(q);
@@ -82,17 +77,22 @@ public class QuestionActivity extends FragmentActivity {
 	}
 
 	public void onNextQuestion(View v) {
-		//if user forgot to press save button and just presses next question
-		onSaveQuestionAnswer(v);
-		
-		Question q = qf.getQuestion();
-		this.questionList.remove(currentQuestionIndex);
-		this.questionList.add(currentQuestionIndex, q);
-		currentQuestionIndex++;
-		
 		if (currentQuestionIndex < this.questionList.size()) {
-			qf.setQuestion(this.questionList.get(currentQuestionIndex));
-			qf.loadNextQuestion();
+			//if user forgot to press save button and just presses next question
+			onSaveQuestionAnswer(v);
+
+			Question q = qf.getQuestion();
+			this.questionList.remove(currentQuestionIndex);
+			this.questionList.add(currentQuestionIndex, q);
+			currentQuestionIndex++;
+
+			if(currentQuestionIndex < this.questionList.size()) {
+				qf.setQuestion(this.questionList.get(currentQuestionIndex));
+				qf.loadNextQuestion();
+				tvQuestionProgress.setText((currentQuestionIndex+1)+"/"+this.questionList.size());
+			} else {
+				finalizeQuiz();
+			}
 		}
 		else {
 			finalizeQuiz();
