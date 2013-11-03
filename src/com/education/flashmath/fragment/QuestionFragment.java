@@ -40,10 +40,10 @@ public class QuestionFragment extends Fragment{
 		tvQuestionTitle = (TextView) getActivity().findViewById(R.id.tvQuestionTitle);
 		tvSectionTitle = (TextView) getActivity().findViewById(R.id.tvSectionTitle);
 		
-		setupQuestionContent();
+		//setupQuestionContent();
 	}
 
-	private void setupQuestionContent() {
+	public void setupQuestionContent() {
 		flQuestion = (FlowLayout) getActivity().findViewById(R.id.flQuestion);
 		
 		tvQuestionTitle.setText("Question "+this.question.getQuestionId());

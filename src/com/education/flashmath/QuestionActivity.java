@@ -2,9 +2,14 @@ package com.education.flashmath;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +17,8 @@ import android.widget.Toast;
 
 import com.education.flashmath.fragment.QuestionFragment;
 import com.education.flashmath.models.Question;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class QuestionActivity extends FragmentActivity {
 
@@ -25,40 +32,33 @@ public class QuestionActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question);
 		
-		setupSampleQuestions();
-		
-		qf = (QuestionFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentForQuestion);
-		qf.setQuestion(questionList.get(currentQuestionIndex));
-		tvQuestionProgress = (TextView) findViewById(R.id.tvQuestionProgress);
-		tvQuestionProgress.setText((currentQuestionIndex+1)+"/"+this.questionList.size());
+		//setupSampleQuestions();
+		setupServerQuestions();
 	}
-
-	private void setupSampleQuestions() {
-		
+	
+	private void setupServerQuestions() {
 		currentQuestionIndex = 0;
-		questionList = new ArrayList<Question>();
-		
-		Question q = new Question();
-		
-		q.setCorrectAnswer("1");
-		q.setQuestionId(1);
-		q.setSectionId(3);
-		q.setQuestionText("Find the unknown number in the following problem @_@ /5 = 20/100");
-		
-		q.setQuiz(null);
-		
-		questionList.add(q);
-		
-		q = new Question();
-		
-		q.setCorrectAnswer("5");
-		q.setQuestionId(2);
-		q.setSectionId(3);
-		q.setQuestionText("Find the unknown number in the following problem @_@ /25 = 100/500");
-		q.setQuiz(null);
-		
-		questionList.add(q);
-		
+		AsyncHttpClient client = new AsyncHttpClient();
+		client.get("http://flashmathapi.herokuapp.com/quizzes/fractions/", 
+				new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(JSONObject response) {
+				JSONArray jsonResults = null;
+				try {
+					jsonResults = response.getJSONArray("questions");
+					questionList = new ArrayList<Question>();
+					questionList.addAll(Question.fromJSONArray(jsonResults));
+					Log.d("DEBUG", questionList.toString());
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				qf = (QuestionFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentForQuestion);
+				qf.setQuestion(questionList.get(currentQuestionIndex));
+				tvQuestionProgress = (TextView) findViewById(R.id.tvQuestionProgress);
+				tvQuestionProgress.setText((currentQuestionIndex + 1) + "/" + questionList.size());
+				qf.setupQuestionContent();
+			}
+		});
 	}
 
 	@Override
