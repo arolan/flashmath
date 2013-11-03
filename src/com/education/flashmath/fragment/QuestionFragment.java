@@ -7,6 +7,7 @@ import si.solarb.flowlayout.FlowLayout.LayoutParams;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +22,12 @@ import com.education.flashmath.models.Question;
 public class QuestionFragment extends Fragment{
 
 	private static final String UKNOWN_VARIABLE_PLACE_HOLDER = "@_@";
-	private Question question;
+	public Question question;
 	private FlowLayout flQuestion;
 	private TextView tvSectionTitle;
 	private TextView tvQuestionTitle;
-	private EditText questionField;
+	private EditText userAnswerField;
+	public TextView tvExplanation;
 	
 	public Question getQuestion() {
 		return question;
@@ -39,8 +41,7 @@ public class QuestionFragment extends Fragment{
 		super.onActivityCreated(savedInstanceState);
 		tvQuestionTitle = (TextView) getActivity().findViewById(R.id.tvQuestionTitle);
 		tvSectionTitle = (TextView) getActivity().findViewById(R.id.tvSectionTitle);
-		
-		//setupQuestionContent();
+		tvExplanation = (TextView) getActivity().findViewById(R.id.tvExplanation);
 	}
 
 	public void setupQuestionContent() {
@@ -48,6 +49,7 @@ public class QuestionFragment extends Fragment{
 		
 		tvQuestionTitle.setText("Question "+this.question.getQuestionId());
 		tvSectionTitle.setText("Section "+this.question.getSectionId());
+		tvExplanation.setText("");
 	
 		String questionText = question.getQuestionText();
 		StringTokenizer st = new StringTokenizer(questionText);
@@ -68,7 +70,7 @@ public class QuestionFragment extends Fragment{
 					et.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_VARIATION_NORMAL);
 					et.setTextSize(14f);
 					et.setPadding(et.getPaddingLeft(), -5, et.getPaddingRight(), et.getPaddingBottom());
-					questionField = et;
+					userAnswerField = et;
 					flQuestion.addView(et);
 				}
 				else {
@@ -86,14 +88,28 @@ public class QuestionFragment extends Fragment{
 	}
 
 	public void clearAnswerFields() {
-		if (questionField != null) {
-			questionField.setText("");
+		if (userAnswerField != null) {
+			userAnswerField.setText("");
 		}
 	}
 
-	public void saveUserAnswersForQuestion() {
-		if (questionField != null) {
-			question.setUserAnswer(questionField.getText().toString());
+	public void verifyUserAnswerForQuestion() {
+		saveUserAnswer();
+		
+		String explanationText = null;
+		if(question.verifyUserAnswerCorrectness()) {
+			explanationText = "<font color=\"green\"><b>Correct! </b></font>";
+		} else {
+			explanationText = "<font color=\"red\"><b>Wrong! </b></font>";	
+		}
+		this.tvExplanation.setText(Html.fromHtml(explanationText + question.getExplanation()));
+		
+		this.userAnswerField.setEnabled(false); 
+	}
+
+	public void saveUserAnswer() {
+		if (userAnswerField != null) {
+			question.setUserAnswer(userAnswerField.getText().toString());
 		}
 		
 		Toast.makeText(getActivity(), "user answered: "+this.question.getUserAnswer(), Toast.LENGTH_LONG).show();

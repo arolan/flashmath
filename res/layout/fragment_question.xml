@@ -26,15 +26,31 @@
         android:textStyle="bold" />
 
     <si.solarb.flowlayout.FlowLayout
-        android:id="@+id/flQuestion"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:flowlayout="http://schemas.android.com/apk/res/si.solarb.flowlayout"
+        android:id="@+id/flQuestion"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="start|top"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/textView1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/tvQuestionTitle" />
+        android:layout_below="@+id/tvQuestionTitle"
+        android:gravity="start|top" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvQuestionTitle"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp" />
+
+    <TextView
+        android:id="@+id/tvExplanation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp"
+        android:text="" />
 
 </RelativeLayout>

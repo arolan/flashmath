@@ -80,6 +80,10 @@ public class Question implements Serializable {
 		this.quiz = quiz;
 	}
 	
+	public boolean verifyUserAnswerCorrectness() {
+		return this.correctAnswer.equals(this.userAnswer);
+	}
+
 	public static ArrayList<Question> fromJSONArray(JSONArray jsonArray) {
 		ArrayList<Question> questions = new ArrayList<Question>();
 		for (int i = 0; i < jsonArray.length(); i++) {

@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".QuestionActivity" >
-    
+
     <fragment
         android:id="@+id/fragmentForQuestion"
         android:name="com.education.flashmath.fragment.QuestionFragment"
@@ -19,52 +19,48 @@
         android:layout_alignParentTop="true"
         tools:layout="@layout/fragment_question" />
 
-    <Button
-        android:id="@+id/btnSave"
+    <TextView
+        android:id="@+id/tvQuestionProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/btnClear"
         android:layout_alignBottom="@+id/btnClear"
-        android:layout_alignRight="@+id/fragmentForQuestion"
-        android:layout_marginRight="77dp"
-        android:onClick="onSaveQuestionAnswer"
-        android:text="Save" />
+        android:layout_alignLeft="@+id/fragmentForQuestion"
+        android:text="1/10" />
 
     <Button
         android:id="@+id/btnClear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="66dp"
-        android:layout_toLeftOf="@+id/btnSave"
+        android:layout_alignBaseline="@+id/btnEndQuiz"
+        android:layout_alignBottom="@+id/btnEndQuiz"
+        android:layout_toRightOf="@+id/tvQuestionProgress"
+        android:layout_marginLeft="10dp"
         android:onClick="onClearQuestionAnswer"
-        android:text="Clear" />
-
-    <Button
-        android:id="@+id/btnNextQuestion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:onClick="onNextQuestion"
-        android:text="Next Question" />
+        android:text="Clear"
+        android:textSize="12sp" />
 
     <Button
         android:id="@+id/btnEndQuiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btnNextQuestion"
-        android:layout_toLeftOf="@+id/btnNextQuestion"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:layout_toRightOf="@+id/btnClear"
         android:onClick="onEndQuiz"
-        android:text="End Quiz" />
+        android:layout_marginLeft="10dp"
+        android:text="End Quiz"
+        android:textSize="12sp" />
 
-    <TextView
-        android:id="@+id/tvQuestionProgress"
+    <Button
+        android:id="@+id/btnVerifyAndNextQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnEndQuiz"
-        android:layout_alignBottom="@+id/btnEndQuiz"
-        android:layout_alignLeft="@+id/fragmentForQuestion"
-        android:text="1/10" />
+        android:layout_alignTop="@+id/btnEndQuiz"
+        android:layout_toRightOf="@+id/btnEndQuiz"
+        android:onClick="onVerifyAndNextQuestionPressed"
+        android:layout_marginLeft="10dp"
+        android:text="Verify Answer"
+        android:textSize="10sp" />
 
 </RelativeLayout>

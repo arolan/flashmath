@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,17 +23,22 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class QuestionActivity extends FragmentActivity {
 
+	private static final String NEXT_QUESTION_BTN_TITLE = "Next Question";
+	private static final String VERIFY_ANSWER_BTN_TITLE = "Verify Answer";
+	public static final String QUESTIONS_ANSWERED_INTENT_KEY = "QUESTIONS_ANSWERED";
 	public QuestionFragment qf;
 	private int currentQuestionIndex;
 	private ArrayList<Question> questionList;
 	private TextView tvQuestionProgress;
+	private Button btnVerifyAndNextQuestion;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question);
 		
-		//setupSampleQuestions();
+		btnVerifyAndNextQuestion = (Button) findViewById(R.id.btnVerifyAndNextQuestion);
+		btnVerifyAndNextQuestion.setVisibility(View.VISIBLE);
 		setupServerQuestions();
 	}
 	
@@ -72,14 +78,31 @@ public class QuestionActivity extends FragmentActivity {
 		qf.clearAnswerFields();
 	}
 	
-	public void onSaveQuestionAnswer(View v) {
-		qf.saveUserAnswersForQuestion();
+	public void onVerifyAndNextQuestionPressed(View v) {
+		if (btnVerifyAndNextQuestion.getText().toString().equals(VERIFY_ANSWER_BTN_TITLE)) {
+			onVerifyQuestionAnswer(v);
+		} else {
+			onNextQuestion(v);
+		}
+	}
+	
+	public void onVerifyQuestionAnswer(View v) {
+		qf.verifyUserAnswerForQuestion();
+
+		//we reached end of questions, remove the Next Question button and 
+		//let user use End Quiz button
+		if(currentQuestionIndex+1 >= this.questionList.size()) {
+			btnVerifyAndNextQuestion.setVisibility(View.GONE);
+		} else {
+			btnVerifyAndNextQuestion.setText(NEXT_QUESTION_BTN_TITLE);
+		}
 	}
 
 	public void onNextQuestion(View v) {
 		if (currentQuestionIndex < this.questionList.size()) {
+			btnVerifyAndNextQuestion.setText(VERIFY_ANSWER_BTN_TITLE);
 			//if user forgot to press save button and just presses next question
-			onSaveQuestionAnswer(v);
+			qf.saveUserAnswer();
 
 			Question q = qf.getQuestion();
 			this.questionList.remove(currentQuestionIndex);
@@ -100,12 +123,12 @@ public class QuestionActivity extends FragmentActivity {
 	}
 
 	public void onEndQuiz(View v) {
-		onSaveQuestionAnswer(v);
+		qf.saveUserAnswer();
 		finalizeQuiz();
 	}
 	private void finalizeQuiz() {
 		Intent i = new Intent(this, ResultActivity.class);
-		i.putExtra("QUESTIONS_ANSWERED", this.questionList);
+		i.putExtra(QUESTIONS_ANSWERED_INTENT_KEY, this.questionList);
 		startActivity(i);
 		Toast.makeText(this, "End Of Quiz", Toast.LENGTH_LONG).show();
 	}
