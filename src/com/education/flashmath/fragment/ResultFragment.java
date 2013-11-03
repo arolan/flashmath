@@ -32,4 +32,3 @@ public class ResultFragment extends android.support.v4.app.Fragment {
 		
 	}
 }
-
