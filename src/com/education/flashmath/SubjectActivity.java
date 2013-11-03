@@ -25,7 +25,7 @@ public class SubjectActivity extends Activity {
 	public void onButtonClick(View v){
 		Intent i = new Intent(this, QuestionActivity.class);
 		String tag = v.getTag().toString();
-		i.putExtra("tag", tag);
+		i.putExtra("subject", tag);
 		Log.d("DEBUG",tag);
 		startActivity(i);
 	}
