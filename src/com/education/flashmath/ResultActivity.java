@@ -2,26 +2,31 @@ package com.education.flashmath;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.education.flashmath.models.Question;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class ResultActivity extends FragmentActivity {
 
 	private ArrayList<Question> resultList;
 	private int score = 0;
+	private String subject;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result);
 		resultList = (ArrayList<Question>) getIntent().getSerializableExtra("QUESTIONS_ANSWERED");
-		
+		subject = getIntent().getStringExtra("subject");
 		evaluate(resultList);
 	}
 
@@ -36,10 +41,19 @@ public class ResultActivity extends FragmentActivity {
 	public void evaluate(ArrayList<Question> resultList){
 		for(int i = 0; i < resultList.size(); i++){
 			String correctAnswer = resultList.get(i).getCorrectAnswer();
-			if (resultList.get(i).getUserAnswer().equals(correctAnswer)){ 
+			if (resultList.get(i).getUserAnswer().equals(correctAnswer)){
 				score++;
 			}
 		}
+		AsyncHttpClient client = new AsyncHttpClient();
+		client.get("http://flashmathapi.herokuapp.com/scores/" + subject + "/" + String.valueOf(score) + "/",
+				new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(JSONArray jsonScores) {
+				// Use the results to populate a graphview!
+				Toast.makeText(ResultActivity.this, String.valueOf(jsonScores.length()), Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 	
 	public int getScore(){
@@ -65,5 +79,4 @@ public class ResultActivity extends FragmentActivity {
 		Intent i = new Intent(this, QuestionActivity.class);
 		startActivity(i);
 	}
-
 }
