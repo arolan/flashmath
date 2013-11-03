@@ -20,15 +20,26 @@ public class Question implements Serializable {
 	private String questionText;
 	private String correctAnswer;
 	private String userAnswer;
+	private String explanation;
 	
 	public Question(JSONObject json) {
 		try {
 			this.questionText = json.getString("text");
 			this.correctAnswer = json.getString("answer");
+			this.explanation = json.getString("explanation");
 		} catch (JSONException e) {
 			this.questionText = null;
 			this.correctAnswer = null;
+			this.explanation = null;
 		}
+	}
+	
+	public String getExplanation() {
+		return explanation;
+	}
+	
+	public void setExplanation(String explanation) {
+		this.explanation = explanation;
 	}
 	
 	public long getSectionId() {
