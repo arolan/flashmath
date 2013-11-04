@@ -19,8 +19,11 @@ public class LongActivity extends Activity {
 	    TextView tvStudy = (TextView) findViewById(R.id.tvStudy);
 		
 		String subject = getIntent().getStringExtra("subject");
-		tvSubject.setText("Your Progress of "+subject);
-		tvStudy.setText("Study "+subject);
+		String SubjectTitle = Character.toUpperCase(subject.charAt(0))+subject.substring(1);
+		
+		tvSubject.setText("Your Progress of "+SubjectTitle);
+		tvStudy.setText("Study "+SubjectTitle);
+		
 		tvLink.setText(Html.fromHtml("<a href=http://en.wikipedia.org/wiki/"+subject+"_(mathematics)> GO TO WIKI "));
 		tvLink.setMovementMethod(LinkMovementMethod.getInstance());
 	}

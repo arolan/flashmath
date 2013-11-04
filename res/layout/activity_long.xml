@@ -50,10 +50,22 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/llstats"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
-        android:layout_toLeftOf="@+id/tvSubject"
+        android:layout_alignRight="@+id/tvSubject"
+        android:layout_marginTop="18dp"
         android:hint="Study"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvStudy"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="Subject"
+        android:textSize="20sp" 
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/tvLink"
@@ -64,15 +76,5 @@
         android:layout_toLeftOf="@+id/btnClose"
         android:hint="link"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/tvSubject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvStudy"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:text="Subject"
-        android:textSize="20sp" />
 
 </RelativeLayout>

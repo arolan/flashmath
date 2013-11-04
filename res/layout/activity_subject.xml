@@ -31,7 +31,7 @@
                 android:longClickable="true"
                 android:onClick="onButtonClick"
                 android:tag="addition"
-                android:text="Adding"
+                android:text="Addition"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
 
