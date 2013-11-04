@@ -2,6 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+    
+    <LinearLayout
+        android:id="@+id/llStats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivProfile"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/btnTryAgain"
+        android:orientation="horizontal" />
 
     <ImageView
         android:id="@+id/ivProfile"
@@ -12,15 +23,6 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp"
         android:src="@drawable/ic_profile" />
-
-    <Button
-        android:id="@+id/btnAnswer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ivProfile"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="147dp"
-        android:text="View Answers" />
 
     <TextView
         android:id="@+id/tvSectionTitle"
@@ -65,5 +67,14 @@
         android:layout_alignBottom="@+id/btnAnswer"
         android:layout_alignRight="@+id/tvRank"
         android:text="Try Again" />
+
+    <Button
+        android:id="@+id/btnAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ivProfile"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="26dp"
+        android:text="View Answers" />
 
 </RelativeLayout>
