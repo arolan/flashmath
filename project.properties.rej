@@ -1,0 +1,12 @@
+diff a/project.properties b/project.properties	(rejected hunks)
+@@ -11,5 +11,10 @@
+  #proguard.config=${sdk.dir}/tools/proguard/proguard-android.txt:proguard-project.txt
+  
+  # Project target.
+++<<<<<<< Updated upstream
+ +target=android-18
+ +android.library.reference.1=../Android_Workspace2/library
+++=======
++ target=android-17
++ android.library.reference.1=../../Desktop/FlowLayout-master/library
+++>>>>>>> Stashed changes

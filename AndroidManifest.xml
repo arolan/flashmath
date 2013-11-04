@@ -52,6 +52,10 @@
             android:name="com.education.flashmath.TweetActivity"
             android:label="@string/title_activity_tweet" >
         </activity>
+        <activity
+            android:name="com.education.flashmath.LongActivity"
+            android:label="@string/title_activity_long" >
+        </activity>
     </application>
 
 </manifest>

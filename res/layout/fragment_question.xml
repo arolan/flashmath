@@ -31,7 +31,7 @@
         android:id="@+id/flQuestion"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/textView1"
+        android:layout_above="@+id/tvSubject"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tvQuestionTitle"

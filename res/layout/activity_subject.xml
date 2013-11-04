@@ -2,91 +2,118 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".SubjectActivity" >
 
-  <Button
-        android:id="@+id/button1"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="45dp"
-        android:text="Adding"
-        android:tag="addition"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/btn_blue"
-        android:onClick="onButtonClick" />
+    <TableLayout
+        android:id="@+id/tbSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentTop="false"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true" 
+        android:longClickable="true"
+        >
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_toRightOf="@+id/button1"
-        android:text="Subtraction"
-        android:tag="subtraction" 
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/btn_purple"
-        android:onClick="onButtonClick"/>
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
 
-    <Button
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/btn_blue"
+                android:longClickable="true"
+                android:onClick="onButtonClick"
+                android:tag="Addition"
+                android:text="Adding"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/btn_purple"
+                android:longClickable="true"
+                android:onClick="onButtonClick"
+                android:tag="Subtraction"
+                android:text="Subtraction"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+   	 <Button
         android:id="@+id/button3"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignLeft="@+id/button1"
         android:layout_below="@+id/button1"
-        android:text="Multiply" 
-        android:tag="multiplication"
+        android:text="Multiplication" 
+        android:tag="Multiplication"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:background="@drawable/btn_green"
-        android:onClick="onButtonClick"/>
+        android:onClick="onButtonClick"
+        android:longClickable="true"/>
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignRight="@+id/button3"
         android:layout_below="@+id/button3"
         android:text="Fraction"
-        android:tag="fractions"
+        android:tag="Fractions"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:background="@drawable/btn_pink" 
         android:color="#764299"
-        android:onClick="onButtonClick"/>
+        android:onClick="onButtonClick"
+        android:longClickable="true"/>
+        </TableRow>
 
-    <Button
+     <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        <Button
         android:id="@+id/button4"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_above="@+id/button6"
         android:layout_alignLeft="@+id/button2"
         android:background="@drawable/btn_yellow"
-        android:tag="division"
+        android:tag="Division"
         android:text="Division"
         android:textStyle="bold" 
         android:textColor="#FFFFFF"
-        android:onClick="onButtonClick"/>
+        android:onClick="onButtonClick"
+        android:longClickable="true"/>
 
-    <Button
+        <Button
         android:id="@+id/button6"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignLeft="@+id/button4"
         android:layout_below="@+id/button3"
         android:background="@drawable/btn_orange"
-        android:tag="geometry"
+        android:tag="Geometry"
         android:text="Geometry"
         android:textStyle="bold" 
         android:textColor="#FFFFFF"
-        android:onClick="onButtonClick"/>
-
+        android:onClick="onButtonClick"
+        android:longClickable="true"/>
+        </TableRow>
+</TableLayout>
 </RelativeLayout>
