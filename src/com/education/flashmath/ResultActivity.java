@@ -4,38 +4,44 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.codepath.oauth.OAuthLoginActivity;
 import com.education.flashmath.models.Question;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
-import com.jjoe64.graphview.GraphView.LegendAlign;
-import com.jjoe64.graphview.GraphViewDataInterface;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewStyle;
 import com.jjoe64.graphview.LineGraphView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-public class ResultActivity extends FragmentActivity {
+public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 
 	private ArrayList<Question> resultList;
 	private int score = 0;
 	private String subject;
 	private LinearLayout llStats;
+	private TextView tvScore;
+	private TextView tvRank;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result);
 		llStats = (LinearLayout) findViewById(R.id.llStats);
+		tvScore = (TextView) findViewById(R.id.tvScore);
+		tvRank = (TextView) findViewById(R.id.tvRank);
 		resultList = (ArrayList<Question>) getIntent().getSerializableExtra("QUESTIONS_ANSWERED");
 		subject = getIntent().getStringExtra("subject");
 		evaluate(resultList);
@@ -49,7 +55,8 @@ public class ResultActivity extends FragmentActivity {
 	}
 
 	
-	public void evaluate(ArrayList<Question> resultList){
+	public void evaluate(final ArrayList<Question> resultList){
+		//if (resultList != null) {
 		for(int i = 0; i < resultList.size(); i++){
 			String correctAnswer = resultList.get(i).getCorrectAnswer();
 			if (resultList.get(i).getUserAnswer().equals(correctAnswer)){
@@ -75,17 +82,20 @@ public class ResultActivity extends FragmentActivity {
 				style.setHorizontalLabelsColor(Color.BLACK);
 				graphView.addSeries(new GraphViewSeries("Scores", null, data));
 				graphView.setGraphViewStyle(style);
-				llStats.addView(graphView);
+				llStats.addView(graphView); 
+				tvScore.setText(score + " / " + resultList.size());
+				tvRank.setText("1st");
 			}
 		});
 	}
 	
-	public int getScore(){
-		return score;
-	}
-	
-	public int getSize(){
-		return resultList.size();
+	public void tweetScore(View v) {
+		if (!FlashMathApp.getTwitterClient().isAuthenticated()) {
+			getClient().connect();
+		}
+		else {
+			tweet();
+		}
 	}
 	
 	//action bar menu icon
@@ -102,5 +112,30 @@ public class ResultActivity extends FragmentActivity {
 	public void onTryAgain(View v){
 		Intent i = new Intent(this, QuestionActivity.class);
 		startActivity(i);
+	}
+	
+	private void tweet() {
+		FlashMathApp.getTwitterClient().sendTweet(new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(JSONObject object) {
+				Toast.makeText(ResultActivity.this, "Sent tweet!", Toast.LENGTH_SHORT).show();
+			}
+			
+			@Override
+			public void onFailure(Throwable e) {
+				e.printStackTrace();
+				Toast.makeText(ResultActivity.this, "Error sending tweet!", Toast.LENGTH_SHORT).show();
+			}
+		}, "testing");
+	}
+
+	@Override
+	public void onLoginSuccess() {
+		
+	}
+
+	@Override
+	public void onLoginFailure(Exception e) {
+		Toast.makeText(ResultActivity.this, "Error logging into Twitter!", Toast.LENGTH_SHORT).show();
 	}
 }

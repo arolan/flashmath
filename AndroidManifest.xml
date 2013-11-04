@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name="com.education.flashmath.FlashMathApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -23,6 +24,16 @@
         <activity
             android:name="com.education.flashmath.ResultActivity"
             android:label="@string/title_activity_result" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="flashMathApp"
+                    android:scheme="oauth" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.education.flashmath.QuestionActivity"
@@ -31,11 +42,15 @@
         <activity
             android:name="com.education.flashmath.SubjectActivity"
             android:label="@string/title_activity_subject" >
-             <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.education.flashmath.TweetActivity"
+            android:label="@string/title_activity_tweet" >
         </activity>
     </application>
 

@@ -7,5 +7,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_question">QuestionActivity</string>
     <string name="title_activity_subject">Flash Math</string>
+    <string name="title_activity_tweet">TweetActivity</string>
 
 </resources>
