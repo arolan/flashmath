@@ -23,6 +23,7 @@ public class Question implements Serializable {
 	private String explanation;
 	
 	public Question(JSONObject json) {
+		this.userAnswer = "";
 		try {
 			this.questionText = json.getString("text");
 			this.correctAnswer = json.getString("answer");
