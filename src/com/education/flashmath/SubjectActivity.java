@@ -137,7 +137,7 @@ public class SubjectActivity extends Activity {
 			color = String.valueOf(R.drawable.btn_purple);
 		} else if (tag.equalsIgnoreCase("Multiplication")) {
 			color = String.valueOf(R.drawable.btn_green);
-		} else if (tag.equalsIgnoreCase("Fraction")) {
+		} else if (tag.equalsIgnoreCase("Fractions")) {
 			color = String.valueOf(R.drawable.btn_pink);
 		} else if (tag.equalsIgnoreCase("Division")) {
 			color = String.valueOf(R.drawable.btn_yellow);
