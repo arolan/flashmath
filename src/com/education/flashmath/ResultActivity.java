@@ -95,8 +95,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	public void tweetScore(View v) {
 		if (!getClient().isAuthenticated()) {
 			getClient().connect();
-		}
-		else {
+		} else {
 			tweet();
 		}
 	}
@@ -129,21 +128,11 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 				e.printStackTrace();
 				Toast.makeText(ResultActivity.this, "Error sending tweet!", Toast.LENGTH_SHORT).show();
 			}
-			
-			@Override
-			protected void handleFailureMessage(Throwable e, String arg1) {
-				// TODO Auto-generated method stub
-				super.handleFailureMessage(e, arg1);
-				e.printStackTrace();
-				Toast.makeText(ResultActivity.this, "Error sending tweet!", Toast.LENGTH_SHORT).show();
-			}
-		}, "testing");
+		}, "Wassssup everyone");
 	}
 
 	@Override
 	public void onLoginSuccess() {
-		Toast.makeText(ResultActivity.this, "Success logging into Twitter!", Toast.LENGTH_SHORT).show();
-		tweet();
 	}
 
 	@Override
