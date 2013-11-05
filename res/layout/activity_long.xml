@@ -38,9 +38,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tvStudy"
-        android:layout_marginTop="92dp"
-        android:background="#A8A8A8"
-        android:orientation="vertical" >
+        android:layout_marginTop="90dp"
+        android:orientation="vertical" 
+        android:background="#F5F5F5">
 
     </LinearLayout>
 
