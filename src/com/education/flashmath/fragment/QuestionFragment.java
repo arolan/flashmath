@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
 import si.solarb.flowlayout.FlowLayout;
 import si.solarb.flowlayout.FlowLayout.LayoutParams;
 import android.app.Fragment;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ public class QuestionFragment extends Fragment{
 	private TextView tvQuestionTitle;
 	private EditText userAnswerField;
 	public TextView tvExplanation;
+	private String backgroundColor;
 	
 	public Question getQuestion() {
 		return question;
@@ -40,10 +42,31 @@ public class QuestionFragment extends Fragment{
 		tvSectionTitle = (TextView) getActivity().findViewById(R.id.tvSectionTitle);
 		tvExplanation = (TextView) getActivity().findViewById(R.id.tvExplanation);
 		flQuestion = (FlowLayout) getActivity().findViewById(R.id.flQuestion);
+		
+		if (backgroundColor != null) {
+			setupBackground();
+		}
+		
 		if (this.question != null) {
 			setupQuestionContent();	
 		}
 	}
+	
+	public String getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+
+	public void setupBackground() {
+		if (backgroundColor != null) {
+			Drawable d = getResources().getDrawable(Integer.valueOf(backgroundColor));
+			getActivity().findViewById(R.id.rlFragmentQuestion).setBackground(d);
+		}
+	}
+
 
 	public void setupQuestionContent() {
 		
@@ -54,7 +77,7 @@ public class QuestionFragment extends Fragment{
 		String questionText = question.getQuestionText();
 		StringTokenizer st = new StringTokenizer(questionText);
 		LayoutParams params = flQuestion.new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		params.setMargins(0, 0, 5, 0);
+		params.setMargins(20, 0, 20, 0);
 		
 		while(st.hasMoreTokens()) {
 			

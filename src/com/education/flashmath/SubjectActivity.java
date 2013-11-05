@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 public class SubjectActivity extends Activity {
 
+	public static final String SUBJECT_BACKGROUND_INTENT_KEY = "subjectBackgroundId";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -120,8 +122,29 @@ public class SubjectActivity extends Activity {
 		Intent i = new Intent(this, QuestionActivity.class);
 		String tag = v.getTag().toString();
 		i.putExtra("subject", tag);
+
+		String backgroundColor = identifySubjectColor(tag);
+		i.putExtra(SUBJECT_BACKGROUND_INTENT_KEY, backgroundColor);
 		//Log.d("DEBUG",tag);
 		startActivity(i);
+	}
+
+	private String identifySubjectColor(String tag) {
+		String color = null;
+		if (tag.equalsIgnoreCase("Addition")) {
+			color = String.valueOf(R.drawable.btn_blue);
+		} else if (tag.equalsIgnoreCase("Subtraction")) {
+			color = String.valueOf(R.drawable.btn_purple);
+		} else if (tag.equalsIgnoreCase("Multiplication")) {
+			color = String.valueOf(R.drawable.btn_green);
+		} else if (tag.equalsIgnoreCase("Fraction")) {
+			color = String.valueOf(R.drawable.btn_pink);
+		} else if (tag.equalsIgnoreCase("Division")) {
+			color = String.valueOf(R.drawable.btn_yellow);
+		} else if (tag.equalsIgnoreCase("Geometry")) {
+			color = String.valueOf(R.drawable.btn_orange);
+		}
+		return color;
 	}
 
 }

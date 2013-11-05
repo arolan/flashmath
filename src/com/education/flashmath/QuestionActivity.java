@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -35,6 +34,7 @@ public class QuestionActivity extends Activity {
 	private TextView tvQuestionProgress;
 	private Button btnVerifyAndNextQuestion;
 	private String subject;
+	private String backgroundColor;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +44,13 @@ public class QuestionActivity extends Activity {
 		btnVerifyAndNextQuestion = (Button) findViewById(R.id.btnVerifyAndNextQuestion);
 		btnVerifyAndNextQuestion.setVisibility(View.VISIBLE);
 		subject = getIntent().getStringExtra("subject");
+		backgroundColor = getIntent().getStringExtra(SubjectActivity.SUBJECT_BACKGROUND_INTENT_KEY);
+		
 		setupServerQuestions();
-	
+		
 		qf = new QuestionFragment();
+		qf.setBackgroundColor(backgroundColor);
+		
 		getFragmentManager().beginTransaction().add(R.id.fragmentForQuestion, qf).commit();
 	}
 	
@@ -145,6 +149,7 @@ public class QuestionActivity extends Activity {
 	            getFragmentManager().popBackStack();
 	            getFragmentManager().beginTransaction().remove(qf).commit();
 	            qf = new QuestionFragment();
+	            qf.setBackgroundColor(backgroundColor);
 	            qf.setQuestion(this.questionList.get(currentQuestionIndex));
 	    		getFragmentManager().beginTransaction().add(R.id.fragmentForQuestion, qf).commit();
 				tvQuestionProgress.setText((currentQuestionIndex+1)+"/"+this.questionList.size());

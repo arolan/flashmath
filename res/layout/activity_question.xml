@@ -8,18 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".QuestionActivity" >
 
-    <!-- <fragment
-        android:id="@+id/fragmentForQuestion"
-        android:name="com.education.flashmath.fragment.QuestionFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnClear"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        tools:layout="@layout/fragment_question" /> -->
-
-	<FrameLayout 
+    <FrameLayout 
 	    android:id="@+id/fragmentForQuestion"
     	android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +16,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-    	 />
+        />
 
     <TextView
         android:id="@+id/tvQuestionProgress"
