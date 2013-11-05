@@ -15,7 +15,6 @@ import com.education.flashmath.models.ArithmeticQuestion;
 
 public class ArithmeticQuestionFragment extends QuestionFragment {
 	
-	private TextView tvEqualSign;
 	private TextView tvOperator;
 	private TextView tvOperand1;
 	private TextView tvOperand2;
@@ -31,13 +30,11 @@ public class ArithmeticQuestionFragment extends QuestionFragment {
 	}
 
 	public void setupParameters() {
-		tvEqualSign = (TextView) getActivity().findViewById(R.id.tvEqualSign);
 		tvOperator = (TextView) getActivity().findViewById(R.id.tvOperator);
 		tvOperand1 = (TextView) getActivity().findViewById(R.id.tvOperand1);
 		tvOperand2 = (TextView) getActivity().findViewById(R.id.tvOperand2);
 		etUserAnswer = (EditText) getActivity().findViewById(R.id.etUserAnswer);
 		etUserAnswer.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_VARIATION_NORMAL);
-		etUserAnswer.setTextSize(14f);
 		
 		
 		if (backgroundColor != null) {

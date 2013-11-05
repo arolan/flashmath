@@ -35,7 +35,6 @@ public class FractionQuestionFragment extends QuestionFragment {
 		tvOperand3 = (TextView) getActivity().findViewById(R.id.tvFractionOperand3);
 		etUserAnswer = (EditText) getActivity().findViewById(R.id.etFractionAnswer);
 		etUserAnswer.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_VARIATION_NORMAL);
-		etUserAnswer.setTextSize(14f);
 		
 		
 		if (backgroundColor != null) {

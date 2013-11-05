@@ -1,52 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
     android:id="@+id/rlFragmentAdditionQuestion"
-    >
-
-    <TextView
-        android:id="@+id/tvEqualSign"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/tvOperand2"
-        android:layout_centerVertical="true"
-        android:text="=" />
-
-    <TextView
-        android:id="@+id/tvOperand1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tvOperator"
-        android:layout_toRightOf="@+id/tvOperator"
-        android:text=" " />
-
-    <TextView
-        android:id="@+id/tvOperator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tvOperand2"
-        android:layout_centerHorizontal="true"
-        android:text=" " />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
     <TextView
         android:id="@+id/tvOperand2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tvEqualSign"
-        android:layout_alignLeft="@+id/tvOperand1"
-        android:layout_marginBottom="18dp"
-        android:text=" " />
+        android:layout_alignRight="@+id/tvOperand1"
+        android:layout_below="@+id/tvOperand1"
+        android:layout_marginTop="-30dp"
+        android:text=""
+        android:textSize="95sp"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 
-   <EditText
-       android:id="@+id/etUserAnswer"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_alignParentLeft="true"
-       android:layout_alignRight="@+id/tvEqualSign"
-       android:layout_below="@+id/tvEqualSign"
-       android:layout_marginTop="30dp" >
+    <EditText
+        android:id="@+id/etUserAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/tvOperand1"
+        android:layout_below="@+id/tvOperand1"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:gravity="right"
+        android:layout_marginTop="100dp"
+        android:maxLength="3"
+        android:paddingBottom="0dp"
+        android:textSize="95sp"
+        android:textStyle="bold" >
 
+        <requestFocus />
     </EditText>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="3dip"
+        android:layout_alignLeft="@+id/tvOperator"
+        android:layout_alignRight="@+id/tvOperand2"
+        android:layout_below="@+id/tvOperator"
+        android:background="#000000" />
+
+    <TextView
+        android:id="@+id/tvOperand1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="34dp"
+        android:text=""
+        android:textSize="95sp"
+        android:textColor="#000000"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvOperator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvOperand1"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="-30dp"
+        android:text=""
+        android:textSize="95sp"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 
 </RelativeLayout>

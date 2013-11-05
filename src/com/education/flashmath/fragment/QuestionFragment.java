@@ -23,8 +23,6 @@ public class QuestionFragment extends Fragment{
 	private static final String UKNOWN_VARIABLE_PLACE_HOLDER = "@_@";
 	public Question question;
 	private FlowLayout flQuestion;
-	private TextView tvSectionTitle;
-	private TextView tvQuestionTitle;
 	protected EditText etUserAnswer;
 	public TextView tvExplanation;
 	protected String backgroundColor;
@@ -39,8 +37,6 @@ public class QuestionFragment extends Fragment{
 
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
-		tvQuestionTitle = (TextView) getActivity().findViewById(R.id.tvQuestionTitle);
-		tvSectionTitle = (TextView) getActivity().findViewById(R.id.tvSectionTitle);
 		tvExplanation = (TextView) getActivity().findViewById(R.id.tvExplanation);
 		flQuestion = (FlowLayout) getActivity().findViewById(R.id.flQuestion);
 		

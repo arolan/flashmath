@@ -8,64 +8,86 @@
         android:id="@+id/tvFractionOperand1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="76dp"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvFractionOperand2"
-        android:layout_below="@+id/tvFractionOperand1"
-        android:textAlignment="center"
-        android:text="__________" />
-
-    <TextView
-        android:id="@+id/tvFractionOperand2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvFractionOperand1"
-        android:layout_below="@+id/textView3"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tvFractionOperand2"
-        android:layout_toRightOf="@+id/textView3"
-        android:text="=" />
+        android:layout_above="@+id/leftLine"
+        android:layout_alignLeft="@+id/leftLine"
+        android:layout_alignRight="@+id/leftLine"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#000000"
+        android:textSize="80sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvFractionOperand3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvFractionOperand2"
-        android:layout_alignBottom="@+id/tvFractionOperand2"
-        android:layout_marginLeft="18dp"
-        android:layout_toRightOf="@+id/textView4"
-        android:text="TextView" />
+        android:layout_below="@+id/rightLine"
+        android:layout_alignLeft="@+id/rightLine"
+        android:layout_alignRight="@+id/rightLine"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#000000"
+        android:textSize="80sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvFractionOperand2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_alignLeft="@+id/tvFractionOperand3"
-        android:text="__________" />
+        android:layout_below="@+id/leftLine"
+        android:layout_alignLeft="@+id/leftLine"
+        android:layout_alignRight="@+id/leftLine"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#000000"
+        android:textSize="80sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etFractionAnswer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_alignLeft="@+id/textView1"
+        android:layout_above="@+id/rightLine"
+        android:layout_alignLeft="@+id/rightLine"
+        android:layout_alignRight="@+id/rightLine"
+        android:gravity="center"
+        android:background="@android:color/transparent"
         android:ems="10"
-        android:inputType="number" >
+        android:inputType="number"
+        android:textColor="#000000"
+        android:textSize="80sp"
+        android:maxLength="2"
+        android:textStyle="bold" />
+    
+    <View
+        android:id="@+id/leftLine"
+        android:layout_width="fill_parent"
+        android:layout_height="5dip"
+        android:layout_toLeftOf="@+id/textView4"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:background="#000000" />
+    
+    <View
+        android:id="@+id/rightLine"
+        android:layout_width="fill_parent"
+        android:layout_height="5dip"
+        android:layout_toRightOf="@+id/textView4"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:background="#000000" />
 
-        <requestFocus />
-    </EditText>
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="="
+        android:textColor="#000000"
+        android:textSize="80sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
