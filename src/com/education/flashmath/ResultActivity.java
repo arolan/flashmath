@@ -35,6 +35,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	private TextView tvScore;
 	private TextView tvRank;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,9 +43,11 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		llStats = (LinearLayout) findViewById(R.id.llStats);
 		tvScore = (TextView) findViewById(R.id.tvScore);
 		tvRank = (TextView) findViewById(R.id.tvRank);
-		resultList = (ArrayList<Question>) getIntent().getSerializableExtra("QUESTIONS_ANSWERED");
-		subject = getIntent().getStringExtra("subject");
-		evaluate(resultList);
+		if (savedInstanceState == null) {
+			resultList = (ArrayList<Question>) getIntent().getSerializableExtra("QUESTIONS_ANSWERED");
+			subject = getIntent().getStringExtra("subject");
+			evaluate();	
+		}
 	}
 
 	@Override
@@ -55,7 +58,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	}
 
 	
-	public void evaluate(final ArrayList<Question> resultList){
+	public void evaluate(){
 		//if (resultList != null) {
 		for(int i = 0; i < resultList.size(); i++){
 			String correctAnswer = resultList.get(i).getCorrectAnswer();
@@ -90,10 +93,9 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	}
 	
 	public void tweetScore(View v) {
-		if (!FlashMathApp.getTwitterClient().isAuthenticated()) {
+		if (!getClient().isAuthenticated()) {
 			getClient().connect();
-		}
-		else {
+		} else {
 			tweet();
 		}
 	}
@@ -115,7 +117,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	}
 	
 	private void tweet() {
-		FlashMathApp.getTwitterClient().sendTweet(new JsonHttpResponseHandler() {
+		getClient().sendTweet(new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject object) {
 				Toast.makeText(ResultActivity.this, "Sent tweet!", Toast.LENGTH_SHORT).show();
@@ -126,12 +128,11 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 				e.printStackTrace();
 				Toast.makeText(ResultActivity.this, "Error sending tweet!", Toast.LENGTH_SHORT).show();
 			}
-		}, "testing");
+		}, "Wassssup everyone");
 	}
 
 	@Override
 	public void onLoginSuccess() {
-		
 	}
 
 	@Override
