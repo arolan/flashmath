@@ -37,3 +37,5 @@ local.properties
 ._.DS_Store
 */virtualenvs/
 !*/virtualenvs/pip-requirements.txt
+
+project.properties
