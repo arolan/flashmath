@@ -45,6 +45,17 @@
         android:layout_marginBottom="-34dp"
         android:layout_above="@+id/llStats"
         android:background="#000000" />
+    
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="-17dp"
+        android:layout_marginRight="-17dp"
+        android:layout_below="@+id/llStats"
+        android:layout_marginTop="-18dp"
+        android:background="#000000" />
 
     <LinearLayout
         android:id="@+id/llStats"
@@ -53,7 +64,7 @@
         android:layout_below="@+id/ivProfile"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="60dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="46dp"
         android:layout_above="@+id/btnTryAgain"
         android:orientation="horizontal" />
 
@@ -80,9 +91,9 @@
         android:id="@+id/btnTweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ivProfile"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="26dp"
+        android:drawableLeft="@drawable/ic_tweet"
         android:onClick="tweetScore"
         android:text="Tweet!" />
 
