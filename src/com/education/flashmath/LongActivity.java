@@ -5,10 +5,16 @@ import org.json.JSONException;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,6 +32,8 @@ public class LongActivity extends Activity {
 	String subject;
 	String subjectTitle;
 	GraphViewData[] data;
+	Button btnClear;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,17 +41,21 @@ public class LongActivity extends Activity {
 		TextView tvSubject = (TextView) findViewById(R.id.tvSubject);
 		TextView tvLink = (TextView) findViewById(R.id.tvLink);
 	    TextView tvStudy = (TextView) findViewById(R.id.tvStudy);
+	    Button btnClear = (Button) findViewById(R.id.btnClear);
+	    btnClear.getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
+	    
 	    llStats = (LinearLayout) findViewById(R.id.llstats);
 		
 		subject = getIntent().getStringExtra("subject");
 		subjectTitle = Character.toUpperCase(subject.charAt(0))+subject.substring(1);
 		
-		tvSubject.setText(" Score History for "+ subjectTitle + " ");
+		tvSubject.setText("Score History for "+ subjectTitle);
 		tvSubject.setBackgroundColor(getColor());
 		tvSubject.setTextColor(Color.WHITE);
-		tvStudy.setText("Study "+subjectTitle);
+		tvStudy.setText(subjectTitle);
 		
-		tvLink.setText(Html.fromHtml("<a href=http://en.wikipedia.org/wiki/"+subject+"_(mathematics)> GO TO WIKI "));
+		tvLink.setText(Html.fromHtml("<a style='text-decoration:none' href=http://en.wikipedia.org/wiki/"+subject+"_(mathematics)>↱"));
+		stripUnderlines(tvLink);
 		tvLink.setMovementMethod(LinkMovementMethod.getInstance());
 		
 		//Graph section
@@ -106,4 +118,26 @@ public class LongActivity extends Activity {
 	
 	}
 	
+	private void stripUnderlines(TextView textView) {
+        Spannable s = (Spannable) new SpannableString(textView.getText());
+        URLSpan[] spans = s.getSpans(0, s.length(), URLSpan.class);
+        for (URLSpan span: spans) {
+            int start = s.getSpanStart(span);
+            int end = s.getSpanEnd(span);
+            s.removeSpan(span);
+            span = new URLSpanNoUnderline(span.getURL());
+            s.setSpan(span, start, end, 0);
+        }
+        textView.setText(s);
+    }
+	
+	private class URLSpanNoUnderline extends URLSpan {
+        public URLSpanNoUnderline(String url) {
+            super(url);
+        }
+        @Override public void updateDrawState(TextPaint ds) {
+            super.updateDrawState(ds);
+            ds.setUnderlineText(false);
+        }
+    }
 }
