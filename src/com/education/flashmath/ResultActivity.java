@@ -124,9 +124,11 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 			}
 			
 			@Override
-			public void onFailure(Throwable e) {
+			public void onFailure(Throwable e, JSONObject errorResponse) {
+				// TODO Auto-generated method stub
+				super.onFailure(e, errorResponse);
 				e.printStackTrace();
-				Toast.makeText(ResultActivity.this, "Error sending tweet!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(ResultActivity.this, errorResponse.toString(), Toast.LENGTH_SHORT).show();
 			}
 		}, "Wassssup everyone");
 	}
