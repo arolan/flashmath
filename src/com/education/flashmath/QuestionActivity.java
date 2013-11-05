@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.education.flashmath.fragment.ArithmeticQuestionFragment;
 import com.education.flashmath.fragment.FractionQuestionFragment;
@@ -200,7 +199,6 @@ public class QuestionActivity extends Activity {
 		i.putExtra(QUESTIONS_ANSWERED_INTENT_KEY, this.questionList);
 		i.putExtra("subject", subject);
 		startActivity(i);
-		Toast.makeText(this, "End Of Quiz", Toast.LENGTH_LONG).show();
 	}
 
 }

@@ -72,9 +72,12 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 			@Override
 			public void onSuccess(JSONArray jsonScores) {
 				GraphViewData[] data = new GraphViewData[jsonScores.length()];
+				int max_score = 1;
 				for (int i = 0; i < jsonScores.length(); i++) {
 					try {
-						data[i] = (new GraphViewData(i + 1, jsonScores.getJSONObject(i).getInt("value")));
+						int val = jsonScores.getJSONObject(i).getInt("value");
+						max_score = val > max_score ? val : max_score;
+						data[i] = (new GraphViewData(i + 1, val));
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -83,6 +86,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 				GraphViewStyle style = new GraphViewStyle();
 				style.setVerticalLabelsColor(Color.BLACK);
 				style.setHorizontalLabelsColor(Color.BLACK);
+				style.setNumVerticalLabels(max_score + 1);
 				graphView.addSeries(new GraphViewSeries("Scores", null, data));
 				graphView.setGraphViewStyle(style);
 				llStats.addView(graphView); 
