@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp"
-        android:text="Section 3"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="23sp"
         android:textStyle="bold" />
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvSectionTitle"
         android:layout_centerHorizontal="true"
-        android:text="Question 1"
+        android:text=""
         android:textSize="19sp"
         android:textStyle="bold" />
 
@@ -38,7 +38,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tvQuestionTitle"
         android:textAlignment="center"
-        android:gravity="start|top" />
+        android:gravity="start|top" /> 
 
     <Space
         android:layout_width="wrap_content"
