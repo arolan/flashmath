@@ -1,14 +1,13 @@
 package com.education.flashmath;
 
-import android.graphics.Color;
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -54,9 +53,12 @@ public class LongActivity extends Activity {
 					@Override
 					public void onSuccess(JSONArray jsonScores) {
 						data = new GraphViewData[jsonScores.length()];
+						int max_score = 0;
 						for (int i = 0; i < jsonScores.length(); i++) {
 							try {
-								data[i] = (new GraphViewData(i + 1, jsonScores.getJSONObject(i).getInt("value")));
+								int val = jsonScores.getJSONObject(i).getInt("value");
+								max_score = val > max_score ? val : max_score;
+								data[i] = (new GraphViewData(i + 1, val));
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
@@ -66,10 +68,11 @@ public class LongActivity extends Activity {
 						style.setVerticalLabelsColor(Color.BLACK);
 						style.setHorizontalLabelsColor(Color.BLACK);
 						style.setGridColor(Color.GRAY);
-						
+						style.setNumVerticalLabels(max_score + 1);
 						GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(getColor(), 5);
-						GraphViewSeries userData = new GraphViewSeries("Score", lineStyle, data);  
+						GraphViewSeries userData = new GraphViewSeries("Score", lineStyle, data);
 						graphView.addSeries(userData);
+						graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
 						graphView.setGraphViewStyle(style);
 						llStats.addView(graphView); 
 					}

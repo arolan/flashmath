@@ -21,6 +21,7 @@ import com.education.flashmath.models.Question;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.GraphViewStyle;
 import com.jjoe64.graphview.LineGraphView;
 import com.loopj.android.http.AsyncHttpClient;
@@ -32,8 +33,9 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	private int score = 0;
 	private String subject;
 	private LinearLayout llStats;
+	private TextView tvTotal;
 	private TextView tvScore;
-	private TextView tvRank;
+	private TextView tvSubject;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -41,12 +43,13 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result);
 		llStats = (LinearLayout) findViewById(R.id.llStats);
+		tvTotal = (TextView) findViewById(R.id.tvTotal);
 		tvScore = (TextView) findViewById(R.id.tvScore);
-		tvRank = (TextView) findViewById(R.id.tvRank);
+		tvSubject = (TextView) findViewById(R.id.tvSubject);
 		if (savedInstanceState == null) {
 			resultList = (ArrayList<Question>) getIntent().getSerializableExtra("QUESTIONS_ANSWERED");
 			subject = getIntent().getStringExtra("subject");
-			evaluate();	
+			evaluate();
 		}
 	}
 
@@ -66,6 +69,14 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 				score++;
 			}
 		}
+		tvScore.setText(String.valueOf(score));
+		tvScore.setTextColor(getScoreColor((float) score / resultList.size()));
+		tvTotal.setText("/ " + String.valueOf(resultList.size()));
+		String subjectTitle = Character.toUpperCase(subject.charAt(0))+subject.substring(1);
+		
+		tvSubject.setText(" Score History for " + subjectTitle + " ");
+		tvSubject.setBackgroundColor(getColor());
+		tvSubject.setTextColor(Color.WHITE);
 		AsyncHttpClient client = new AsyncHttpClient();
 		client.get("http://flashmathapi.herokuapp.com/scores/" + subject + "/" + String.valueOf(score) + "/",
 				new JsonHttpResponseHandler() {
@@ -82,16 +93,17 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 						e.printStackTrace();
 					}
 				}
-				GraphView graphView = new LineGraphView(ResultActivity.this, "Scores for " + subject);
+				GraphView graphView = new LineGraphView(ResultActivity.this, "");
 				GraphViewStyle style = new GraphViewStyle();
 				style.setVerticalLabelsColor(Color.BLACK);
 				style.setHorizontalLabelsColor(Color.BLACK);
+				style.setGridColor(Color.GRAY);
 				style.setNumVerticalLabels(max_score + 1);
-				graphView.addSeries(new GraphViewSeries("Scores", null, data));
+				GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(getColor(), 5);
+				graphView.addSeries(new GraphViewSeries("Scores", lineStyle, data));
+				graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
 				graphView.setGraphViewStyle(style);
-				llStats.addView(graphView); 
-				tvScore.setText(score + " / " + resultList.size());
-				tvRank.setText("1st");
+				llStats.addView(graphView);
 			}
 		});
 	}
@@ -135,6 +147,33 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 				Toast.makeText(ResultActivity.this, errorResponse.toString(), Toast.LENGTH_SHORT).show();
 			}
 		}, "Wassssup everyone");
+	}
+	
+
+	public int getColor() {
+		int color = 0;
+		if(subject.equals("addition")){
+			color = Color.parseColor("#2C8EB8");
+		} else if(subject.equals("subtraction")){
+			color = Color.parseColor("#D79BFA");
+		} else if(subject.equals("multiplication")){
+			color = Color.parseColor("#32D426");
+		} else if(subject.equals("fractions")){
+			color = Color.parseColor("#FA96D2");
+		} else if(subject.equals("division")){
+			color = Color.parseColor("#FFF126");
+		}
+		return color;
+	}
+	
+	public int getScoreColor(float pc) {
+		if (pc >= .8) {
+			return Color.parseColor("#66FF66");
+		} else if (pc >= .5) {
+			return Color.parseColor("#FFFF66");
+		} else {
+			return Color.parseColor("#FF0033");
+		}
 	}
 
 	@Override

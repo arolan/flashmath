@@ -7,8 +7,6 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.Button;
-import android.widget.TableLayout;
-import android.widget.Toast;
 
 public class SubjectActivity extends Activity {
 

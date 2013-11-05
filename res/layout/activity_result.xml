@@ -6,8 +6,45 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:clipToPadding="false"
     tools:context=".ResultActivity" >
 
+    <TextView
+        android:id="@+id/tvSubject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/llStats"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="-17dp"
+        android:layout_marginRight="-17dp"
+        android:layout_marginBottom="-60dp"
+        android:gravity="center"
+        android:text="Subject"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+    
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="-17dp"
+        android:layout_marginRight="-17dp"
+        android:layout_marginBottom="-62dp"
+        android:layout_above="@+id/llStats"
+        android:background="#000000" />
+    
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="-17dp"
+        android:layout_marginRight="-17dp"
+        android:layout_marginBottom="-34dp"
+        android:layout_above="@+id/llStats"
+        android:background="#000000" />
 
     <LinearLayout
         android:id="@+id/llStats"
@@ -15,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivProfile"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="60dp"
         android:layout_marginBottom="20dp"
         android:layout_above="@+id/btnTryAgain"
         android:orientation="horizontal" />
@@ -30,49 +67,14 @@
         android:layout_marginTop="30dp"
         android:src="@drawable/ic_profile" />
 
-    <TextView
-        android:id="@+id/tvSectionTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/ivProfile"
-        android:layout_centerHorizontal="true"
-        android:text="Score:" />
-
-    <TextView
-        android:id="@+id/tvScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvSectionTitle"
-        android:layout_alignBottom="@+id/tvSectionTitle"
-        android:layout_marginLeft="36dp"
-        android:layout_toRightOf="@+id/tvSectionTitle"
-        android:hint="your Score" />
-
-    <TextView
-        android:id="@+id/tvOperator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ivProfile"
-        android:layout_alignLeft="@+id/tvSectionTitle"
-        android:text="Ranking" />
-
-    <TextView
-        android:id="@+id/tvRank"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvOperator"
-        android:layout_alignBottom="@+id/tvOperator"
-        android:layout_alignLeft="@+id/tvScore"
-        android:hint="your Ranking" />
-
     <Button
         android:id="@+id/btnTryAgain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/btnTweet"
         android:layout_alignBottom="@+id/btnTweet"
-        android:layout_alignRight="@+id/tvRank"
-        android:text="Try Again" />
+        android:layout_alignParentRight="true"
+        android:text="Take again!" />
 
     <Button
         android:id="@+id/btnTweet"
@@ -83,5 +85,30 @@
         android:layout_marginBottom="26dp"
         android:onClick="tweetScore"
         android:text="Tweet!" />
+
+    <TextView
+        android:id="@+id/tvTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/llStats"
+        android:layout_marginBottom="-10dp"
+        android:layout_toRightOf="@+id/tvScore"
+        android:layout_marginLeft="40dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/tvScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-20dp"
+        android:textSize="100sp"
+        android:textStyle="bold"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
