@@ -121,12 +121,16 @@ public class SubjectActivity extends Activity {
 	public void onButtonClick(View v){
 		Intent i = new Intent(this, QuestionActivity.class);
 		String tag = v.getTag().toString();
-		i.putExtra("subject", tag);
+		
+		if (!tag.equalsIgnoreCase("Geometry")) {
+			i.putExtra("subject", tag);
 
-		String backgroundColor = identifySubjectColor(tag);
-		i.putExtra(SUBJECT_BACKGROUND_INTENT_KEY, backgroundColor);
-		//Log.d("DEBUG",tag);
-		startActivity(i);
+			String backgroundColor = identifySubjectColor(tag);
+			i.putExtra(SUBJECT_BACKGROUND_INTENT_KEY, backgroundColor);
+			//Log.d("DEBUG",tag);
+			startActivity(i);
+		}
+		
 	}
 
 	private String identifySubjectColor(String tag) {

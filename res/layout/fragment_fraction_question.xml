@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:id="@+id/rlFragmentAdditionQuestion">
+
+    <TextView
+        android:id="@+id/tvFractionOperand1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="76dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvFractionOperand2"
+        android:layout_below="@+id/tvFractionOperand1"
+        android:textAlignment="center"
+        android:text="__________" />
+
+    <TextView
+        android:id="@+id/tvFractionOperand2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvFractionOperand1"
+        android:layout_below="@+id/textView3"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvFractionOperand2"
+        android:layout_toRightOf="@+id/textView3"
+        android:text="=" />
+
+    <TextView
+        android:id="@+id/tvFractionOperand3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvFractionOperand2"
+        android:layout_alignBottom="@+id/tvFractionOperand2"
+        android:layout_marginLeft="18dp"
+        android:layout_toRightOf="@+id/textView4"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignLeft="@+id/tvFractionOperand3"
+        android:text="__________" />
+
+    <EditText
+        android:id="@+id/etFractionAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignLeft="@+id/textView1"
+        android:ems="10"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
+</RelativeLayout>

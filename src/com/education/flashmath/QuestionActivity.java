@@ -16,8 +16,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.education.flashmath.fragment.ArithmeticQuestionFragment;
+import com.education.flashmath.fragment.FractionQuestionFragment;
 import com.education.flashmath.fragment.QuestionAnswerFragment;
 import com.education.flashmath.fragment.QuestionFragment;
+import com.education.flashmath.models.ArithmeticQuestion;
+import com.education.flashmath.models.FractionQuestion;
 import com.education.flashmath.models.Question;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -46,10 +50,14 @@ public class QuestionActivity extends Activity {
 		subject = getIntent().getStringExtra("subject");
 		backgroundColor = getIntent().getStringExtra(SubjectActivity.SUBJECT_BACKGROUND_INTENT_KEY);
 		
+		if (subject.equalsIgnoreCase("Fractions")) {
+			qf = new FractionQuestionFragment();
+		} else {
+			qf = new ArithmeticQuestionFragment();
+		}
 		setupServerQuestions();
-		
-		qf = new QuestionFragment();
 		qf.setBackgroundColor(backgroundColor);
+		
 		
 		getFragmentManager().beginTransaction().add(R.id.fragmentForQuestion, qf).commit();
 	}
@@ -64,17 +72,31 @@ public class QuestionActivity extends Activity {
 				JSONArray jsonResults = null;
 				try {
 					jsonResults = response.getJSONArray("questions");
+					
 					questionList = new ArrayList<Question>();
-					questionList.addAll(Question.fromJSONArray(jsonResults));
+					
+					if (subject.equalsIgnoreCase("Fractions")) {
+						questionList.addAll(FractionQuestion.fromJSONArray(jsonResults, subject));
+					} else {
+						questionList.addAll(ArithmeticQuestion.fromJSONArray(jsonResults, subject));
+					}
+					
 					Log.d("DEBUG", questionList.toString());
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 				
 				qf.setQuestion(questionList.get(currentQuestionIndex));
+				
+				if (subject.equalsIgnoreCase("Fractions")) {
+					((FractionQuestionFragment) qf).setupFractionQuestion();
+				} else {
+					((ArithmeticQuestionFragment) qf).setupArithmeticQuestion();
+				}
+				
 				tvQuestionProgress = (TextView) findViewById(R.id.tvQuestionProgress);
 				tvQuestionProgress.setText((currentQuestionIndex + 1) + "/" + questionList.size());
-				qf.setupQuestionContent();
+
 				
 				qaf = new QuestionAnswerFragment();
 				qaf.setQuestion(questionList.get(currentQuestionIndex));
@@ -105,6 +127,7 @@ public class QuestionActivity extends Activity {
 		qf.saveUserAnswer();
 		
 		qaf.setQuestion(questionList.get(currentQuestionIndex));
+		
 		
 		// Create and commit a new fragment transaction that adds the fragment for the back of
 		// the card, uses custom animations, and is part of the fragment manager's back stack.
@@ -148,11 +171,16 @@ public class QuestionActivity extends Activity {
 			if(currentQuestionIndex < this.questionList.size()) {
 	            getFragmentManager().popBackStack();
 	            getFragmentManager().beginTransaction().remove(qf).commit();
-	            qf = new QuestionFragment();
+	            if (this.subject.equalsIgnoreCase("Fractions")) {
+	            	qf = new FractionQuestionFragment();
+	            } else {
+	            	qf = new ArithmeticQuestionFragment();
+				}
+	            
 	            qf.setBackgroundColor(backgroundColor);
 	            qf.setQuestion(this.questionList.get(currentQuestionIndex));
-	    		getFragmentManager().beginTransaction().add(R.id.fragmentForQuestion, qf).commit();
-				tvQuestionProgress.setText((currentQuestionIndex+1)+"/"+this.questionList.size());
+	            getFragmentManager().beginTransaction().add(R.id.fragmentForQuestion, qf).commit();
+	            tvQuestionProgress.setText((currentQuestionIndex+1)+"/"+this.questionList.size());
 			} else {
 				finalizeQuiz();
 			}
@@ -166,6 +194,7 @@ public class QuestionActivity extends Activity {
 		qf.saveUserAnswer();
 		finalizeQuiz();
 	}
+	
 	private void finalizeQuiz() {
 		Intent i = new Intent(this, ResultActivity.class);
 		i.putExtra(QUESTIONS_ANSWERED_INTENT_KEY, this.questionList);

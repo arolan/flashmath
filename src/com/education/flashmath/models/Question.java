@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.education.flashmath.utils.Constants.SubjectCategory;
+
 public class Question implements Serializable {
 	
 	/**
@@ -14,14 +16,22 @@ public class Question implements Serializable {
 	 */
 	private static final long serialVersionUID = 8573224643054756703L;
 	
-	private long questionId;
-	private long sectionId;
-	private Quiz quiz;
-	private String questionText;
-	private String correctAnswer;
-	private String userAnswer;
-	private String explanation;
+	protected long questionId;
+	protected SubjectCategory subjectId;
+	protected Quiz quiz;
+	protected String questionText;
+	protected String correctAnswer;
+	protected String userAnswer;
+	protected String explanation;
 	
+	public SubjectCategory getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(SubjectCategory subjectId) {
+		this.subjectId = subjectId;
+	}
+
 	public Question(JSONObject json) {
 		try {
 			this.questionText = json.getString("text");
@@ -42,12 +52,7 @@ public class Question implements Serializable {
 		this.explanation = explanation;
 	}
 	
-	public long getSectionId() {
-		return sectionId;
-	}
-	public void setSectionId(long sectionId) {
-		this.sectionId = sectionId;
-	}
+	
 	public String getCorrectAnswer() {
 		return correctAnswer;
 	}
@@ -90,7 +95,7 @@ public class Question implements Serializable {
 			try {
 				Question question = new Question(jsonArray.getJSONObject(i));
 				question.setQuestionId(i + 1);
-				question.setSectionId(3);
+				question.setSubjectId(null);
 				questions.add(question);
 			} catch (JSONException e) {
 				e.printStackTrace();

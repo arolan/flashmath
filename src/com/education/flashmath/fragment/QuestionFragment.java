@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.education.flashmath.R;
@@ -24,9 +25,9 @@ public class QuestionFragment extends Fragment{
 	private FlowLayout flQuestion;
 	private TextView tvSectionTitle;
 	private TextView tvQuestionTitle;
-	private EditText userAnswerField;
+	protected EditText etUserAnswer;
 	public TextView tvExplanation;
-	private String backgroundColor;
+	protected String backgroundColor;
 	
 	public Question getQuestion() {
 		return question;
@@ -47,9 +48,9 @@ public class QuestionFragment extends Fragment{
 			setupBackground();
 		}
 		
-		if (this.question != null) {
-			setupQuestionContent();	
-		}
+//		if (this.question != null) {
+//			setupQuestionContent();	
+//		}
 	}
 	
 	public String getBackgroundColor() {
@@ -63,16 +64,22 @@ public class QuestionFragment extends Fragment{
 	public void setupBackground() {
 		if (backgroundColor != null) {
 			Drawable d = getResources().getDrawable(Integer.valueOf(backgroundColor));
-			getActivity().findViewById(R.id.rlFragmentQuestion).setBackground(d);
+			RelativeLayout rlFragmentQuestion = (RelativeLayout) getActivity().findViewById(R.id.rlFragmentQuestion);
+			if (rlFragmentQuestion != null) {
+				rlFragmentQuestion.setBackground(d);
+			}
 		}
 	}
 
 
 	public void setupQuestionContent() {
 		
+		if (flQuestion == null) {
+			return;
+		}
 		
-		tvQuestionTitle.setText("Question "+this.question.getQuestionId());
-		tvSectionTitle.setText("Section "+this.question.getSectionId());
+//		tvQuestionTitle.setText("Question "+this.question.getQuestionId());
+//		tvSectionTitle.setText("Section "+this.question.getSectionId());
 		
 		String questionText = question.getQuestionText();
 		StringTokenizer st = new StringTokenizer(questionText);
@@ -93,7 +100,7 @@ public class QuestionFragment extends Fragment{
 					et.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_VARIATION_NORMAL);
 					et.setTextSize(14f);
 					et.setPadding(et.getPaddingLeft(), -5, et.getPaddingRight(), et.getPaddingBottom());
-					userAnswerField = et;
+					etUserAnswer = et;
 					flQuestion.addView(et);
 				}
 				else {
@@ -111,16 +118,16 @@ public class QuestionFragment extends Fragment{
 	}
 
 	public void clearAnswerFields() {
-		if (userAnswerField != null) {
-			userAnswerField.setText("");
+		if (etUserAnswer != null) {
+			etUserAnswer.setText("");
 		}
 	}
 
 
 	public void saveUserAnswer() {
-		if (userAnswerField != null) {
-			question.setUserAnswer(userAnswerField.getText().toString());
-			this.userAnswerField.setEnabled(false);
+		if (etUserAnswer != null) {
+			question.setUserAnswer(etUserAnswer.getText().toString());
+			this.etUserAnswer.setEnabled(false);
 		}
 	}
 
