@@ -188,7 +188,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		if (pc >= .8) {
 			return Color.parseColor("#66FF66");
 		} else if (pc >= .5) {
-			return Color.parseColor("#FFFF66");
+			return Color.parseColor("#E5E500");
 		} else {
 			return Color.parseColor("#FF0033");
 		}

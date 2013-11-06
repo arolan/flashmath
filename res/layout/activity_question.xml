@@ -38,8 +38,9 @@
         android:layout_toLeftOf="@+id/tvQuestionProgress"
         android:onClick="onClearQuestionAnswer"
         android:layout_marginRight="30dp"
-        android:text="Erase"
-        android:textSize="12sp" />
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:text="Erase"/>
 
     <Button
         android:id="@+id/btnVerifyAndNextQuestion"
@@ -49,8 +50,9 @@
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/tvQuestionProgress"
         android:layout_marginLeft="30dp"
+        android:textColor="#FFFFFF"
         android:onClick="onVerifyAndNextQuestionPressed"
-        android:text="Answer"
-        android:textSize="12sp" />
+        android:textStyle="bold"
+        android:text="Answer"/>
 
 </RelativeLayout>
