@@ -140,10 +140,11 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 				style.setVerticalLabelsColor(Color.BLACK);
 				style.setHorizontalLabelsColor(Color.BLACK);
 				style.setGridColor(Color.GRAY);
-				style.setNumVerticalLabels(max_score + 1);
+				style.setNumVerticalLabels(4);
 				GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(getColor(), 5);
 				graphView.addSeries(new GraphViewSeries("Scores", lineStyle, data));
 				graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
+				graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
 				graphView.setGraphViewStyle(style);
 				llStats.addView(graphView);
 			}

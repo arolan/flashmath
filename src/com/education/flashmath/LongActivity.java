@@ -14,7 +14,6 @@ import android.text.SpannableString;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -88,35 +87,43 @@ public class LongActivity extends Activity {
 						tvAttempts.setText(jsonScores.length() + " Attempts");
 						data = new GraphViewData[jsonScores.length()];
 						int max_score = 0;
-						int min_score = 1000;
+						int min_score = -1;
 						int total = 0;
 						for (int i = 0; i < jsonScores.length(); i++) {
 							try {
 								int val = jsonScores.getJSONObject(i).getInt("value");
 								max_score = val > max_score ? val : max_score;
-								min_score = val > min_score ? min_score : val;
+								if (min_score == -1) {
+									min_score = val;
+								} else {
+									min_score = val > min_score ? min_score : val;
+								}
 								total += val;
 								data[i] = (new GraphViewData(i + 1, val));
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
 						}
+						if (min_score == -1) {
+							min_score = 0;
+						}
 						tvBest.setText(String.valueOf(max_score));
 						tvBest.setTextColor(getScoreColor((float) max_score / 3));
 						tvWorst.setText(String.valueOf(min_score));
 						tvWorst.setTextColor(getScoreColor((float) min_score / 3));
-						float average = (float) total / jsonScores.length();
+						float average = jsonScores.length() == 0 ? 0f : (float) total / jsonScores.length();
 						tvAverage.setText(String.format("%.1f", average));
 						tvAverage.setTextColor(getScoreColor(average / 3));
 						
 						style.setVerticalLabelsColor(Color.BLACK);
 						style.setHorizontalLabelsColor(Color.BLACK);
 						style.setGridColor(Color.GRAY);
-						style.setNumVerticalLabels(max_score + 1);
+						style.setNumVerticalLabels(4);
 						GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(getColor(), 5);
 						GraphViewSeries userData = new GraphViewSeries("Score", lineStyle, data);
 						graphView.addSeries(userData);
 						graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
+						graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
 						graphView.setGraphViewStyle(style);
 						llStats.addView(graphView); 
 					}
@@ -175,12 +182,12 @@ public class LongActivity extends Activity {
 	
 	//Clear button
 	public void onClear(View v){
-		tvAttempts.setText("0");
+		tvAttempts.setText("0 Attempts");
 		tvBest.setText("0");
 		tvBest.setTextColor(getScoreColor(0));
 		tvWorst.setText("0");
 		tvWorst.setTextColor(getScoreColor(0));
-		tvAverage.setText("0");
+		tvAverage.setText("0.0");
 		tvAverage.setTextColor(getScoreColor(0));	
 		graphView = new LineGraphView(LongActivity.this,"");
 		style = new GraphViewStyle();
@@ -188,8 +195,10 @@ public class LongActivity extends Activity {
 		style.setHorizontalLabelsColor(Color.BLACK);
 		style.setGridColor(Color.GRAY);
 		style.setNumVerticalLabels(4);
-		graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(0, 0),new GraphViewData(2, 3) }));
+		graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
+		graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
 		graphView.setGraphViewStyle(style);
+		llStats.removeAllViews();
 		llStats.addView(graphView);
 		
 		AsyncHttpClient client = new AsyncHttpClient();		
