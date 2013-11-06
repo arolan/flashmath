@@ -269,6 +269,7 @@ public class QuestionActivity extends Activity {
 		Intent i = new Intent(this, ResultActivity.class);
 		i.putExtra(QUESTIONS_ANSWERED_INTENT_KEY, this.questionList);
 		i.putExtra("subject", subject);
+		i.putExtra(SubjectActivity.SUBJECT_BACKGROUND_INTENT_KEY, backgroundColor);
 		startActivity(i);
 	}
 	

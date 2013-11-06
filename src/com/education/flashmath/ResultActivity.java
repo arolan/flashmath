@@ -32,6 +32,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 
+	public static final String SUBJECT_INTENT_KEY = "subject";
 	private ArrayList<Question> resultList;
 	private int score = 0;
 	private String subject;
@@ -39,6 +40,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	private TextView tvTotal;
 	private TextView tvScore;
 	private TextView tvSubject;
+	private String backgroundColor;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -51,7 +53,8 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		tvSubject = (TextView) findViewById(R.id.tvSubject);
 		if (savedInstanceState == null) {
 			resultList = (ArrayList<Question>) getIntent().getSerializableExtra("QUESTIONS_ANSWERED");
-			subject = getIntent().getStringExtra("subject");
+			subject = getIntent().getStringExtra(SUBJECT_INTENT_KEY);
+			backgroundColor = getIntent().getStringExtra(SubjectActivity.SUBJECT_BACKGROUND_INTENT_KEY);
 			evaluate();
 		}
 	}
@@ -105,6 +108,8 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		btnTweet.setBackground(getButton());
 		Button btnTryAgain = (Button) findViewById(R.id.btnTryAgain);
 		btnTryAgain.setBackground(getButton());
+		Button btnMainMenu = (Button) findViewById(R.id.btnMainMenu);
+		btnMainMenu.setBackground(getButton());
 		tvScore.setText(String.valueOf(score));
 		tvScore.setTextColor(getScoreColor((float) score / resultList.size()));
 		tvTotal.setText("/ " + String.valueOf(resultList.size()));
@@ -220,4 +225,20 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	public void onLoginFailure(Exception e) {
 		Toast.makeText(ResultActivity.this, "Error logging into Twitter!", Toast.LENGTH_SHORT).show();
 	}
+	
+	public void onTakeQuizAgain(View v) {
+		Intent i = new Intent(this, QuestionActivity.class);
+		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		i.putExtra(SUBJECT_INTENT_KEY, subject);
+		i.putExtra(SubjectActivity.SUBJECT_BACKGROUND_INTENT_KEY, backgroundColor);
+		startActivity(i);
+	}
+	
+	public void onMainMenuSelected(View v) {
+		Intent i = new Intent(this, SubjectActivity.class);
+		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
+	}
+	
+	
 }

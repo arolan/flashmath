@@ -68,27 +68,16 @@
         android:src="@drawable/ic_profile" />
 
     <Button
-        android:id="@+id/btnTryAgain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnTweet"
-        android:layout_alignBottom="@+id/btnTweet"
-        android:layout_alignParentRight="true"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:text="Take Again!" />
-
-    <Button
         android:id="@+id/btnTweet"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:drawableLeft="@drawable/ic_tweet"
         android:onClick="tweetScore"
-        android:textStyle="bold"
+        android:text=""
         android:textColor="#FFFFFF"
-        android:text="Tweet!" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvTotal"
@@ -113,5 +102,29 @@
         android:textStyle="bold"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/btnTryAgain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/btnTweet"
+        android:layout_toRightOf="@+id/btnMainMenu"
+        android:onClick="onTakeQuizAgain"
+        android:text="Take Again!"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnMainMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnTweet"
+        android:layout_alignTop="@+id/btnTweet"
+        android:layout_toRightOf="@+id/btnTweet"
+        android:onClick="onMainMenuSelected"
+        android:text="Main Menu"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
 
 </RelativeLayout>
