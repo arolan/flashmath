@@ -5,7 +5,7 @@ import org.json.JSONException;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spannable;
@@ -41,12 +41,14 @@ public class LongActivity extends Activity {
 		TextView tvSubject = (TextView) findViewById(R.id.tvSubject);
 		TextView tvLink = (TextView) findViewById(R.id.tvLink);
 	    TextView tvStudy = (TextView) findViewById(R.id.tvStudy);
-	    Button btnClear = (Button) findViewById(R.id.btnClear);
-	    btnClear.getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
+	    btnClear = (Button) findViewById(R.id.btnClear);
+	    btnClear.setBackground(getResources().getDrawable(R.drawable.btn_red));
 	    
 	    llStats = (LinearLayout) findViewById(R.id.llstats);
 		
 		subject = getIntent().getStringExtra("subject");
+	    Button btnClose = (Button) findViewById(R.id.btnClose);
+	    btnClose.setBackground(getButton());
 		subjectTitle = Character.toUpperCase(subject.charAt(0))+subject.substring(1);
 		
 		tvSubject.setText("Score History for "+ subjectTitle);
@@ -111,17 +113,31 @@ public class LongActivity extends Activity {
 	public int getColor(){
 		int color = 0;
 		if(subject.equals("addition")){
-			color = Color.parseColor("#2C8EB8");
+			color = Color.parseColor("#7979FF");
 		} else if(subject.equals("subtraction")){
 			color = Color.parseColor("#D79BFA");
 		} else if(subject.equals("multiplication")){
-			color = Color.parseColor("#32D426");
+			color = Color.parseColor("#66b266");
 		} else if(subject.equals("fractions")){
 			color = Color.parseColor("#FA96D2");
 		} else if(subject.equals("division")){
-			color = Color.parseColor("#FFF126");
+			color = Color.parseColor("#44B4D5");
 		}
 		return color;
+	}
+	
+	public Drawable getButton(){
+		if(subject.equals("addition")){
+			return getResources().getDrawable(R.drawable.btn_blue2);
+		} else if(subject.equals("subtraction")){
+			return getResources().getDrawable(R.drawable.btn_purple2);
+		} else if(subject.equals("multiplication")){
+			return getResources().getDrawable(R.drawable.btn_green2);
+		} else if(subject.equals("fractions")){
+			return getResources().getDrawable(R.drawable.btn_pink2);
+		} else {
+			return getResources().getDrawable(R.drawable.btn_yellow2);
+		}
 	}
 	
 	//Close button

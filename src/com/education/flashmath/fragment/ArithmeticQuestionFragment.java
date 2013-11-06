@@ -36,7 +36,6 @@ public class ArithmeticQuestionFragment extends QuestionFragment {
 		etUserAnswer = (EditText) getActivity().findViewById(R.id.etUserAnswer);
 		etUserAnswer.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_VARIATION_NORMAL);
 		
-		
 		if (backgroundColor != null) {
 			setupBackground();
 		}

@@ -16,7 +16,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:text="Clear scores" 
+        android:text="Clear Scores" 
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
         android:onClick="onClear"/>
 
     <Button
@@ -27,6 +29,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:onClick="onClose"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
         android:text="Close" />
 
     <LinearLayout
@@ -42,17 +46,6 @@
         android:background="#F5F5F5">
 
     </LinearLayout>
-    
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="-17dp"
-        android:layout_marginRight="-17dp"
-        android:layout_below="@+id/llstats"
-        android:layout_marginTop="-18dp"
-        android:background="#000000" />
 
     <TextView
         android:id="@+id/tvStudy"

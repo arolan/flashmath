@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlFragmentAdditionQuestion"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/tvOperand2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/tvOperand1"
+        android:layout_below="@+id/tvOperand1"
+        android:layout_marginTop="-30dp"
+        android:text=""
+        android:textSize="95sp"
+        android:textColor="#000000"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/tvOperand1"
+        android:layout_below="@+id/tvOperand1"
+        android:gravity="right"
+        android:layout_marginTop="105dp"
+        android:maxLength="3"
+        android:paddingBottom="0dp"
+        android:textSize="95sp"
+        android:textColor="#000000"
+        android:textStyle="bold" >
+    </TextView>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="3dip"
+        android:layout_alignLeft="@+id/tvOperator"
+        android:layout_alignRight="@+id/tvOperand2"
+        android:layout_below="@+id/tvOperator"
+        android:background="#000000" />
+
+    <TextView
+        android:id="@+id/tvOperand1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="34dp"
+        android:text=""
+        android:textSize="95sp"
+        android:textColor="#000000"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvOperator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvOperand1"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="-30dp"
+        android:text=""
+        android:textSize="95sp"
+        android:textColor="#000000"
+        android:textStyle="bold" />
+
+</RelativeLayout>

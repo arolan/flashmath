@@ -33,7 +33,7 @@
         android:layout_marginRight="-17dp"
         android:layout_marginBottom="-62dp"
         android:layout_above="@+id/llStats"
-        android:background="#000000" />
+        android:background="#FFFFFF" />
     
     <View
         android:layout_width="fill_parent"
@@ -44,18 +44,7 @@
         android:layout_marginRight="-17dp"
         android:layout_marginBottom="-34dp"
         android:layout_above="@+id/llStats"
-        android:background="#000000" />
-    
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="-17dp"
-        android:layout_marginRight="-17dp"
-        android:layout_below="@+id/llStats"
-        android:layout_marginTop="-18dp"
-        android:background="#000000" />
+        android:background="#FFFFFF" />
 
     <LinearLayout
         android:id="@+id/llStats"
@@ -85,7 +74,9 @@
         android:layout_alignBaseline="@+id/btnTweet"
         android:layout_alignBottom="@+id/btnTweet"
         android:layout_alignParentRight="true"
-        android:text="Take again!" />
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:text="Take Again!" />
 
     <Button
         android:id="@+id/btnTweet"
@@ -95,6 +86,8 @@
         android:layout_alignParentBottom="true"
         android:drawableLeft="@drawable/ic_tweet"
         android:onClick="tweetScore"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
         android:text="Tweet!" />
 
     <TextView
@@ -104,8 +97,8 @@
         android:layout_above="@+id/llStats"
         android:layout_marginBottom="-10dp"
         android:layout_toRightOf="@+id/tvScore"
-        android:layout_marginLeft="40dp"
-        android:textSize="20sp"
+        android:layout_marginLeft="25dp"
+        android:textSize="50sp"
         android:textStyle="bold"
         android:textColor="#000000"
         android:text="" />
@@ -116,8 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-20dp"
-        android:textSize="100sp"
+        android:textSize="80sp"
         android:textStyle="bold"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />

@@ -7,7 +7,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,9 +17,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.education.flashmath.fragment.ArithmeticQuestionAnswerFragment;
 import com.education.flashmath.fragment.ArithmeticQuestionFragment;
+import com.education.flashmath.fragment.FractionQuestionAnswerFragment;
 import com.education.flashmath.fragment.FractionQuestionFragment;
-import com.education.flashmath.fragment.QuestionAnswerFragment;
 import com.education.flashmath.fragment.QuestionFragment;
 import com.education.flashmath.models.ArithmeticQuestion;
 import com.education.flashmath.models.FractionQuestion;
@@ -27,11 +30,12 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class QuestionActivity extends Activity {
 
-	private static final String NEXT_QUESTION_BTN_TITLE = "Next Question";
-	private static final String VERIFY_ANSWER_BTN_TITLE = "Verify Answer";
+	private static final String NEXT_QUESTION_BTN_TITLE = "Next";
+	private static final String VERIFY_ANSWER_BTN_TITLE = "Answer";
+	private static final String END_QUIZ_BTN_TITLE = "Finish";
 	public static final String QUESTIONS_ANSWERED_INTENT_KEY = "QUESTIONS_ANSWERED";
 	public QuestionFragment qf;
-	public QuestionAnswerFragment qaf;
+	public Fragment qaf;
 	private int currentQuestionIndex;
 	private ArrayList<Question> questionList;
 	private TextView tvQuestionProgress;
@@ -47,6 +51,9 @@ public class QuestionActivity extends Activity {
 		btnVerifyAndNextQuestion = (Button) findViewById(R.id.btnVerifyAndNextQuestion);
 		btnVerifyAndNextQuestion.setVisibility(View.VISIBLE);
 		subject = getIntent().getStringExtra("subject");
+		btnVerifyAndNextQuestion.setBackground(getButton());
+		Button btnClear = (Button) findViewById(R.id.btnClear);
+		btnClear.setBackground(getButton());
 		backgroundColor = getIntent().getStringExtra(SubjectActivity.SUBJECT_BACKGROUND_INTENT_KEY);
 		
 		if (subject.equalsIgnoreCase("Fractions")) {
@@ -89,16 +96,17 @@ public class QuestionActivity extends Activity {
 				
 				if (subject.equalsIgnoreCase("Fractions")) {
 					((FractionQuestionFragment) qf).setupFractionQuestion();
+					qaf = new FractionQuestionAnswerFragment();
+					((FractionQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
 				} else {
 					((ArithmeticQuestionFragment) qf).setupArithmeticQuestion();
+					qaf = new ArithmeticQuestionAnswerFragment();
+					((ArithmeticQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
 				}
 				
 				tvQuestionProgress = (TextView) findViewById(R.id.tvQuestionProgress);
 				tvQuestionProgress.setText((currentQuestionIndex + 1) + "/" + questionList.size());
 
-				
-				qaf = new QuestionAnswerFragment();
-				qaf.setQuestion(questionList.get(currentQuestionIndex));
 			}
 		});
 	}
@@ -117,40 +125,67 @@ public class QuestionActivity extends Activity {
 	public void onVerifyAndNextQuestionPressed(View v) {
 		if (btnVerifyAndNextQuestion.getText().toString().equals(VERIFY_ANSWER_BTN_TITLE)) {
 			onVerifyQuestionAnswer(v);
-		} else {
+		} else if (btnVerifyAndNextQuestion.getText().toString().equals(NEXT_QUESTION_BTN_TITLE)){
 			onNextQuestion(v);
+		} else {
+			qf.saveUserAnswer();
+			finalizeQuiz();
 		}
 	}
 	
 	public void onVerifyQuestionAnswer(View v) {
 		qf.saveUserAnswer();
 		
-		qaf.setQuestion(questionList.get(currentQuestionIndex));
+		if (subject.equalsIgnoreCase("Fractions")) {
+			((FractionQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
+
+			// Create and commit a new fragment transaction that adds the fragment for the back of
+			// the card, uses custom animations, and is part of the fragment manager's back stack.
+			getFragmentManager().beginTransaction()
+			// Replace the default fragment animations with animator resources representing
+			// rotations when switching to the back of the card, as well as animator
+			// resources representing rotations when flipping back to the front (e.g. when
+			// the system Back button is pressed).
+			.setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+								 R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+			// Replace any fragments currently in the container view with a fragment
+			// representing the next page (indicated by the just-incremented currentPage
+			// variable).
+			.replace(R.id.fragmentForQuestion, (FractionQuestionAnswerFragment) qaf)
+			// Add this transaction to the back stack, allowing users to press Back
+			// to get to the front of the card.
+			.addToBackStack(null)
+			// Commit the transaction.
+			.commit();
+		} else {
+			((ArithmeticQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
+
+			// Create and commit a new fragment transaction that adds the fragment for the back of
+			// the card, uses custom animations, and is part of the fragment manager's back stack.
+			getFragmentManager().beginTransaction()
+			// Replace the default fragment animations with animator resources representing
+			// rotations when switching to the back of the card, as well as animator
+			// resources representing rotations when flipping back to the front (e.g. when
+			// the system Back button is pressed).
+			.setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+								 R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+			// Replace any fragments currently in the container view with a fragment
+			// representing the next page (indicated by the just-incremented currentPage
+			// variable).
+			.replace(R.id.fragmentForQuestion, (ArithmeticQuestionAnswerFragment) qaf)
+			// Add this transaction to the back stack, allowing users to press Back
+			// to get to the front of the card.
+			.addToBackStack(null)
+			// Commit the transaction.
+			.commit();
+		}
 		
 		
-		// Create and commit a new fragment transaction that adds the fragment for the back of
-		// the card, uses custom animations, and is part of the fragment manager's back stack.
-		getFragmentManager().beginTransaction()
-		// Replace the default fragment animations with animator resources representing
-		// rotations when switching to the back of the card, as well as animator
-		// resources representing rotations when flipping back to the front (e.g. when
-		// the system Back button is pressed).
-		.setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out,
-							 R.animator.card_flip_left_in, R.animator.card_flip_left_out)
-		// Replace any fragments currently in the container view with a fragment
-		// representing the next page (indicated by the just-incremented currentPage
-		// variable).
-		.replace(R.id.fragmentForQuestion,  qaf)
-		// Add this transaction to the back stack, allowing users to press Back
-		// to get to the front of the card.
-		.addToBackStack(null)
-		// Commit the transaction.
-		.commit();
 		
 		//we reached end of questions, remove the Next Question button and 
 		//let user use End Quiz button
 		if(currentQuestionIndex+1 >= this.questionList.size()) {
-			btnVerifyAndNextQuestion.setVisibility(View.GONE);
+			btnVerifyAndNextQuestion.setText(END_QUIZ_BTN_TITLE);
 		} else {
 			btnVerifyAndNextQuestion.setText(NEXT_QUESTION_BTN_TITLE);
 		}
@@ -199,6 +234,20 @@ public class QuestionActivity extends Activity {
 		i.putExtra(QUESTIONS_ANSWERED_INTENT_KEY, this.questionList);
 		i.putExtra("subject", subject);
 		startActivity(i);
+	}
+	
+	public Drawable getButton(){
+		if(subject.equals("addition")){
+			return getResources().getDrawable(R.drawable.btn_blue2);
+		} else if(subject.equals("subtraction")){
+			return getResources().getDrawable(R.drawable.btn_purple2);
+		} else if(subject.equals("multiplication")){
+			return getResources().getDrawable(R.drawable.btn_green2);
+		} else if(subject.equals("fractions")){
+			return getResources().getDrawable(R.drawable.btn_pink2);
+		} else {
+			return getResources().getDrawable(R.drawable.btn_yellow2);
+		}
 	}
 
 }

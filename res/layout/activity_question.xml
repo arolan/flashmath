@@ -22,44 +22,35 @@
         android:id="@+id/tvQuestionProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnClear"
-        android:layout_alignBottom="@+id/btnClear"
-        android:layout_alignLeft="@+id/fragmentForQuestion"
-        android:text="1/10" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:text="1/3" />
 
     <Button
         android:id="@+id/btnClear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnEndQuiz"
-        android:layout_alignBottom="@+id/btnEndQuiz"
-        android:layout_toRightOf="@+id/tvQuestionProgress"
-        android:layout_marginLeft="10dp"
-        android:onClick="onClearQuestionAnswer"
-        android:text="Clear"
-        android:textSize="12sp" />
-
-    <Button
-        android:id="@+id/btnEndQuiz"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
-        android:layout_toRightOf="@+id/btnClear"
-        android:onClick="onEndQuiz"
-        android:layout_marginLeft="10dp"
-        android:text="End Quiz"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/tvQuestionProgress"
+        android:onClick="onClearQuestionAnswer"
+        android:layout_marginRight="30dp"
+        android:text="Erase"
         android:textSize="12sp" />
 
     <Button
         android:id="@+id/btnVerifyAndNextQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btnEndQuiz"
-        android:layout_toRightOf="@+id/btnEndQuiz"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/tvQuestionProgress"
+        android:layout_marginLeft="30dp"
         android:onClick="onVerifyAndNextQuestionPressed"
-        android:layout_marginLeft="10dp"
-        android:text="Verify Answer"
-        android:textSize="10sp" />
+        android:text="Answer"
+        android:textSize="12sp" />
 
 </RelativeLayout>

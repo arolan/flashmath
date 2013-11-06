@@ -8,10 +8,12 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,7 +61,20 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		getMenuInflater().inflate(R.menu.result, menu);
 		return true;
 	}
-
+	
+	public Drawable getButton(){
+		if(subject.equals("addition")){
+			return getResources().getDrawable(R.drawable.btn_blue2);
+		} else if(subject.equals("subtraction")){
+			return getResources().getDrawable(R.drawable.btn_purple2);
+		} else if(subject.equals("multiplication")){
+			return getResources().getDrawable(R.drawable.btn_green2);
+		} else if(subject.equals("fractions")){
+			return getResources().getDrawable(R.drawable.btn_pink2);
+		} else {
+			return getResources().getDrawable(R.drawable.btn_yellow2);
+		}
+	}
 	
 	public void evaluate(){
 		//if (resultList != null) {
@@ -69,6 +84,10 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 				score++;
 			}
 		}
+		Button btnTweet = (Button) findViewById(R.id.btnTweet);
+		btnTweet.setBackground(getButton());
+		Button btnTryAgain = (Button) findViewById(R.id.btnTryAgain);
+		btnTryAgain.setBackground(getButton());
 		tvScore.setText(String.valueOf(score));
 		tvScore.setTextColor(getScoreColor((float) score / resultList.size()));
 		tvTotal.setText("/ " + String.valueOf(resultList.size()));
@@ -148,20 +167,19 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 			}
 		}, "Wassssup everyone");
 	}
-	
 
-	public int getColor() {
+	public int getColor(){
 		int color = 0;
 		if(subject.equals("addition")){
-			color = Color.parseColor("#2C8EB8");
+			color = Color.parseColor("#7979FF");
 		} else if(subject.equals("subtraction")){
 			color = Color.parseColor("#D79BFA");
 		} else if(subject.equals("multiplication")){
-			color = Color.parseColor("#32D426");
+			color = Color.parseColor("#66b266");
 		} else if(subject.equals("fractions")){
 			color = Color.parseColor("#FA96D2");
 		} else if(subject.equals("division")){
-			color = Color.parseColor("#FFF126");
+			color = Color.parseColor("#44B4D5");
 		}
 		return color;
 	}
