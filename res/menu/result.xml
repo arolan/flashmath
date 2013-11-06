@@ -3,9 +3,7 @@
         <item
         android:id="@+id/rlQuestion"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom"
-        android:icon="@drawable/ic_menu"
-        android:onClick="onMenu">
+        android:showAsAction="never">
         </item> 
 
 </menu>

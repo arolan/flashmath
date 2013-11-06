@@ -6,9 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,6 +57,12 @@ public class QuestionActivity extends Activity {
 		Button btnClear = (Button) findViewById(R.id.btnClear);
 		btnClear.setBackground(getButton());
 		backgroundColor = getIntent().getStringExtra(SubjectActivity.SUBJECT_BACKGROUND_INTENT_KEY);
+		tvQuestionProgress = (TextView) findViewById(R.id.tvQuestionProgress);
+		tvQuestionProgress.setTextColor(getColor());
+		ActionBar ab = getActionBar();
+		ab.setIcon(getBarIcon());
+		String subjectTitle = Character.toUpperCase(subject.charAt(0))+subject.substring(1);
+		ab.setTitle(subjectTitle + " Questions");
 		
 		if (subject.equalsIgnoreCase("Fractions")) {
 			qf = new FractionQuestionFragment();
@@ -68,6 +76,20 @@ public class QuestionActivity extends Activity {
 		getFragmentManager().beginTransaction().add(R.id.fragmentForQuestion, qf).commit();
 	}
 	
+	private Drawable getBarIcon() {
+		if(subject.equals("addition")){
+			return getResources().getDrawable(R.drawable.ic_action_plus);
+		} else if(subject.equals("subtraction")){
+			return getResources().getDrawable(R.drawable.ic_action_minus);
+		} else if(subject.equals("multiplication")){
+			return getResources().getDrawable(R.drawable.ic_action_times);
+		} else if(subject.equals("fractions")){
+			return getResources().getDrawable(R.drawable.ic_action_fraction);
+		} else {
+			return getResources().getDrawable(R.drawable.ic_action_divide);
+		}
+	}
+
 	private void setupServerQuestions() {
 		currentQuestionIndex = 0;
 		AsyncHttpClient client = new AsyncHttpClient();
@@ -104,9 +126,7 @@ public class QuestionActivity extends Activity {
 					((ArithmeticQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
 				}
 				
-				tvQuestionProgress = (TextView) findViewById(R.id.tvQuestionProgress);
 				tvQuestionProgress.setText((currentQuestionIndex + 1) + "/" + questionList.size());
-
 			}
 		});
 	}
@@ -116,6 +136,22 @@ public class QuestionActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.question, menu);
 		return true;
+	}
+
+	public int getColor(){
+		int color = 0;
+		if(subject.equals("addition")){
+			color = Color.parseColor("#7979FF");
+		} else if(subject.equals("subtraction")){
+			color = Color.parseColor("#D79BFA");
+		} else if(subject.equals("multiplication")){
+			color = Color.parseColor("#66b266");
+		} else if(subject.equals("fractions")){
+			color = Color.parseColor("#FA96D2");
+		} else if(subject.equals("division")){
+			color = Color.parseColor("#44B4D5");
+		}
+		return color;
 	}
 
 	public void onClearQuestionAnswer(View v) {

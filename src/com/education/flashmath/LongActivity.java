@@ -3,6 +3,7 @@ package com.education.flashmath;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -47,9 +48,12 @@ public class LongActivity extends Activity {
 	    llStats = (LinearLayout) findViewById(R.id.llstats);
 		
 		subject = getIntent().getStringExtra("subject");
+		ActionBar ab = getActionBar();
+		ab.setIcon(getBarIcon());
 	    Button btnClose = (Button) findViewById(R.id.btnClose);
 	    btnClose.setBackground(getButton());
 		subjectTitle = Character.toUpperCase(subject.charAt(0))+subject.substring(1);
+		ab.setTitle(subjectTitle + " Details");
 		
 		tvSubject.setText("Score History for "+ subjectTitle);
 		tvSubject.setBackgroundColor(getColor());
@@ -124,6 +128,20 @@ public class LongActivity extends Activity {
 			color = Color.parseColor("#44B4D5");
 		}
 		return color;
+	}
+	
+	private Drawable getBarIcon() {
+		if(subject.equals("addition")){
+			return getResources().getDrawable(R.drawable.ic_action_plus);
+		} else if(subject.equals("subtraction")){
+			return getResources().getDrawable(R.drawable.ic_action_minus);
+		} else if(subject.equals("multiplication")){
+			return getResources().getDrawable(R.drawable.ic_action_times);
+		} else if(subject.equals("fractions")){
+			return getResources().getDrawable(R.drawable.ic_action_fraction);
+		} else {
+			return getResources().getDrawable(R.drawable.ic_action_divide);
+		}
 	}
 	
 	public Drawable getButton(){

@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -76,8 +77,24 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		}
 	}
 	
+	private Drawable getBarIcon() {
+		if(subject.equals("addition")){
+			return getResources().getDrawable(R.drawable.ic_action_plus);
+		} else if(subject.equals("subtraction")){
+			return getResources().getDrawable(R.drawable.ic_action_minus);
+		} else if(subject.equals("multiplication")){
+			return getResources().getDrawable(R.drawable.ic_action_times);
+		} else if(subject.equals("fractions")){
+			return getResources().getDrawable(R.drawable.ic_action_fraction);
+		} else {
+			return getResources().getDrawable(R.drawable.ic_action_divide);
+		}
+	}
+	
 	public void evaluate(){
 		//if (resultList != null) {
+		ActionBar ab = getActionBar();
+		ab.setIcon(getBarIcon());
 		for(int i = 0; i < resultList.size(); i++){
 			String correctAnswer = resultList.get(i).getCorrectAnswer();
 			if (resultList.get(i).getUserAnswer().equals(correctAnswer)){
@@ -92,6 +109,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		tvScore.setTextColor(getScoreColor((float) score / resultList.size()));
 		tvTotal.setText("/ " + String.valueOf(resultList.size()));
 		String subjectTitle = Character.toUpperCase(subject.charAt(0))+subject.substring(1);
+		ab.setTitle(subjectTitle + " Results");
 		
 		tvSubject.setText(" Score History for " + subjectTitle + " ");
 		tvSubject.setBackgroundColor(getColor());
@@ -133,16 +151,6 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		} else {
 			tweet();
 		}
-	}
-	
-	//action bar menu icon
-	public void onMenu(MenuItem mi){
-
-	}
-
-	//view Answers
-	public void onViewAnswers(View v){
-		//AnswersActivity
 	}
 
 	//goes back to the first questions

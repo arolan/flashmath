@@ -13,7 +13,7 @@
         android:layout_marginTop="-30dp"
         android:text=""
         android:textSize="95sp"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textStyle="bold" />
 
     <EditText
@@ -28,7 +28,9 @@
         android:layout_marginTop="105dp"
         android:maxLength="3"
         android:paddingBottom="0dp"
+        android:textColor="#FFFFFF"
         android:textSize="95sp"
+        android:textCursorDrawable="@null"
         android:textStyle="bold" >
 
         <requestFocus />
@@ -40,7 +42,7 @@
         android:layout_alignLeft="@+id/tvOperator"
         android:layout_alignRight="@+id/tvOperand2"
         android:layout_below="@+id/tvOperator"
-        android:background="#000000" />
+        android:background="#FFFFFF" />
 
     <TextView
         android:id="@+id/tvOperand1"
@@ -51,7 +53,7 @@
         android:layout_marginRight="34dp"
         android:text=""
         android:textSize="95sp"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textStyle="bold" />
 
     <TextView
@@ -64,7 +66,7 @@
         android:layout_marginTop="-30dp"
         android:text=""
         android:textSize="95sp"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textStyle="bold" />
 
 </RelativeLayout>
