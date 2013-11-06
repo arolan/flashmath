@@ -14,6 +14,7 @@ import android.text.SpannableString;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -29,11 +30,17 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class LongActivity extends Activity {
-	LinearLayout llStats;
-	String subject;
-	String subjectTitle;
-	GraphViewData[] data;
-	Button btnClear;
+	private LinearLayout llStats;
+	private String subject;
+	private String subjectTitle;
+	private GraphViewData[] data;
+	private Button btnClear;
+	private TextView tvAttempts;
+	private TextView tvBest;
+	private TextView tvWorst;
+	private TextView tvAverage;
+	private GraphView graphView;
+	private GraphViewStyle style;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +50,13 @@ public class LongActivity extends Activity {
 		TextView tvLink = (TextView) findViewById(R.id.tvLink);
 	    TextView tvStudy = (TextView) findViewById(R.id.tvStudy);
 	    btnClear = (Button) findViewById(R.id.btnClear);
-	    btnClear.setBackground(getResources().getDrawable(R.drawable.btn_red));
-	    
 	    llStats = (LinearLayout) findViewById(R.id.llstats);
+	    tvAttempts = (TextView) findViewById(R.id.tvAttempts);
+	    tvBest = (TextView) findViewById(R.id.tvBest);
+	    tvWorst = (TextView) findViewById(R.id.tvWorst);
+	    tvAverage = (TextView) findViewById(R.id.tvAverage);
+	    
+	    btnClear.setBackground(getResources().getDrawable(R.drawable.btn_red));   
 		
 		subject = getIntent().getStringExtra("subject");
 		ActionBar ab = getActionBar();
@@ -65,15 +76,15 @@ public class LongActivity extends Activity {
 		tvLink.setMovementMethod(LinkMovementMethod.getInstance());
 		
 		//Graph section
+		graphView = new LineGraphView(LongActivity.this,"");
+		style = new GraphViewStyle();
+		
 				AsyncHttpClient client = new AsyncHttpClient();
 				client.get("http://flashmathapi.herokuapp.com/scores/" + subject + "/",
 						new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray jsonScores) {
-					    TextView tvAttempts = (TextView) findViewById(R.id.tvAttempts);
-					    TextView tvBest = (TextView) findViewById(R.id.tvBest);
-					    TextView tvWorst = (TextView) findViewById(R.id.tvWorst);
-					    TextView tvAverage = (TextView) findViewById(R.id.tvAverage);
+					    
 						tvAttempts.setText(jsonScores.length() + " Attempts");
 						data = new GraphViewData[jsonScores.length()];
 						int max_score = 0;
@@ -97,8 +108,7 @@ public class LongActivity extends Activity {
 						float average = (float) total / jsonScores.length();
 						tvAverage.setText(String.format("%.1f", average));
 						tvAverage.setTextColor(getScoreColor(average / 3));
-						GraphView graphView = new LineGraphView(LongActivity.this,"");
-						GraphViewStyle style = new GraphViewStyle();
+						
 						style.setVerticalLabelsColor(Color.BLACK);
 						style.setHorizontalLabelsColor(Color.BLACK);
 						style.setGridColor(Color.GRAY);
@@ -165,7 +175,31 @@ public class LongActivity extends Activity {
 	
 	//Clear button
 	public void onClear(View v){
-	
+		tvAttempts.setText("0");
+		tvBest.setText("0");
+		tvBest.setTextColor(getScoreColor(0));
+		tvWorst.setText("0");
+		tvWorst.setTextColor(getScoreColor(0));
+		tvAverage.setText("0");
+		tvAverage.setTextColor(getScoreColor(0));	
+		graphView = new LineGraphView(LongActivity.this,"");
+		style = new GraphViewStyle();
+		style.setVerticalLabelsColor(Color.BLACK);
+		style.setHorizontalLabelsColor(Color.BLACK);
+		style.setGridColor(Color.GRAY);
+		style.setNumVerticalLabels(4);
+		graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(0, 0),new GraphViewData(2, 3) }));
+		graphView.setGraphViewStyle(style);
+		llStats.addView(graphView);
+		
+		AsyncHttpClient client = new AsyncHttpClient();		
+		client.get("http://flashmathapi.herokuapp.com/scores/" + subject + "/clear",
+				new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(JSONArray jsonScores) {
+ 
+			}
+		});
 	}
 	
 	public int getScoreColor(float pc) {
