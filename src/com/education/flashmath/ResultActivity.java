@@ -163,7 +163,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		getClient().sendTweet(new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject object) {
-				Toast.makeText(ResultActivity.this, "Sent tweet!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(ResultActivity.this, "Sent tweet \"" + getTweet((float) score / resultList.size()) + "\"", Toast.LENGTH_LONG).show();
 			}
 			
 			@Override
@@ -173,9 +173,19 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 				e.printStackTrace();
 				Toast.makeText(ResultActivity.this, errorResponse.toString(), Toast.LENGTH_SHORT).show();
 			}
-		}, "Wassssup everyone");
+		}, getTweet((float) score / resultList.size()));
 	}
-
+	
+	public String getTweet(float pc) {
+		if (pc >= .8) {
+			return "Look Ma! I passed " + subject + " with a " + String.format("%.0f", pc * 100) + "%.";
+		} else if (pc >= .5) {
+			return "Alas, I am mortal! I barely passed " + subject + " with a " + String.format("%.0f", pc * 100) + "%.";
+		} else {
+			return "I have brought shame to my family. I failed " + subject + " with a " + String.format("%.0f", pc * 100) + "%.";
+		}
+	}
+	
 	public int getColor(){
 		int color = 0;
 		if(subject.equals("addition")){
