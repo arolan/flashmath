@@ -64,17 +64,33 @@ public class LongActivity extends Activity {
 						new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray jsonScores) {
+					    TextView tvAttempts = (TextView) findViewById(R.id.tvAttempts);
+					    TextView tvBest = (TextView) findViewById(R.id.tvBest);
+					    TextView tvWorst = (TextView) findViewById(R.id.tvWorst);
+					    TextView tvAverage = (TextView) findViewById(R.id.tvAverage);
+						tvAttempts.setText(jsonScores.length() + " Attempts");
 						data = new GraphViewData[jsonScores.length()];
 						int max_score = 0;
+						int min_score = 1000;
+						int total = 0;
 						for (int i = 0; i < jsonScores.length(); i++) {
 							try {
 								int val = jsonScores.getJSONObject(i).getInt("value");
 								max_score = val > max_score ? val : max_score;
+								min_score = val > min_score ? min_score : val;
+								total += val;
 								data[i] = (new GraphViewData(i + 1, val));
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
 						}
+						tvBest.setText(String.valueOf(max_score));
+						tvBest.setTextColor(getScoreColor((float) max_score / 3));
+						tvWorst.setText(String.valueOf(min_score));
+						tvWorst.setTextColor(getScoreColor((float) min_score / 3));
+						float average = (float) total / jsonScores.length();
+						tvAverage.setText(String.format("%.1f", average));
+						tvAverage.setTextColor(getScoreColor(average / 3));
 						GraphView graphView = new LineGraphView(LongActivity.this,"");
 						GraphViewStyle style = new GraphViewStyle();
 						style.setVerticalLabelsColor(Color.BLACK);
@@ -117,6 +133,17 @@ public class LongActivity extends Activity {
 	public void onClear(View v){
 	
 	}
+	
+	public int getScoreColor(float pc) {
+		if (pc >= .8) {
+			return Color.parseColor("#66FF66");
+		} else if (pc >= .5) {
+			return Color.parseColor("#FFFF66");
+		} else {
+			return Color.parseColor("#FF0033");
+		}
+	}
+
 	
 	private void stripUnderlines(TextView textView) {
         Spannable s = (Spannable) new SpannableString(textView.getText());

@@ -89,7 +89,7 @@
         android:layout_marginRight="-17dp"
         android:layout_marginTop="87dp"
         android:layout_below="@+id/tvStudy"
-        android:background="#000000" />
+        android:background="#FFFFFF" />
     
     <View
         android:layout_width="fill_parent"
@@ -100,7 +100,7 @@
         android:layout_marginRight="-17dp"
         android:layout_marginTop="60dp"
         android:layout_below="@+id/tvStudy"
-        android:background="#000000" />
+        android:background="#FFFFFF" />
 
     <TextView
         android:id="@+id/tvLink"
@@ -110,5 +110,81 @@
         android:layout_toRightOf="@+id/tvStudy"
         android:hint="link"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvAverageLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvBestLabel"
+        android:layout_alignBottom="@+id/tvBestLabel"
+        android:layout_centerHorizontal="true"
+        android:textSize="10sp"
+        android:text="Average" />
+
+    <TextView
+        android:id="@+id/tvWorstLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvBestLabel"
+        android:layout_alignBottom="@+id/tvBestLabel"
+        android:layout_alignParentRight="true"
+        android:textSize="10sp"
+        android:text="Lowest" />
+
+    <TextView
+        android:id="@+id/tvBestLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvStudy"
+        android:layout_marginTop="-40dp"
+        android:textSize="10sp"
+        android:text="Highest" />
+
+    <TextView
+        android:id="@+id/tvAttempts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvStudy"
+        android:layout_alignBottom="@+id/tvStudy"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:text="Attempts" />
+
+    <TextView
+        android:id="@+id/tvBest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBestLabel"
+        android:layout_alignLeft="@+id/tvBestLabel"
+        android:layout_marginTop="-5dp"
+        android:gravity="left"
+        android:textSize="70sp"
+        android:textStyle="bold"
+        android:text="" />
+    
+    <TextView
+        android:id="@+id/tvWorst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvWorstLabel"
+        android:layout_alignRight="@+id/tvWorstLabel"
+        android:layout_marginTop="-5dp"
+        android:gravity="right"
+        android:textSize="70sp"
+        android:textStyle="bold"
+        android:text="" />
+    
+    <TextView
+        android:id="@+id/tvAverage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAverageLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-21dp"
+        android:gravity="center"
+        android:textSize="90sp"
+        android:textStyle="bold"
+        android:text="" />
 
 </RelativeLayout>
