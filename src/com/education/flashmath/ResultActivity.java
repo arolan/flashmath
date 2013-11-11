@@ -1,5 +1,13 @@
 package com.education.flashmath;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -8,11 +16,13 @@ import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -166,7 +176,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	}
 	
 	private void tweet() {
-		getClient().sendTweet(new JsonHttpResponseHandler() {
+		getClient().sendTweetWithImage(new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject object) {
 				Toast.makeText(ResultActivity.this, "Sent tweet \"" + getTweet((float) score / resultList.size()) + "\"", Toast.LENGTH_LONG).show();
@@ -174,14 +184,36 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 			
 			@Override
 			public void onFailure(Throwable e, JSONObject errorResponse) {
-				// TODO Auto-generated method stub
 				super.onFailure(e, errorResponse);
 				e.printStackTrace();
 				Toast.makeText(ResultActivity.this, errorResponse.toString(), Toast.LENGTH_SHORT).show();
 			}
-		}, getTweet((float) score / resultList.size()));
+		}, getTweet((float) score / resultList.size()), getScreenShotFile()
+		);
 	}
 	
+	
+	private InputStream getTestResourceFileAsInputStream() {
+		//testing with a local profile picture
+		InputStream is = getResources().openRawResource(R.drawable.ic_profile);
+		return is;
+	}
+	
+	private InputStream getScreenShotFile() {
+		// create bitmap screen capture
+		Bitmap bitmap;
+		View resultView = findViewById(R.id.rlResult).getRootView();
+		resultView.setDrawingCacheEnabled(true);
+		bitmap = Bitmap.createBitmap(resultView.getDrawingCache());
+		resultView.setDrawingCacheEnabled(false);
+
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		bitmap.compress(CompressFormat.JPEG, 100, stream);
+		InputStream is = new ByteArrayInputStream(stream.toByteArray());
+        
+		return is;
+	}
+
 	public String getTweet(float pc) {
 		if (pc >= .8) {
 			return "Look Ma! I passed " + subject + " with a " + String.format("%.0f", pc * 100) + "%.";

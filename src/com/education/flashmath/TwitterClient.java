@@ -1,5 +1,7 @@
 package com.education.flashmath;
 
+import java.io.InputStream;
+
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TwitterApi;
 
@@ -38,4 +40,13 @@ public class TwitterClient extends OAuthBaseClient {
     	params.put("status", text);
     	client.post(url, params, handler);
     }
+    
+    public void sendTweetWithImage(AsyncHttpResponseHandler handler, String text, InputStream inputStream) {
+    	String url = getApiUrl("statuses/update_with_media.json");
+    	RequestParams params = new RequestParams();
+    	params.put("status", text);
+    	params.put("media", inputStream, "screenshot.jpg");
+    	client.post(url, params, handler);
+    }
+    
 }
