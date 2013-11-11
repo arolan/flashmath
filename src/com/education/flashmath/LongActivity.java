@@ -1,5 +1,7 @@
 package com.education.flashmath;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -14,9 +16,13 @@ import android.text.SpannableString;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
@@ -40,6 +46,8 @@ public class LongActivity extends Activity {
 	private TextView tvAverage;
 	private GraphView graphView;
 	private GraphViewStyle style;
+	private ListView lvScore;
+	private ScoreAdapter adapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +62,7 @@ public class LongActivity extends Activity {
 	    tvBest = (TextView) findViewById(R.id.tvBest);
 	    tvWorst = (TextView) findViewById(R.id.tvWorst);
 	    tvAverage = (TextView) findViewById(R.id.tvAverage);
-	    
+	    lvScore = (ListView) findViewById(R.id.lvScore);
 	    btnClear.setBackground(getResources().getDrawable(R.drawable.btn_red));   
 		
 		subject = getIntent().getStringExtra("subject");
@@ -86,6 +94,8 @@ public class LongActivity extends Activity {
 					    
 						tvAttempts.setText(jsonScores.length() + " Attempts");
 						data = new GraphViewData[jsonScores.length()];
+						ArrayList<Integer> scoreList = new ArrayList<Integer>(jsonScores.length());
+						
 						int max_score = 0;
 						int min_score = -1;
 						int total = 0;
@@ -100,6 +110,7 @@ public class LongActivity extends Activity {
 								}
 								total += val;
 								data[i] = (new GraphViewData(i + 1, val));
+								scoreList.add(val);
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
@@ -126,6 +137,19 @@ public class LongActivity extends Activity {
 						graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
 						graphView.setGraphViewStyle(style);
 						llStats.addView(graphView); 
+						llStats.setVisibility(View.INVISIBLE);
+						adapter = new ScoreAdapter(LongActivity.this, scoreList);
+						
+						lvScore.setAdapter(adapter);
+						lvScore.setOnItemClickListener(new OnItemClickListener(){
+							@Override
+							public void onItemClick(AdapterView<?> adapter, View parent, int position,
+									long rowId) {
+								llStats.setVisibility(View.VISIBLE);
+								lvScore.setVisibility(View.INVISIBLE);
+							}
+							
+						});
 					}
 				});
 	}
