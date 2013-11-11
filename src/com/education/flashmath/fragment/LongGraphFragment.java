@@ -46,6 +46,7 @@ public class LongGraphFragment extends Fragment{
 		style.setHorizontalLabelsColor(Color.BLACK);
 		style.setGridColor(Color.GRAY);
 		style.setNumVerticalLabels(4);
+		style.setNumHorizontalLabels(2);
 		GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(getColor(), 5);
 		GraphViewSeries userData = new GraphViewSeries("Score", lineStyle, data);
 		graphView.addSeries(userData);
