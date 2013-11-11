@@ -24,7 +24,7 @@ public class ArithmeticQuestionFragment extends QuestionFragment {
 		return inf.inflate(R.layout.fragment_arithmetic_question, parent, false);	
 	}
 
-	public void onActivityCreated(Bundle savedInstanceState){
+	public void onActivityCreated(Bundle savedInstanceState){ 
 		super.onActivityCreated(savedInstanceState);
 		setupParameters();
 	}

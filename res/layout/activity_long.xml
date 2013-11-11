@@ -20,6 +20,20 @@
         android:text="Clear Scores"
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
+    
+    <Button
+        android:id="@+id/btnSwap"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btnClose"
+        android:layout_toRightOf="@+id/btnClear"
+        android:onClick="onSwap"
+        android:text="Graph"
+        android:drawableLeft="@drawable/ic_line"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnClose"
@@ -33,35 +47,19 @@
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
     
-
-    <ListView
-        android:id="@+id/lvScore"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/llstats"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/btn_blue4"
-        android:layout_marginLeft="-19dp"
-        android:layout_marginRight="-19dp"
-        android:visibility="invisible"
-        android:layout_below="@+id/tvSubject" >
-        
-
-    </ListView>
-
-    <LinearLayout
-        android:id="@+id/llstats"
+    <FrameLayout 
+        android:id="@+id/frameStats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnClear"
+        android:layout_below="@+id/tvSubject"
+        android:layout_marginTop="155dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="-19dp"
+        android:layout_marginRight="-19dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/tvSubject"
-        android:layout_marginBottom="25dp"
-        android:background="#F5F5F5"
-        android:orientation="vertical" >
-    </LinearLayout>
-    
+        android:layout_alignParentTop="true" />
     
     <ProgressBar
         android:id="@+id/pgLoad"

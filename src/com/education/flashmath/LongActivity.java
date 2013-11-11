@@ -4,16 +4,14 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
@@ -23,38 +21,28 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.education.flashmath.fragment.LongFragment;
+import com.education.flashmath.fragment.LongGraphFragment;
 import com.education.flashmath.models.Score;
-import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
-import com.jjoe64.graphview.GraphViewSeries;
-import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
-import com.jjoe64.graphview.GraphViewStyle;
-import com.jjoe64.graphview.LineGraphView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class LongActivity extends Activity {
-	private LinearLayout llStats;
 	private String subject;
 	private String subjectTitle;
-	private GraphViewData[] data;
 	private Button btnClear;
+	private Button btnSwap;
 	private TextView tvAttempts;
 	private TextView tvBest;
 	private TextView tvWorst;
 	private TextView tvAverage;
-	private GraphView graphView;
-	private GraphViewStyle style;
-	private ListView lvScore;
-	private ScoreAdapter adapter;
+	private LongFragment lf;
+	private LongGraphFragment lg;
+	private Boolean listOn;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,21 +52,18 @@ public class LongActivity extends Activity {
 		TextView tvLink = (TextView) findViewById(R.id.tvLink);
 	    TextView tvStudy = (TextView) findViewById(R.id.tvStudy);
 	    btnClear = (Button) findViewById(R.id.btnClear);
-	    llStats = (LinearLayout) findViewById(R.id.llstats);
 	    tvAttempts = (TextView) findViewById(R.id.tvAttempts);
 	    tvBest = (TextView) findViewById(R.id.tvBest);
 	    tvWorst = (TextView) findViewById(R.id.tvWorst);
-	    tvAverage = (TextView) findViewById(R.id.tvAverage);
-	    lvScore = (ListView) findViewById(R.id.lvScore);
-	    lvScore.setDivider(new ColorDrawable(Color.parseColor("#FFFFFF")));
-	    lvScore.setDividerHeight(1);
-	    btnClear.setBackground(getResources().getDrawable(R.drawable.btn_red));   
+	    tvAverage = (TextView) findViewById(R.id.tvAverage);	    btnClear.setBackground(getResources().getDrawable(R.drawable.btn_red));
 		
 		subject = getIntent().getStringExtra("subject");
 		ActionBar ab = getActionBar();
 		ab.setIcon(getBarIcon());
 	    Button btnClose = (Button) findViewById(R.id.btnClose);
 	    btnClose.setBackground(getButton());
+	    btnSwap = (Button) findViewById(R.id.btnSwap);
+	    btnSwap.setBackground(getButton());
 		subjectTitle = Character.toUpperCase(subject.charAt(0))+subject.substring(1);
 		ab.setTitle(subjectTitle + " Details");
 		
@@ -92,79 +77,60 @@ public class LongActivity extends Activity {
 		tvLink.setMovementMethod(LinkMovementMethod.getInstance());
 		
 		//Graph section
-		graphView = new LineGraphView(LongActivity.this,"");
-		style = new GraphViewStyle();
 		
-				AsyncHttpClient client = new AsyncHttpClient();
-				client.get("http://flashmathapi.herokuapp.com/scores/" + subject + "/",
-						new JsonHttpResponseHandler() {
-					@Override
-					public void onSuccess(JSONArray jsonScores) {
-					    
-						tvAttempts.setText(jsonScores.length() + " Attempts");
-						data = new GraphViewData[jsonScores.length()];
-						ArrayList<Score> scoreList = new ArrayList<Score>(jsonScores.length());
-						
-						int max_score = 0;
-						int min_score = -1;
-						int total = 0;
-						for (int i = jsonScores.length() - 1; i >= 0; i--) {
-							try {
-								int val = jsonScores.getJSONObject(i).getInt("value");
-								max_score = val > max_score ? val : max_score;
-								if (min_score == -1) {
-									min_score = val;
-								} else {
-									min_score = val > min_score ? min_score : val;
-								}
-								total += val;
-								data[i] = (new GraphViewData(i + 1, val));
-								SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-								Date date = dateFormat.parse(jsonScores.getJSONObject(i).getString("created"), new ParsePosition(0));
-								scoreList.add(new Score(jsonScores.length() - i, val, date));
-							} catch (JSONException e) {
-								e.printStackTrace();
-							}
-						}
+		AsyncHttpClient client = new AsyncHttpClient();
+		client.get("http://flashmathapi.herokuapp.com/scores/" + subject + "/",
+				new JsonHttpResponseHandler() {
+			@SuppressLint("SimpleDateFormat")
+			@Override
+			public void onSuccess(JSONArray jsonScores) {
+			    
+				tvAttempts.setText(jsonScores.length() + " Attempts");
+				GraphViewData[] data = new GraphViewData[jsonScores.length()];
+				ArrayList<Score> scoreList = new ArrayList<Score>(jsonScores.length());
+				
+				int max_score = 0;
+				int min_score = -1;
+				int total = 0;
+				for (int i = jsonScores.length() - 1; i >= 0; i--) {
+					try {
+						int val = jsonScores.getJSONObject(i).getInt("value");
+						max_score = val > max_score ? val : max_score;
 						if (min_score == -1) {
-							min_score = 0;
+							min_score = val;
+						} else {
+							min_score = val > min_score ? min_score : val;
 						}
-						tvBest.setText(String.valueOf(max_score));
-						tvBest.setTextColor(getScoreColor((float) max_score / 3));
-						tvWorst.setText(String.valueOf(min_score));
-						tvWorst.setTextColor(getScoreColor((float) min_score / 3));
-						float average = jsonScores.length() == 0 ? 0f : (float) total / jsonScores.length();
-						tvAverage.setText(String.format("%.1f", average));
-						tvAverage.setTextColor(getScoreColor(average / 3));
-						
-						style.setVerticalLabelsColor(Color.BLACK);
-						style.setHorizontalLabelsColor(Color.BLACK);
-						style.setGridColor(Color.GRAY);
-						style.setNumVerticalLabels(4);
-						GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(getColor(), 5);
-						GraphViewSeries userData = new GraphViewSeries("Score", lineStyle, data);
-						graphView.addSeries(userData);
-						graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
-						graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
-						graphView.setGraphViewStyle(style);
-						llStats.addView(graphView); 
-						llStats.setVisibility(View.INVISIBLE);
-						adapter = new ScoreAdapter(LongActivity.this, scoreList);
-						
-						lvScore.setAdapter(adapter);
-						lvScore.setOnItemClickListener(new OnItemClickListener(){
-							@Override
-							public void onItemClick(AdapterView<?> adapter, View parent, int position,
-									long rowId) {
-								llStats.setVisibility(View.VISIBLE);
-								lvScore.setVisibility(View.INVISIBLE);
-							}
-							
-						});
-						lvScore.setVisibility(View.VISIBLE);
-						findViewById(R.id.pgLoad).setVisibility(View.GONE);
+						total += val;
+						data[i] = (new GraphViewData(i + 1, val));
+						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+						Date date = dateFormat.parse(jsonScores.getJSONObject(i).getString("created"), new ParsePosition(0));
+						scoreList.add(new Score(jsonScores.length() - i, val, date));
+					} catch (JSONException e) {
+						e.printStackTrace();
 					}
-				});
+				}
+				if (min_score == -1) {
+					min_score = 0;
+				}
+				tvBest.setText(String.valueOf(max_score));
+				tvBest.setTextColor(getScoreColor((float) max_score / 3));
+				tvWorst.setText(String.valueOf(min_score));
+				tvWorst.setTextColor(getScoreColor((float) min_score / 3));
+				float average = jsonScores.length() == 0 ? 0f : (float) total / jsonScores.length();
+				tvAverage.setText(String.format("%.1f", average));
+				tvAverage.setTextColor(getScoreColor(average / 3));
+				lg = new LongGraphFragment();
+				lg.setScores(data);
+				lg.setSubject(subject);
+				lf = new LongFragment();
+				lf.setScoreList(scoreList);
+				lf.setSubject(subject);
+				getFragmentManager().beginTransaction().add(R.id.frameStats, lf).commit();
+				listOn = true;
+				findViewById(R.id.pgLoad).setVisibility(View.GONE);
+			}
+		});
 	}
 
 
@@ -212,9 +178,48 @@ public class LongActivity extends Activity {
 		}
 	}
 	
+	public Drawable getListColor(){
+		if(subject.equals("addition")){
+			return getResources().getDrawable(R.drawable.btn_blue4);
+		} else if(subject.equals("subtraction")){
+			return getResources().getDrawable(R.drawable.btn_purple4);
+		} else if(subject.equals("multiplication")){
+			return getResources().getDrawable(R.drawable.btn_green4);
+		} else if(subject.equals("fractions")){
+			return getResources().getDrawable(R.drawable.btn_pink4);
+		} else {
+			return getResources().getDrawable(R.drawable.btn_yellow4);
+		}
+	}
+	
 	//Close button
 	public void onClose(View v){
 		finish();
+	}
+
+	//Close button
+	public void onSwap(View v){
+		if (listOn) {
+			getFragmentManager().beginTransaction()
+				.setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+						 R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+				.replace(R.id.frameStats, lg)
+				.addToBackStack(null)
+				.commit();
+			listOn = false;
+			btnSwap.setText("List");
+			btnSwap.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_list, 0, 0, 0);
+		} else {
+			getFragmentManager().beginTransaction()
+				.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out,
+						 R.animator.card_flip_right_in, R.animator.card_flip_right_out)
+				.replace(R.id.frameStats, lf)
+				.addToBackStack(null)
+				.commit();
+			listOn = true;
+			btnSwap.setText("Graph");
+			btnSwap.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_line, 0, 0, 0);
+		}
 	}
 	
 	//Clear button
@@ -225,18 +230,10 @@ public class LongActivity extends Activity {
 		tvWorst.setText("0");
 		tvWorst.setTextColor(getScoreColor(0));
 		tvAverage.setText("0.0");
-		tvAverage.setTextColor(getScoreColor(0));	
-		graphView = new LineGraphView(LongActivity.this,"");
-		style = new GraphViewStyle();
-		style.setVerticalLabelsColor(Color.BLACK);
-		style.setHorizontalLabelsColor(Color.BLACK);
-		style.setGridColor(Color.GRAY);
-		style.setNumVerticalLabels(4);
-		graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
-		graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
-		graphView.setGraphViewStyle(style);
-		llStats.removeAllViews();
-		llStats.addView(graphView);
+		tvAverage.setTextColor(getScoreColor(0));
+		
+		lf.clearScores();
+		lg.clearScores();
 		
 		AsyncHttpClient client = new AsyncHttpClient();		
 		client.get("http://flashmathapi.herokuapp.com/scores/" + subject + "/clear",
