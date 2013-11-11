@@ -32,13 +32,20 @@
         android:text="Close"
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
+    
 
     <ListView
         android:id="@+id/lvScore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/llstats"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/btn_blue4"
+        android:layout_marginLeft="-19dp"
+        android:layout_marginRight="-19dp"
+        android:visibility="invisible"
         android:layout_below="@+id/tvSubject" >
+        
 
     </ListView>
 
@@ -54,6 +61,15 @@
         android:background="#F5F5F5"
         android:orientation="vertical" >
     </LinearLayout>
+    
+    
+    <ProgressBar
+        android:id="@+id/pgLoad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        style="@android:style/Widget.ProgressBar.Large" />
 
     <TextView
         android:id="@+id/tvStudy"
@@ -129,17 +145,8 @@
         android:layout_alignBaseline="@+id/tvBestLabel"
         android:layout_alignBottom="@+id/tvBestLabel"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="9dp"
         android:text="Lowest"
-        android:textSize="10sp" />
-
-    <TextView
-        android:id="@+id/tvBestLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvStudy"
-        android:layout_marginTop="-40dp"
-        android:text="Highest"
         android:textSize="10sp" />
 
     <TextView
@@ -157,8 +164,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvBestLabel"
-        android:layout_below="@+id/tvBestLabel"
-        android:layout_marginTop="-5dp"
+        android:layout_above="@+id/tvBestLabel"
+        android:layout_marginBottom="-5dp"
         android:gravity="left"
         android:text=""
         android:textSize="70sp"
@@ -169,9 +176,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/tvWorstLabel"
-        android:layout_below="@+id/tvWorstLabel"
-        android:layout_marginTop="-5dp"
+        android:layout_above="@+id/tvWorstLabel"
+        android:layout_marginBottom="-5dp"
         android:gravity="right"
+        android:layout_marginRight="-1dp"
         android:text=""
         android:textSize="70sp"
         android:textStyle="bold" />
@@ -180,12 +188,23 @@
         android:id="@+id/tvAverage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvAverageLabel"
+        android:layout_above="@+id/tvAverageLabel"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-21dp"
+        android:layout_marginBottom="-18dp"
         android:gravity="center"
         android:text=""
         android:textSize="90sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvBestLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_above="@+id/tvSubject"
+        android:layout_marginBottom="-60dp"
+        android:layout_marginLeft="11dp"
+        android:text="Highest"
+        android:textSize="10sp" />
 
 </RelativeLayout>

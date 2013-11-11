@@ -1,6 +1,11 @@
 package com.education.flashmath;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,6 +13,7 @@ import org.json.JSONException;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
@@ -16,7 +22,6 @@ import android.text.SpannableString;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -24,7 +29,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.education.flashmath.models.Score;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
@@ -63,6 +70,8 @@ public class LongActivity extends Activity {
 	    tvWorst = (TextView) findViewById(R.id.tvWorst);
 	    tvAverage = (TextView) findViewById(R.id.tvAverage);
 	    lvScore = (ListView) findViewById(R.id.lvScore);
+	    lvScore.setDivider(new ColorDrawable(Color.parseColor("#FFFFFF")));
+	    lvScore.setDividerHeight(1);
 	    btnClear.setBackground(getResources().getDrawable(R.drawable.btn_red));   
 		
 		subject = getIntent().getStringExtra("subject");
@@ -94,12 +103,12 @@ public class LongActivity extends Activity {
 					    
 						tvAttempts.setText(jsonScores.length() + " Attempts");
 						data = new GraphViewData[jsonScores.length()];
-						ArrayList<Integer> scoreList = new ArrayList<Integer>(jsonScores.length());
+						ArrayList<Score> scoreList = new ArrayList<Score>(jsonScores.length());
 						
 						int max_score = 0;
 						int min_score = -1;
 						int total = 0;
-						for (int i = 0; i < jsonScores.length(); i++) {
+						for (int i = jsonScores.length() - 1; i >= 0; i--) {
 							try {
 								int val = jsonScores.getJSONObject(i).getInt("value");
 								max_score = val > max_score ? val : max_score;
@@ -110,7 +119,9 @@ public class LongActivity extends Activity {
 								}
 								total += val;
 								data[i] = (new GraphViewData(i + 1, val));
-								scoreList.add(val);
+								SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+								Date date = dateFormat.parse(jsonScores.getJSONObject(i).getString("created"), new ParsePosition(0));
+								scoreList.add(new Score(jsonScores.length() - i, val, date));
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
@@ -150,6 +161,8 @@ public class LongActivity extends Activity {
 							}
 							
 						});
+						lvScore.setVisibility(View.VISIBLE);
+						findViewById(R.id.pgLoad).setVisibility(View.GONE);
 					}
 				});
 	}

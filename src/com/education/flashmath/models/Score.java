@@ -1,7 +1,16 @@
 package com.education.flashmath.models;
 
+import java.util.Date;
+
 public class Score {
-	private long scoreId;
-	private User user;
-	private Quiz quiz;
+	
+	public Score(int att, int value, Date date) {
+		this.att = att;
+		this.value = value;
+		this.date = date;
+	}
+	
+	public int att;
+	public int value;
+	public Date date;
 }
