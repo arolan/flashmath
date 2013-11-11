@@ -1,0 +1,154 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SubjectActivity" >
+    
+    
+
+    <TableLayout
+        android:id="@+id/tbSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentTop="false"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true" 
+        android:longClickable="true"
+        >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            
+            <RelativeLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+                
+              <Button
+                  android:id="@+id/button1"
+                  android:layout_width="150dp"
+                  android:layout_height="150dp"
+	              android:layout_alignParentLeft="true"
+	              android:layout_alignParentTop="true"
+                  android:background="@drawable/btn_blue3" />
+                
+              <ImageView
+                  android:background="@drawable/noun_project_25230"
+                  android:layout_width="75dp"
+                  android:layout_height="75dp"
+                  android:layout_centerInParent="true" />
+           </RelativeLayout>
+
+
+            <RelativeLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+                
+              <Button
+                  android:id="@+id/button2"
+                  android:layout_width="150dp"
+                  android:layout_height="150dp"
+                  android:layout_alignParentLeft="true"
+                  android:layout_alignParentTop="true"
+                  android:background="@drawable/btn_purple3" />
+                
+              <ImageView
+                  android:background="@drawable/noun_project_17171"
+                  android:layout_width="75dp"
+                  android:layout_height="75dp"
+                  android:layout_centerInParent="true" />
+           </RelativeLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            
+            <RelativeLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+                
+              <Button
+                  android:id="@+id/button3"
+                  android:layout_width="150dp"
+                  android:layout_height="150dp"
+                  android:layout_alignLeft="@+id/button1"
+                  android:layout_below="@+id/button1"
+                  android:background="@drawable/btn_green3" />
+                
+              <ImageView
+                  android:background="@drawable/svg_12969_01"
+                  android:layout_width="75dp"
+                  android:layout_height="75dp"
+                  android:layout_centerInParent="true" />
+           </RelativeLayout>
+
+		   <RelativeLayout
+		      android:layout_width="wrap_content"
+		      android:layout_height="wrap_content">
+		        
+		      <Button
+		          android:id="@+id/button5"
+		          android:layout_width="150dp"
+		          android:layout_height="150dp"
+		          android:layout_alignRight="@+id/button3"
+		          android:layout_below="@+id/button3"
+		          android:background="@drawable/btn_yellow3" />
+		        
+		      <ImageView
+		          android:background="@drawable/svg_13581_01"
+		          android:layout_width="60dp"
+		          android:layout_height="75dp"
+		          android:layout_centerInParent="true" />
+		   </RelativeLayout>
+     </TableRow>
+
+     <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            
+			<Button
+				android:id="@+id/button4"
+				android:layout_width="150dp"
+				android:layout_height="150dp"
+				android:background="@drawable/btn_pink3" />
+			
+			<ImageView
+			    android:background="@drawable/noun_project_13603"
+			    android:layout_width="75dp"
+			    android:layout_height="75dp"
+			    android:layout_centerInParent="true" />
+         </RelativeLayout>
+
+        
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+			
+	        <Button
+		        android:id="@+id/button6"
+		        android:layout_width="150dp"
+		        android:layout_height="150dp"
+		        android:layout_alignLeft="@+id/button4"
+		        android:layout_below="@+id/button3"
+		        android:background="@drawable/btn_orange3" />
+	        
+            <ImageView
+                android:background="@drawable/noun_project_3476"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_centerInParent="true" />
+         </RelativeLayout>
+        </TableRow>
+</TableLayout>
+</RelativeLayout>

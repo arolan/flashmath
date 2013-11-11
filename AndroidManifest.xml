@@ -41,6 +41,10 @@
             android:label="@string/title_activity_question" >
         </activity>
         <activity
+            android:name="com.education.flashmath.ClassActivity"
+            android:label="@string/title_activity_class" >
+        </activity>
+        <activity
             android:name="com.education.flashmath.SubjectActivity"
             android:label="@string/title_activity_subject" >
             <intent-filter>

@@ -9,5 +9,6 @@
     <string name="title_activity_subject">Flash Math</string>
     <string name="title_activity_tweet">TweetActivity</string>
     <string name="title_activity_long">LongActivity</string>
+    <string name="title_activity_class">ClassActivity</string>
 
 </resources>

@@ -10,14 +10,14 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.Button;
 
-public class SubjectActivity extends Activity {
+public class ClassActivity extends Activity {
 
 	public static final String SUBJECT_BACKGROUND_INTENT_KEY = "subjectBackgroundId";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_subject);
+		setContentView(R.layout.activity_class);
 		
 		Button button1 = (Button) findViewById(R.id.button1);
 		Button button2 = (Button) findViewById(R.id.button2);
@@ -30,7 +30,7 @@ public class SubjectActivity extends Activity {
 
 		    @Override
 		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
+		        Intent i = new Intent(ClassActivity.this, LongActivity.class);
 		  		String tag = v.getTag().toString();
 		  		i.putExtra("subject", tag);
 		  		//Log.d("DEBUG",tag);
@@ -44,7 +44,7 @@ public class SubjectActivity extends Activity {
 
 		    @Override
 		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
+		        Intent i = new Intent(ClassActivity.this, LongActivity.class);
 		  		String tag = v.getTag().toString();
 		  		i.putExtra("subject", tag);
 		  		//Log.d("DEBUG",tag);
@@ -58,7 +58,7 @@ public class SubjectActivity extends Activity {
 
 		    @Override
 		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
+		        Intent i = new Intent(ClassActivity.this, LongActivity.class);
 		  		String tag = v.getTag().toString();
 		  		i.putExtra("subject", tag);
 		  		//Log.d("DEBUG",tag);
@@ -72,7 +72,7 @@ public class SubjectActivity extends Activity {
 
 		    @Override
 		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
+		        Intent i = new Intent(ClassActivity.this, LongActivity.class);
 		  		String tag = v.getTag().toString();
 		  		i.putExtra("subject", tag);
 		  		//Log.d("DEBUG",tag);
@@ -86,7 +86,7 @@ public class SubjectActivity extends Activity {
 
 		    @Override
 		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
+		        Intent i = new Intent(ClassActivity.this, LongActivity.class);
 		  		String tag = v.getTag().toString();
 		  		i.putExtra("subject", tag);
 		  		//Log.d("DEBUG",tag);
@@ -100,7 +100,7 @@ public class SubjectActivity extends Activity {
 
 		    @Override
 		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
+		        Intent i = new Intent(ClassActivity.this, LongActivity.class);
 		  		String tag = v.getTag().toString();
 		  		i.putExtra("subject", tag);
 		  		//Log.d("DEBUG",tag);
@@ -115,7 +115,7 @@ public class SubjectActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.subject, menu);
-		getActionBar().setTitle("Flash Math");
+		getActionBar().setTitle("Mr. Einstein's Class");
 		return true;
 	}
 	
@@ -132,8 +132,18 @@ public class SubjectActivity extends Activity {
 	}
 	
 	public void onClassroomClick(View v){
-		Intent i = new Intent(this, ClassActivity.class);
-		startActivity(i);
+		Intent i = new Intent(this, QuestionActivity.class);
+		String tag = v.getTag().toString();
+		
+		if (!tag.equalsIgnoreCase("Geometry")) {
+			i.putExtra("subject", tag);
+
+			String backgroundColor = identifySubjectColor(tag);
+			i.putExtra(SUBJECT_BACKGROUND_INTENT_KEY, backgroundColor);
+			//Log.d("DEBUG",tag);
+			startActivity(i);
+		}
+		
 	}
 
 	private String identifySubjectColor(String tag) {
