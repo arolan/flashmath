@@ -1,7 +1,6 @@
 package com.education.flashmath;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -46,11 +45,11 @@ public class ScoreAdapter extends ArrayAdapter<Score>{
 	private String getMsg(int score) { 
 		String msg = "";
 		if (score == 3) {
-			msg = "Good Job!";
+			msg = "Good job!";
 		} else if (score == 2) {
-			msg = "Try Again";
+			msg = "Almost there!";
 		} else {
-			msg = "Let'a Go Study";
+			msg = "Keep trying!";
 		}
 		return msg;
 	}

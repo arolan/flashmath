@@ -151,6 +151,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 				style.setHorizontalLabelsColor(Color.BLACK);
 				style.setGridColor(Color.GRAY);
 				style.setNumVerticalLabels(4);
+				style.setNumHorizontalLabels(2);
 				GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(getColor(), 5);
 				graphView.addSeries(new GraphViewSeries("Scores", lineStyle, data));
 				graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
