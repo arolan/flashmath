@@ -1,8 +1,13 @@
 package com.education.flashmath;
 
+import java.io.IOException;
+
+import com.education.flashmath.utils.SoundUtility;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.Menu;
@@ -109,7 +114,27 @@ public class SubjectActivity extends Activity {
 		    }
 
 		});
+		
+		
+		prepareSounds();
 	}
+	
+
+	private void prepareSounds() {
+		AssetFileDescriptor badSound = null;
+		AssetFileDescriptor averageSound = null;
+		AssetFileDescriptor excellentSound = null;
+		try {
+			badSound = getAssets().openFd("fail.mp3");
+			averageSound = getAssets().openFd("average.mp3");
+			excellentSound = getAssets().openFd("excellent.mp3");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		SoundUtility.initSounds(this);
+		SoundUtility.loadSounds(badSound,averageSound, excellentSound);
+	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

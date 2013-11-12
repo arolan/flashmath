@@ -2,26 +2,27 @@ package com.education.flashmath;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ import android.widget.Toast;
 
 import com.codepath.oauth.OAuthLoginActivity;
 import com.education.flashmath.models.Question;
+import com.education.flashmath.utils.SoundUtility;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
@@ -51,6 +53,8 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	private TextView tvScore;
 	private TextView tvSubject;
 	private String backgroundColor;
+	private static SoundPool soundPool;
+	private static HashMap soundPoolMap;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -67,6 +71,20 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 			backgroundColor = getIntent().getStringExtra(SubjectActivity.SUBJECT_BACKGROUND_INTENT_KEY);
 			evaluate();
 		}
+		
+		
+	}
+
+	private void playSounds(float pc) {
+		if (pc >= .8) {
+			SoundUtility.playSound(this, 3);
+		} else if (pc >= .5) {
+			SoundUtility.playSound(this, 2);
+		} else {
+			SoundUtility.playSound(this, 1);
+		}
+		
+		
 	}
 
 	@Override
@@ -90,6 +108,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		}
 	}
 	
+
 	private Drawable getBarIcon() {
 		if(subject.equals("addition")){
 			return getResources().getDrawable(R.drawable.ic_action_plus);
@@ -160,6 +179,8 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 				llStats.addView(graphView);
 			}
 		});
+		
+		playSounds((float) score / resultList.size());
 	}
 	
 	public void tweetScore(View v) {
