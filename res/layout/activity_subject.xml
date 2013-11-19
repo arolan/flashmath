@@ -96,65 +96,37 @@
             android:id="@+id/tableRow3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
             
-			<Button
-				android:id="@+id/button4"
-				android:layout_width="150dp"
-				android:layout_height="150dp"
-				android:background="@drawable/btn_pink"
-				android:longClickable="true"
-				android:onClick="onButtonClick"
-				android:paddingBottom="5dp"
-				android:tag="fractions"
-				android:text="/"
-				android:textColor="#FFFFFF"
-				android:textSize="100sp"
-				android:textStyle="bold" />
+		<Button
+			android:id="@+id/button4"
+			android:layout_width="150dp"
+			android:layout_height="150dp"
+			android:background="@drawable/btn_pink"
+			android:longClickable="true"
+			android:onClick="onButtonClick"
+			android:paddingBottom="5dp"
+			android:tag="fractions"
+			android:text="/"
+			android:textColor="#FFFFFF"
+			android:textSize="100sp"
+			android:textStyle="bold" />
 			
-			<ImageView
-			    android:background="@drawable/ic_dynamic"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_alignRight="@+id/button4"
-                android:layout_alignBottom="@+id/button4"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="2dp" />
-         </RelativeLayout>
-
-        
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-			
-	        <Button
-		        android:id="@+id/button6"
-		        android:layout_width="150dp"
-		        android:layout_height="150dp"
-		        android:layout_alignLeft="@+id/button4"
-		        android:layout_below="@+id/button3"
-		        android:background="@drawable/btn_orange"
-		        android:tag="geometry"
-		        android:text="Mr. Einstein's Class"
-		        android:textSize="20sp"
-		        android:paddingBottom="5dp"
-		        android:textStyle="bold" 
-		        android:textColor="#FFFFFF"
-		        android:onClick="onClassroomClick"
-		        android:longClickable="true"/>
+        <Button
+	        android:id="@+id/button6"
+	        android:layout_width="150dp"
+	        android:layout_height="150dp"
+	        android:layout_alignLeft="@+id/button4"
+	        android:layout_below="@+id/button3"
+	        android:background="@drawable/btn_orange"
+	        android:tag="geometry"
+	        android:text="△"
+            android:textColor="#FFFFFF"
+            android:textSize="100sp"
+            android:textStyle="bold"
+	        android:paddingBottom="5dp"
+	        android:onClick="onButtonClick"
+	        android:longClickable="true"/>
 	        
-            <ImageView
-                android:background="@drawable/ic_grid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/button6"
-                android:layout_alignBottom="@+id/button6"
-                android:layout_marginRight="3dp"
-                android:layout_marginBottom="3dp" />
-         </RelativeLayout>
         </TableRow>
 </TableLayout>
 </RelativeLayout>
