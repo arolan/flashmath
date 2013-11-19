@@ -27,7 +27,7 @@ import com.education.flashmath.fragment.QuestionFragment;
 import com.education.flashmath.models.ArithmeticQuestion;
 import com.education.flashmath.models.FractionQuestion;
 import com.education.flashmath.models.Question;
-import com.loopj.android.http.AsyncHttpClient;
+import com.education.flashmath.network.FlashMathClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class QuestionActivity extends Activity {
@@ -92,9 +92,8 @@ public class QuestionActivity extends Activity {
 
 	private void setupServerQuestions() {
 		currentQuestionIndex = 0;
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.get("http://flashmathapi.herokuapp.com/quizzes/" + subject + "/", 
-				new JsonHttpResponseHandler() {
+		FlashMathClient client = FlashMathClient.getClient(this);
+		client.getQuestions(subject, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject response) {
 				JSONArray jsonResults = null;

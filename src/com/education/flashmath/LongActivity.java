@@ -27,8 +27,8 @@ import android.widget.TextView;
 import com.education.flashmath.fragment.LongFragment;
 import com.education.flashmath.fragment.LongGraphFragment;
 import com.education.flashmath.models.Score;
+import com.education.flashmath.network.FlashMathClient;
 import com.jjoe64.graphview.GraphView.GraphViewData;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class LongActivity extends Activity {
@@ -55,7 +55,8 @@ public class LongActivity extends Activity {
 	    tvAttempts = (TextView) findViewById(R.id.tvAttempts);
 	    tvBest = (TextView) findViewById(R.id.tvBest);
 	    tvWorst = (TextView) findViewById(R.id.tvWorst);
-	    tvAverage = (TextView) findViewById(R.id.tvAverage);	    btnClear.setBackground(getResources().getDrawable(R.drawable.btn_red));
+	    tvAverage = (TextView) findViewById(R.id.tvAverage);
+	    btnClear.setBackground(getResources().getDrawable(R.drawable.btn_red));
 		
 		subject = getIntent().getStringExtra("subject");
 		ActionBar ab = getActionBar();
@@ -78,9 +79,8 @@ public class LongActivity extends Activity {
 		
 		//Graph section
 		
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.get("http://flashmathapi.herokuapp.com/scores/" + subject + "/",
-				new JsonHttpResponseHandler() {
+		FlashMathClient client = FlashMathClient.getClient(this);
+		client.getScores(subject, new JsonHttpResponseHandler() {
 			@SuppressLint("SimpleDateFormat")
 			@Override
 			public void onSuccess(JSONArray jsonScores) {
@@ -235,9 +235,8 @@ public class LongActivity extends Activity {
 		lf.clearScores();
 		lg.clearScores();
 		
-		AsyncHttpClient client = new AsyncHttpClient();		
-		client.get("http://flashmathapi.herokuapp.com/scores/" + subject + "/clear",
-				new JsonHttpResponseHandler() {
+		FlashMathClient client = FlashMathClient.getClient(this);
+		client.clearScores(subject, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray jsonScores) {
  
