@@ -2,7 +2,6 @@ package com.education.flashmath;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,15 +11,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,6 +27,7 @@ import android.widget.Toast;
 
 import com.codepath.oauth.OAuthLoginActivity;
 import com.education.flashmath.models.Question;
+import com.education.flashmath.network.FlashMathClient;
 import com.education.flashmath.utils.SoundUtility;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
@@ -39,7 +35,6 @@ import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.GraphViewStyle;
 import com.jjoe64.graphview.LineGraphView;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
@@ -148,9 +143,8 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		tvSubject.setText(" Score History for " + subjectTitle + " ");
 		tvSubject.setBackgroundColor(getColor());
 		tvSubject.setTextColor(Color.WHITE);
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.get("http://flashmathapi.herokuapp.com/scores/" + subject + "/" + String.valueOf(score) + "/",
-				new JsonHttpResponseHandler() {
+		FlashMathClient client = FlashMathClient.getClient(this);
+		client.putScore(subject, String.valueOf(score), new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray jsonScores) {
 				GraphViewData[] data = new GraphViewData[jsonScores.length()];
