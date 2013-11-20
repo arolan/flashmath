@@ -48,7 +48,6 @@ public class ArithmeticQuestion extends Question {
 			this.operator = "+";
 			break;
 		}
-		
 	}
 
 	public static ArrayList<Question> fromJSONArray(JSONArray jsonArray, String subject) {
