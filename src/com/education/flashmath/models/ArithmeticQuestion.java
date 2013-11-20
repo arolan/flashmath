@@ -1,7 +1,5 @@
 package com.education.flashmath.models;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
