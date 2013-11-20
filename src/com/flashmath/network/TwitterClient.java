@@ -1,4 +1,4 @@
-package com.flashmath;
+package com.flashmath.network;
 
 import java.io.InputStream;
 

@@ -1,4 +1,4 @@
-package com.flashmath;
+package com.flashmath.adapter;
 
 import java.util.ArrayList;
 import java.util.Date;

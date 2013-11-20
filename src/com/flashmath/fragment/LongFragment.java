@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.education.flashmath.R;
-import com.flashmath.ScoreAdapter;
+import com.flashmath.adapter.ScoreAdapter;
 import com.flashmath.models.Score;
 
 public class LongFragment extends Fragment{

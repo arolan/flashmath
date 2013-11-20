@@ -1,4 +1,4 @@
-package com.flashmath;
+package com.flashmath.activity;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -29,7 +29,8 @@ import com.codepath.oauth.OAuthLoginActivity;
 import com.education.flashmath.R;
 import com.flashmath.models.Question;
 import com.flashmath.network.FlashMathClient;
-import com.flashmath.utils.SoundUtility;
+import com.flashmath.network.TwitterClient;
+import com.flashmath.util.SoundUtility;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;

@@ -1,4 +1,4 @@
-package com.flashmath.utils;
+package com.flashmath.util;
 
 import java.io.IOException;
 import java.util.HashMap;

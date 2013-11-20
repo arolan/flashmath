@@ -22,7 +22,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.flashmath.ResultActivity"
+            android:name="com.flashmath.activity.ResultActivity"
             android:label="@string/title_activity_result" 
             android:launchMode="singleTask">
             <intent-filter>
@@ -37,7 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.flashmath.QuestionActivity"
+            android:name="com.flashmath.activity.QuestionActivity"
             android:label="@string/title_activity_question" >
         </activity>
         <activity
@@ -45,7 +45,7 @@
             android:label="@string/title_activity_class" >
         </activity>
         <activity
-            android:name="com.flashmath.SubjectActivity"
+            android:name="com.flashmath.activity.SubjectActivity"
             android:label="@string/title_activity_subject" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,7 +58,7 @@
             android:label="@string/title_activity_tweet" >
         </activity>
         <activity
-            android:name="com.flashmath.LongActivity"
+            android:name="com.flashmath.activity.LongActivity"
             android:label="@string/title_activity_long" >
         </activity>
     </application>

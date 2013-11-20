@@ -1,20 +1,18 @@
-package com.flashmath;
+package com.flashmath.activity;
 
 import java.io.IOException;
 
-import com.education.flashmath.R;
-import com.flashmath.utils.SoundUtility;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.Button;
+
+import com.education.flashmath.R;
+import com.flashmath.util.SoundUtility;
 
 public class SubjectActivity extends Activity {
 
@@ -157,11 +155,6 @@ public class SubjectActivity extends Activity {
 		startActivity(i);
 	}
 	
-	public void onClassroomClick(View v){
-		Intent i = new Intent(this, ClassActivity.class);
-		startActivity(i);
-	}
-
 	private String identifySubjectColor(String tag) {
 		String color = null;
 		if (tag.equalsIgnoreCase("Addition")) {

@@ -6,7 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.flashmath.utils.Constants.SubjectCategory;
+import com.flashmath.util.Constants.SubjectCategory;
 
 public class FractionQuestion extends Question {
 

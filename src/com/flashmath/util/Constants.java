@@ -1,4 +1,4 @@
-package com.flashmath.utils;
+package com.flashmath.util;
 
 
 public class Constants {

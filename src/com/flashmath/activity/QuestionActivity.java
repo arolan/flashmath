@@ -1,4 +1,4 @@
-package com.flashmath;
+package com.flashmath.activity;
 
 import java.util.ArrayList;
 
