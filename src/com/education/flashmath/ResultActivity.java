@@ -288,6 +288,10 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 	}
-	
+
+	@Override
+	public void onBackPressed() {
+		//do not allow to go back to modify the last question's answer
+	}
 	
 }
