@@ -12,11 +12,13 @@ import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.SoundPool;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -26,8 +28,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.oauth.OAuthLoginActivity;
+import com.education.flashmath.models.OfflineScore;
 import com.education.flashmath.models.Question;
 import com.education.flashmath.network.FlashMathClient;
+import com.education.flashmath.utils.ConnectivityUtility;
 import com.education.flashmath.utils.SoundUtility;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
@@ -144,37 +148,52 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		tvSubject.setBackgroundColor(getColor());
 		tvSubject.setTextColor(Color.WHITE);
 		FlashMathClient client = FlashMathClient.getClient(this);
-		client.putScore(subject, String.valueOf(score), new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(JSONArray jsonScores) {
-				GraphViewData[] data = new GraphViewData[jsonScores.length()];
-				int max_score = 1;
-				for (int i = 0; i < jsonScores.length(); i++) {
-					try {
-						int val = jsonScores.getJSONObject(i).getInt("value");
-						max_score = val > max_score ? val : max_score;
-						data[i] = (new GraphViewData(i + 1, val));
-					} catch (JSONException e) {
-						e.printStackTrace();
+		
+		if(ConnectivityUtility.isInternetConnectionAvailable(this.getApplicationContext())) {
+			client.putScore(subject, String.valueOf(score), new JsonHttpResponseHandler() {
+				@Override
+				public void onSuccess(JSONArray jsonScores) {
+					GraphViewData[] data = new GraphViewData[jsonScores.length()];
+					int max_score = 1;
+					for (int i = 0; i < jsonScores.length(); i++) {
+						try {
+							int val = jsonScores.getJSONObject(i).getInt("value");
+							max_score = val > max_score ? val : max_score;
+							data[i] = (new GraphViewData(i + 1, val));
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
 					}
+					GraphView graphView = new LineGraphView(ResultActivity.this, "");
+					GraphViewStyle style = new GraphViewStyle();
+					style.setVerticalLabelsColor(Color.BLACK);
+					style.setHorizontalLabelsColor(Color.BLACK);
+					style.setGridColor(Color.GRAY);
+					style.setNumVerticalLabels(4);
+					style.setNumHorizontalLabels(2);
+					GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(getColor(), 5);
+					graphView.addSeries(new GraphViewSeries("Scores", lineStyle, data));
+					graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
+					graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
+					graphView.setGraphViewStyle(style);
+					llStats.addView(graphView);
 				}
-				GraphView graphView = new LineGraphView(ResultActivity.this, "");
-				GraphViewStyle style = new GraphViewStyle();
-				style.setVerticalLabelsColor(Color.BLACK);
-				style.setHorizontalLabelsColor(Color.BLACK);
-				style.setGridColor(Color.GRAY);
-				style.setNumVerticalLabels(4);
-				style.setNumHorizontalLabels(2);
-				GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(getColor(), 5);
-				graphView.addSeries(new GraphViewSeries("Scores", lineStyle, data));
-				graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
-				graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
-				graphView.setGraphViewStyle(style);
-				llStats.addView(graphView);
-			}
-		});
+			});
+		} else {
+			OfflineScore os = new OfflineScore();
+			os.setScore(score);
+			os.setSubject(subject);
+			ConnectivityUtility.setUnsentScore(os);
+			
+			//prepare to send out score when we have internet connection again
+			this.registerReceiver( new ConnectivityUtility(),
+						      new IntentFilter(
+						            ConnectivityManager.CONNECTIVITY_ACTION));
+			Toast.makeText(getApplicationContext(), "Your results will be submitted when internet connection is back", Toast.LENGTH_LONG).show();
+		}
 		
 		playSounds((float) score / resultList.size());
+		
 	}
 	
 	public void tweetScore(View v) {
