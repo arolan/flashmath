@@ -2,13 +2,16 @@ package com.education.flashmath;
 
 import java.io.IOException;
 
+import com.education.flashmath.utils.ConnectivityUtility;
 import com.education.flashmath.utils.SoundUtility;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Canvas;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -117,8 +120,16 @@ public class SubjectActivity extends Activity {
 		
 		
 		prepareSounds();
+		
+		prepareConnectionListener();
 	}
-	
+
+	private void prepareConnectionListener() {
+		//prepare to send out score when we have internet connection again
+		this.registerReceiver( new ConnectivityUtility(),
+					      new IntentFilter(
+					            ConnectivityManager.CONNECTIVITY_ACTION));
+	}
 
 	private void prepareSounds() {
 		AssetFileDescriptor badSound = null;

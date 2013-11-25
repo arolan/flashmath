@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -12,13 +13,11 @@ import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.SoundPool;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -183,18 +182,22 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 			OfflineScore os = new OfflineScore();
 			os.setScore(score);
 			os.setSubject(subject);
-			ConnectivityUtility.setUnsentScore(os);
 			
-			//prepare to send out score when we have internet connection again
-			this.registerReceiver( new ConnectivityUtility(),
-						      new IntentFilter(
-						            ConnectivityManager.CONNECTIVITY_ACTION));
+			Calendar c = Calendar.getInstance(); 
+			os.setTimeStampInSeconds(c.get(Calendar.SECOND));
+			ConnectivityUtility.setUnsentScore(os);
+			os.save();
+			
 			Toast.makeText(getApplicationContext(), "Your results will be submitted when internet connection is back", Toast.LENGTH_LONG).show();
 		}
 		
 		playSounds((float) score / resultList.size());
 		
 	}
+	
+
+	
+	
 	
 	public void tweetScore(View v) {
 		if (!getClient().isAuthenticated()) {

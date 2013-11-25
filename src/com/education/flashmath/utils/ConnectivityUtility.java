@@ -1,5 +1,8 @@
 package com.education.flashmath.utils;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.json.JSONArray;
 
 import android.content.BroadcastReceiver;
@@ -11,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.activeandroid.query.Select;
 import com.education.flashmath.models.OfflineScore;
 import com.education.flashmath.network.FlashMathClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -21,20 +25,53 @@ public class ConnectivityUtility extends BroadcastReceiver {
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		//debugIntent(intent, "flashmath");
-		if (unsentScore != null) {
+		
+		ArrayList<OfflineScore> scoresToSent = new Select().from(OfflineScore.class).execute();
+		
+		if (scoresToSent != null && scoresToSent.size() > 0) {
+			boolean unsentScoreIsSaved = false;
+			if (unsentScore != null) {
+				for (int i = 0; i < scoresToSent.size(); i++) {
+					OfflineScore os = scoresToSent.get(i);
+					if (os != null && os.getTimeStampInSeconds() == unsentScore.getTimeStampInSeconds()) {
+						unsentScoreIsSaved = true;
+						break;
+					}
+				}
+				
+			}
+			
+			if (!unsentScoreIsSaved && unsentScore != null) {
+				scoresToSent.add(unsentScore);
+			}
+			//clear it since it's either in the db or has been added to the array
+			unsentScore = null;
+		} else if (unsentScore != null && scoresToSent == null){
+			scoresToSent = new ArrayList<OfflineScore>();
+			scoresToSent.add(unsentScore);
+			unsentScore = null;
+		}
+		
+		
+		
+		if (scoresToSent != null) {
 			FlashMathClient client = FlashMathClient.getClient(context);
 			final Context localContext = context;
-			if(this.unsentScore != null && ConnectivityUtility.isInternetConnectionAvailable(context)) {
-				client.putScore(unsentScore.getSubject(), String.valueOf(unsentScore.getScore()), 
-						new JsonHttpResponseHandler() {
-					@Override
-					public void onSuccess(JSONArray jsonScores) {
-						//score has been sent successfully, so clear the score
-						unsentScore = null;
-						Toast.makeText(localContext, "Sent offline score successfully!", Toast.LENGTH_LONG).show();
+			if(ConnectivityUtility.isInternetConnectionAvailable(context)) {
+				for (int i = 0; i < scoresToSent.size(); i++) {
+					final OfflineScore osToSent = scoresToSent.get(i);
+					if (osToSent != null) {
+						client.putScore(osToSent.getSubject(), String.valueOf(osToSent.getScore()), 
+								new JsonHttpResponseHandler() {
+							@Override
+							public void onSuccess(JSONArray jsonScores) {
+								//score has been sent successfully, so clear the score
+								osToSent.delete();
+								Toast.makeText(localContext, "Sent offline score successfully!", Toast.LENGTH_LONG).show();
+							}
+						});
 					}
-				});
+				}
 			}
 		}
 	}
