@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class SubjectActivity extends Activity {
 
@@ -126,15 +127,19 @@ public class SubjectActivity extends Activity {
 	}
 	
 	public void onButtonClick(View v){
-		Intent i = new Intent(this, QuestionActivity.class);
-		String tag = v.getTag().toString();
-		
-		i.putExtra("subject", tag);
+		if (ConnectivityUtility.isInternetConnectionAvailable(this)) {
+			Intent i = new Intent(this, QuestionActivity.class);
+			String tag = v.getTag().toString();
+			
+			i.putExtra("subject", tag);
 
-		String backgroundColor = identifySubjectColor(tag);
-		i.putExtra(SUBJECT_BACKGROUND_INTENT_KEY, backgroundColor);
-		//Log.d("DEBUG",tag);
-		startActivity(i);
+			String backgroundColor = identifySubjectColor(tag);
+			i.putExtra(SUBJECT_BACKGROUND_INTENT_KEY, backgroundColor);
+			//Log.d("DEBUG",tag);
+			startActivity(i);
+		} else {
+			Toast.makeText(this, "Internet connection is not available", Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	public void onClassroomClick(View v){
@@ -161,11 +166,17 @@ public class SubjectActivity extends Activity {
 	}
 
 	public boolean handleSubjectLongClick(View v) {
-		Intent i = new Intent(SubjectActivity.this, LongActivity.class);
-		String tag = v.getTag().toString();
-		i.putExtra("subject", tag);
-		//Log.d("DEBUG",tag);
-		startActivity(i);
-		return true;
+		if (ConnectivityUtility.isInternetConnectionAvailable(this)) {
+			Intent i = new Intent(SubjectActivity.this, LongActivity.class);
+			String tag = v.getTag().toString();
+			i.putExtra("subject", tag);
+			//Log.d("DEBUG",tag);
+			startActivity(i);
+			return true;
+		} else {
+			Toast.makeText(this, "Internet connection is not available", Toast.LENGTH_LONG).show();
+			return false;
+		}
+		
 	}
 }

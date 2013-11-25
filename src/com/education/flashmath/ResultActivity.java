@@ -200,17 +200,25 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	
 	
 	public void tweetScore(View v) {
-		if (!getClient().isAuthenticated()) {
-			getClient().connect();
+		if (ConnectivityUtility.isInternetConnectionAvailable(this)) {
+			if (!getClient().isAuthenticated()) {
+				getClient().connect();
+			} else {
+				tweet();
+			}
 		} else {
-			tweet();
+			Toast.makeText(this, "Internet connection is not available", Toast.LENGTH_SHORT).show();
 		}
 	}
 
 	//goes back to the first questions
 	public void onTryAgain(View v){
-		Intent i = new Intent(this, QuestionActivity.class);
-		startActivity(i);
+		if (ConnectivityUtility.isInternetConnectionAvailable(this)) {
+			Intent i = new Intent(this, QuestionActivity.class);
+			startActivity(i);
+		} else {
+			Toast.makeText(this, "Internet connection is not available", Toast.LENGTH_SHORT).show();
+		}
 	}
 	
 	private void tweet() {
