@@ -38,12 +38,7 @@ public class SubjectActivity extends Activity {
 
 		    @Override
 		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
-		  		String tag = v.getTag().toString();
-		  		i.putExtra("subject", tag);
-		  		//Log.d("DEBUG",tag);
-		  		startActivity(i);
-		        return true;
+		        return handleSubjectLongClick(v);
 		    }
 
 		});
@@ -52,12 +47,7 @@ public class SubjectActivity extends Activity {
 
 		    @Override
 		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
-		  		String tag = v.getTag().toString();
-		  		i.putExtra("subject", tag);
-		  		//Log.d("DEBUG",tag);
-		  		startActivity(i);
-		        return true;
+		    	return handleSubjectLongClick(v);
 		    }
 
 		});
@@ -66,12 +56,7 @@ public class SubjectActivity extends Activity {
 
 		    @Override
 		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
-		  		String tag = v.getTag().toString();
-		  		i.putExtra("subject", tag);
-		  		//Log.d("DEBUG",tag);
-		  		startActivity(i);
-		        return true;
+		    	return handleSubjectLongClick(v);
 		    }
 
 		});
@@ -80,12 +65,7 @@ public class SubjectActivity extends Activity {
 
 		    @Override
 		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
-		  		String tag = v.getTag().toString();
-		  		i.putExtra("subject", tag);
-		  		//Log.d("DEBUG",tag);
-		  		startActivity(i);
-		        return true;
+		    	return handleSubjectLongClick(v);
 		    }
 
 		});
@@ -94,12 +74,7 @@ public class SubjectActivity extends Activity {
 
 		    @Override
 		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
-		  		String tag = v.getTag().toString();
-		  		i.putExtra("subject", tag);
-		  		//Log.d("DEBUG",tag);
-		  		startActivity(i);
-		        return true;
+		    	return handleSubjectLongClick(v);
 		    }
 
 		});
@@ -108,12 +83,7 @@ public class SubjectActivity extends Activity {
 
 		    @Override
 		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
-		  		String tag = v.getTag().toString();
-		  		i.putExtra("subject", tag);
-		  		//Log.d("DEBUG",tag);
-		  		startActivity(i);
-		        return true;
+		    	return handleSubjectLongClick(v);
 		    }
 
 		});
@@ -188,5 +158,14 @@ public class SubjectActivity extends Activity {
 			color = String.valueOf(R.drawable.btn_orange);
 		}
 		return color;
+	}
+
+	public boolean handleSubjectLongClick(View v) {
+		Intent i = new Intent(SubjectActivity.this, LongActivity.class);
+		String tag = v.getTag().toString();
+		i.putExtra("subject", tag);
+		//Log.d("DEBUG",tag);
+		startActivity(i);
+		return true;
 	}
 }
