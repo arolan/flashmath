@@ -207,7 +207,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 				tweet();
 			}
 		} else {
-			Toast.makeText(this, "Internet connection is not available", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, ConnectivityUtility.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -217,7 +217,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 			Intent i = new Intent(this, QuestionActivity.class);
 			startActivity(i);
 		} else {
-			Toast.makeText(this, "Internet connection is not available", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, ConnectivityUtility.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
 		}
 	}
 	

@@ -21,6 +21,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class ConnectivityUtility extends BroadcastReceiver {
 
+	public static final String INTERNET_CONNECTION_IS_NOT_AVAILABLE = "Internet connection is not available";
 	private static OfflineScore unsentScore;
 	
 	@Override

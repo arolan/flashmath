@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 public class SubjectActivity extends Activity {
 
+	
 	public static final String SUBJECT_BACKGROUND_INTENT_KEY = "subjectBackgroundId";
 
 	@Override
@@ -138,7 +139,7 @@ public class SubjectActivity extends Activity {
 			//Log.d("DEBUG",tag);
 			startActivity(i);
 		} else {
-			Toast.makeText(this, "Internet connection is not available", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, ConnectivityUtility.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -174,7 +175,7 @@ public class SubjectActivity extends Activity {
 			startActivity(i);
 			return true;
 		} else {
-			Toast.makeText(this, "Internet connection is not available", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, ConnectivityUtility.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_LONG).show();
 			return false;
 		}
 		
