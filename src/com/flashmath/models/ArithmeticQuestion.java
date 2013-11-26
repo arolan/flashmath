@@ -39,10 +39,10 @@ public class ArithmeticQuestion extends Question {
 			this.operator = "-";
 			break;
 		case MULTIPLICATION:
-			this.operator = "×";
+			this.operator = "\u00D7";
 			break;
 		case DIVISION:
-			this.operator = "÷";
+			this.operator = "\u00F7";
 			break;
 		default:
 			this.operator = "+";

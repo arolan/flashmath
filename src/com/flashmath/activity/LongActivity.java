@@ -76,7 +76,7 @@ public class LongActivity extends Activity {
 		tvSubject.setBackgroundColor(ColorUtil.subjectColorInt(subject));
 		tvSubject.setTextColor(Color.WHITE);
 		tvStudy.setText(subjectTitle);
-		tvLink.setText(Html.fromHtml("<a style='text-decoration:none' href=http://en.wikipedia.org/wiki/"+subject+"_(mathematics)>↱"));
+		tvLink.setText(Html.fromHtml("<a style='text-decoration:none' href=http://en.wikipedia.org/wiki/"+subject+"_(mathematics)>\u21b1"));
 		stripUnderlines(tvLink);
 		tvLink.setMovementMethod(LinkMovementMethod.getInstance());
 		
