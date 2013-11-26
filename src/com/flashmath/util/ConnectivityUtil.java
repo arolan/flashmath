@@ -76,6 +76,7 @@ public class ConnectivityUtil extends BroadcastReceiver {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void debugIntent(Intent intent, String tag) {
 		Log.v(tag, "action: " + intent.getAction());
 		Log.v(tag, "component: " + intent.getComponent());
@@ -91,7 +92,7 @@ public class ConnectivityUtil extends BroadcastReceiver {
 		}
 	}
 
-	public static boolean  isInternetConnectionAvailable(Context context) {
+	public static boolean isInternetConnectionAvailable(Context context) {
 		ConnectivityManager cm =
 				(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
