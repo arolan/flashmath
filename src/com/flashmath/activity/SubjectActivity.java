@@ -33,7 +33,7 @@ public class SubjectActivity extends Activity {
 				 	if (ConnectivityUtil.isInternetConnectionAvailable(SubjectActivity.this)) {
 				        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
 				  		String tag = v.getTag().toString();
-				  		i.putExtra("subject", tag);
+				  		i.putExtra(ResultActivity.SUBJECT_INTENT_KEY, tag);
 				  		startActivity(i);
 				        return true;
 				 	} else {
@@ -65,11 +65,12 @@ public class SubjectActivity extends Activity {
 	 	if (ConnectivityUtil.isInternetConnectionAvailable(this)) {
 			Intent i = new Intent(this, QuestionActivity.class);
 			String tag = v.getTag().toString();
-			
-			i.putExtra("subject", tag);
+			i.putExtra(ResultActivity.SUBJECT_INTENT_KEY, tag);
+			i.putExtra(QuestionActivity.IS_MOCK_QUIZ_INTENT_KEY, false);
 			startActivity(i);
 	 	} else {
 	 		// construct a mock quiz and set the quiz flag to be offline mode
+	 		//i.putExtra(QuestionActivity.IS_MOCK_QUIZ_INTENT_KEY, true);
 	 	}
 	}
 }

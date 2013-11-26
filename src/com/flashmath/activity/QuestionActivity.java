@@ -33,6 +33,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class QuestionActivity extends Activity {
 
+	public static final String IS_MOCK_QUIZ_INTENT_KEY = "isMockQuiz";
 	private static final String NEXT_QUESTION_BTN_TITLE = "Next";
 	private static final String VERIFY_ANSWER_BTN_TITLE = "Answer";
 	private static final String END_QUIZ_BTN_TITLE = "Finish";
@@ -45,6 +46,7 @@ public class QuestionActivity extends Activity {
 	private Button btnVerifyAndNextQuestion;
 	private String subject;
 	private String backgroundColor;
+	private boolean isMockQuiz;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class QuestionActivity extends Activity {
 		btnVerifyAndNextQuestion = (Button) findViewById(R.id.btnVerifyAndNextQuestion);
 		btnVerifyAndNextQuestion.setVisibility(View.VISIBLE);
 		subject = getIntent().getStringExtra("subject");
+		isMockQuiz = getIntent().getBooleanExtra(IS_MOCK_QUIZ_INTENT_KEY, true);
 		btnVerifyAndNextQuestion.setBackground(ColorUtil.getButtonStyle(subject, this));
 		Button btnClear = (Button) findViewById(R.id.btnClear);
 		btnClear.setBackground(ColorUtil.getButtonStyle(subject, this));
@@ -258,8 +261,9 @@ public class QuestionActivity extends Activity {
 	
 	private void finalizeQuiz() {
 		Intent i = new Intent(this, ResultActivity.class);
-		i.putExtra(QUESTIONS_ANSWERED_INTENT_KEY, this.questionList);
-		i.putExtra("subject", subject);
+		i.putExtra(QuestionActivity.QUESTIONS_ANSWERED_INTENT_KEY, this.questionList);
+		i.putExtra(ResultActivity.SUBJECT_INTENT_KEY, subject);
+		i.putExtra(QuestionActivity.IS_MOCK_QUIZ_INTENT_KEY, isMockQuiz);
 		startActivity(i);
 	}
 
