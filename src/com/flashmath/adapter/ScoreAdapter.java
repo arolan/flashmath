@@ -44,9 +44,9 @@ public class ScoreAdapter extends ArrayAdapter<Score>{
 
 	private String getMsg(int score) { 
 		String msg = "";
-		if (score == 3) {
+		if (score >= 8) {
 			msg = "Good job!";
-		} else if (score == 2) {
+		} else if (score >= 5) {
 			msg = "Almost there!";
 		} else {
 			msg = "Keep trying!";
