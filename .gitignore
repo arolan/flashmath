@@ -41,3 +41,4 @@ local.properties
 project.properties
 
 .settings
+build/
