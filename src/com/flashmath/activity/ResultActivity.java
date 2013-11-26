@@ -197,7 +197,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 				showAlternativeTextForGraph("Thank you for completing the offline quiz! Your score will not be submitted.");
 			} else {
 				//Mock quiz and Internet
-				showAlternativeTextForGraph("Thank you for completing the offline quiz! You can try now real quiz in the Main Menu.");
+				showAlternativeTextForGraph("Thank you for completing the offline quiz! You can try a real quiz in the Main Menu.");
 			}
 		}
 		playSounds((float) score / resultList.size());
