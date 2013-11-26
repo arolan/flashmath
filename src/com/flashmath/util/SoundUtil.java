@@ -6,19 +6,34 @@ import java.util.HashMap;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 
-public class SoundUtility {
+public class SoundUtil {
 
 	private static SoundPool soundPool;
-	private static HashMap soundPoolMap;
-	public static void initSounds(Context context) {
+	private static HashMap<String, Integer> soundPoolMap;
+	
+	public static void prepareSounds(Context context) {
+		AssetFileDescriptor badSound = null;
+		AssetFileDescriptor averageSound = null;
+		AssetFileDescriptor excellentSound = null;
+		try {
+			badSound = context.getAssets().openFd("fail.mp3");
+			averageSound = context.getAssets().openFd("average.mp3");
+			excellentSound = context.getAssets().openFd("excellent.mp3");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		initSounds(context);
+		loadSounds(badSound,averageSound, excellentSound);
+	}
+	
+	private static void initSounds(Context context) {
 		soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 100);
-		soundPoolMap = new HashMap(3);
+		soundPoolMap = new HashMap<String, Integer>(3);
 	}
 
-	public static void loadSounds(AssetFileDescriptor badSound, AssetFileDescriptor averageSound, AssetFileDescriptor excellentSound){
+	private static void loadSounds(AssetFileDescriptor badSound, AssetFileDescriptor averageSound, AssetFileDescriptor excellentSound){
 		
 		// play sound with same right and left volume, with a priority of 1, 
 		// zero repeats (i.e play once), and a playback rate of 1f
