@@ -1,4 +1,4 @@
-package com.education.flashmath.utils;
+package com.flashmath.util;
 
 import java.util.ArrayList;
 
@@ -14,11 +14,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
-import com.education.flashmath.models.OfflineScore;
+import com.flashmath.models.OfflineScore;
 import com.flashmath.network.FlashMathClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-public class ConnectivityUtility extends BroadcastReceiver {
+public class ConnectivityUtil extends BroadcastReceiver {
 
 	public static final String INTERNET_CONNECTION_IS_NOT_AVAILABLE = "Internet connection is not available";
 	private static OfflineScore unsentScore;
@@ -57,7 +57,7 @@ public class ConnectivityUtility extends BroadcastReceiver {
 		if (scoresToSent != null) {
 			FlashMathClient client = FlashMathClient.getClient(context);
 			final Context localContext = context;
-			if(ConnectivityUtility.isInternetConnectionAvailable(context)) {
+			if(ConnectivityUtil.isInternetConnectionAvailable(context)) {
 				for (int i = 0; i < scoresToSent.size(); i++) {
 					final OfflineScore osToSent = scoresToSent.get(i);
 					if (osToSent != null) {
@@ -106,7 +106,7 @@ public class ConnectivityUtility extends BroadcastReceiver {
 	}
 
 	public static void setUnsentScore(OfflineScore unsentScore) {
-		ConnectivityUtility.unsentScore = unsentScore;
+		ConnectivityUtil.unsentScore = unsentScore;
 	}
 
 	

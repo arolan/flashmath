@@ -25,12 +25,12 @@ import android.widget.Toast;
 
 import com.codepath.oauth.OAuthLoginActivity;
 import com.education.flashmath.R;
-import com.education.flashmath.models.OfflineScore;
-import com.education.flashmath.utils.ConnectivityUtility;
+import com.flashmath.models.OfflineScore;
 import com.flashmath.models.Question;
 import com.flashmath.network.FlashMathClient;
 import com.flashmath.network.TwitterClient;
 import com.flashmath.util.ColorUtil;
+import com.flashmath.util.ConnectivityUtil;
 import com.flashmath.util.SoundUtil;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
@@ -114,7 +114,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		tvSubject.setTextColor(Color.WHITE);
 		FlashMathClient client = FlashMathClient.getClient(this);
 		
-		if(ConnectivityUtility.isInternetConnectionAvailable(this.getApplicationContext())) {
+		if(ConnectivityUtil.isInternetConnectionAvailable(this.getApplicationContext())) {
 			client.putScore(subject, String.valueOf(score), new JsonHttpResponseHandler() {
 				@Override
 				public void onSuccess(JSONArray jsonScores) {
@@ -151,7 +151,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 			
 			Calendar c = Calendar.getInstance(); 
 			os.setTimeStampInSeconds(c.get(Calendar.SECOND));
-			ConnectivityUtility.setUnsentScore(os);
+			ConnectivityUtil.setUnsentScore(os);
 			os.save();
 			
 			Toast.makeText(getApplicationContext(), "Your results will be submitted when internet connection is back", Toast.LENGTH_LONG).show();
@@ -165,24 +165,24 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	
 	
 	public void tweetScore(View v) {
-		if (ConnectivityUtility.isInternetConnectionAvailable(this)) {
+		if (ConnectivityUtil.isInternetConnectionAvailable(this)) {
 			if (!getClient().isAuthenticated()) {
 				getClient().connect();
 			} else {
 				tweet();
 			}
 		} else {
-			Toast.makeText(this, ConnectivityUtility.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, ConnectivityUtil.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
 		}
 	}
 
 	//goes back to the first questions
 	public void onTryAgain(View v){
-		if (ConnectivityUtility.isInternetConnectionAvailable(this)) {
+		if (ConnectivityUtil.isInternetConnectionAvailable(this)) {
 			Intent i = new Intent(this, QuestionActivity.class);
 			startActivity(i);
 		} else {
-			Toast.makeText(this, ConnectivityUtility.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, ConnectivityUtil.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
 		}
 	}
 	

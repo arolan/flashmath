@@ -1,4 +1,4 @@
-package com.education.flashmath.models;
+package com.flashmath.models;
 
 import java.io.Serializable;
 
