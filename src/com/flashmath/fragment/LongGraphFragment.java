@@ -14,6 +14,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
+import com.jjoe64.graphview.CustomLabelFormatter;
 import com.jjoe64.graphview.GraphViewStyle;
 import com.jjoe64.graphview.LineGraphView;
 
@@ -40,6 +41,7 @@ public class LongGraphFragment extends Fragment{
 		llStats = (LinearLayout) getActivity().findViewById(R.id.llStats);
 		
 		GraphView graphView = new LineGraphView(getActivity(),"");
+		graphView.setCustomLabelFormatter(new CustomLabelFormatter.IntegerOnly());
 		GraphViewStyle style = new GraphViewStyle();
 		
 		style.setVerticalLabelsColor(Color.BLACK);
