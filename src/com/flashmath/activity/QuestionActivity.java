@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
@@ -28,6 +29,7 @@ import com.flashmath.models.FractionQuestion;
 import com.flashmath.models.Question;
 import com.flashmath.network.FlashMathClient;
 import com.flashmath.util.ColorUtil;
+import com.flashmath.util.QuestionUtil;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class QuestionActivity extends Activity {
@@ -82,11 +84,30 @@ public class QuestionActivity extends Activity {
 		}
 		//disable the button until we have data loaded...
 		btnVerifyAndNextQuestion.setEnabled(false);
-		setupServerQuestions();
+		if (!isMockQuiz) {
+			setupServerQuestions();
+		} else {
+			currentQuestionIndex = 0;
+			JSONArray jsonQuestions = QuestionUtil.getMockQuestions(subject);
+			questionList = new ArrayList<Question>();
+			
+			if (subject.equalsIgnoreCase("Fractions")) {
+				questionList.addAll(FractionQuestion.fromJSONArray(jsonQuestions, subject));
+			} else {
+				questionList.addAll(ArithmeticQuestion.fromJSONArray(jsonQuestions, subject));
+			}
+		}
 		qf.setBackgroundColor(backgroundColor);
 		
-		
 		getFragmentManager().beginTransaction().add(R.id.fragmentForQuestion, qf).commit();
+	}
+	
+	@Override
+	protected void onResume() {
+		if (isMockQuiz) {
+			postQuestionLoaded();
+		}
+		super.onResume();
 	}
 
 	private void setupServerQuestions() {
@@ -111,23 +132,8 @@ public class QuestionActivity extends Activity {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				
-				qf.setQuestion(questionList.get(currentQuestionIndex));
-				
-				if (subject.equalsIgnoreCase("Fractions")) {
-					((FractionQuestionFragment) qf).setupFractionQuestion();
-					qaf = new FractionQuestionAnswerFragment();
-					((FractionQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
-				} else {
-					((ArithmeticQuestionFragment) qf).setupArithmeticQuestion();
-					qaf = new ArithmeticQuestionAnswerFragment();
-					((ArithmeticQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
-				}
-				
-				tvQuestionProgress.setText(String.valueOf(currentQuestionIndex + 1));
-				//data is loaded, we can enable the button
-				btnVerifyAndNextQuestion.setEnabled(true);
-				setProgressBarIndeterminateVisibility(false);
+
+				postQuestionLoaded();
 			}
 			
 			@Override
@@ -137,6 +143,24 @@ public class QuestionActivity extends Activity {
 				setProgressBarIndeterminateVisibility(false);
 			}
 		});
+	}
+
+	protected void postQuestionLoaded() {
+		qf.setQuestion(questionList.get(currentQuestionIndex));
+		if (subject.equalsIgnoreCase("Fractions")) {
+			((FractionQuestionFragment) qf).setupFractionQuestion();
+			qaf = new FractionQuestionAnswerFragment();
+			((FractionQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
+		} else {
+			((ArithmeticQuestionFragment) qf).setupArithmeticQuestion();
+			qaf = new ArithmeticQuestionAnswerFragment();
+			((ArithmeticQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
+		}
+		
+		tvQuestionProgress.setText(String.valueOf(currentQuestionIndex + 1));
+		//data is loaded, we can enable the button
+		btnVerifyAndNextQuestion.setEnabled(true);
+		setProgressBarIndeterminateVisibility(false);
 	}
 
 	@Override
