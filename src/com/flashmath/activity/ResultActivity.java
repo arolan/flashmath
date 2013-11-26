@@ -16,11 +16,13 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +56,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	private TextView tvSubject;
 	private Button btnMainMenu;
 	private boolean wentThroughTwitterFlow = false;
+	private boolean isMockQuiz;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -73,6 +76,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		if (savedInstanceState == null) {
 			resultList = (ArrayList<Question>) getIntent().getSerializableExtra("QUESTIONS_ANSWERED");
 			subject = getIntent().getStringExtra(SUBJECT_INTENT_KEY);
+			isMockQuiz = getIntent().getBooleanExtra(QuestionActivity.IS_MOCK_QUIZ_INTENT_KEY, true);
 			evaluate();
 		}
 		
@@ -122,40 +126,45 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		tvSubject.setTextColor(Color.WHITE);
 		FlashMathClient client = FlashMathClient.getClient(this);
 		
-		// Check if quiz is legitimate
+		boolean isConnectionAvailable = ConnectivityUtil.isInternetConnectionAvailable(this.getApplicationContext());
 		
-		if(ConnectivityUtil.isInternetConnectionAvailable(this.getApplicationContext())) {
+		//Real quiz && Internet is available
+		if(!isMockQuiz && isConnectionAvailable) {
 			setProgressBarIndeterminateVisibility(true);
 			btnMainMenu.setEnabled(false);
 			
 			client.putScore(subject, String.valueOf(score), new JsonHttpResponseHandler() {
 				@Override
 				public void onSuccess(JSONArray jsonScores) {
-					GraphViewData[] data = new GraphViewData[jsonScores.length()];
-					int max_score = 1;
-					for (int i = 0; i < jsonScores.length(); i++) {
-						try {
-							int val = jsonScores.getJSONObject(i).getInt("value");
-							max_score = val > max_score ? val : max_score;
-							data[i] = (new GraphViewData(i + 1, val));
-						} catch (JSONException e) {
-							e.printStackTrace();
+					if (jsonScores != null && jsonScores.length() > 1) {
+						GraphViewData[] data = new GraphViewData[jsonScores.length()];
+						int max_score = 1;
+						for (int i = 0; i < jsonScores.length(); i++) {
+							try {
+								int val = jsonScores.getJSONObject(i).getInt("value");
+								max_score = val > max_score ? val : max_score;
+								data[i] = (new GraphViewData(i + 1, val));
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
 						}
+						GraphView graphView = new LineGraphView(ResultActivity.this, "");
+						graphView.setCustomLabelFormatter(new CustomLabelFormatter.IntegerOnly());
+						GraphViewStyle style = new GraphViewStyle();
+						style.setVerticalLabelsColor(Color.BLACK);
+						style.setHorizontalLabelsColor(Color.BLACK);
+						style.setGridColor(Color.GRAY);
+						style.setNumVerticalLabels(4);
+						style.setNumHorizontalLabels(2);
+						GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(ColorUtil.subjectColorInt(subject), 5);
+						graphView.addSeries(new GraphViewSeries("Scores", lineStyle, data));
+						graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
+						graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
+						graphView.setGraphViewStyle(style);
+						llStats.addView(graphView);
+					} else {
+						showAlternativeTextForGraph("Not enough scores to show graph. Please do the quiz one more time!");
 					}
-					GraphView graphView = new LineGraphView(ResultActivity.this, "");
-					graphView.setCustomLabelFormatter(new CustomLabelFormatter.IntegerOnly());
-					GraphViewStyle style = new GraphViewStyle();
-					style.setVerticalLabelsColor(Color.BLACK);
-					style.setHorizontalLabelsColor(Color.BLACK);
-					style.setGridColor(Color.GRAY);
-					style.setNumVerticalLabels(4);
-					style.setNumHorizontalLabels(2);
-					GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(ColorUtil.subjectColorInt(subject), 5);
-					graphView.addSeries(new GraphViewSeries("Scores", lineStyle, data));
-					graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
-					graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
-					graphView.setGraphViewStyle(style);
-					llStats.addView(graphView);
 					
 					setProgressBarIndeterminateVisibility(false);
 					btnMainMenu.setEnabled(true);
@@ -166,10 +175,13 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 					super.onFailure(arg0, errorResponse);
 					setProgressBarIndeterminateVisibility(false);
 					btnMainMenu.setEnabled(true);
+					showAlternativeTextForGraph("Could not load historical data. Please try again later!");
 				}
 
 			});
-		} else {
+		
+		} else if(!isMockQuiz && !isConnectionAvailable) {
+			// Real quiz but no Internet
 			OfflineScore os = new OfflineScore();
 			os.setScore(score);
 			os.setSubject(subject);
@@ -178,14 +190,16 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 			os.setTimeStampInSeconds(c.get(Calendar.SECOND));
 			ConnectivityUtil.setUnsentScore(os);
 			os.save();
-			// Put this into llStats somehow
-			Toast.makeText(getApplicationContext(), "Your results will be submitted when internet connection is back", Toast.LENGTH_LONG).show();
+
+			showAlternativeTextForGraph("Your results will be submitted when internet connection is back.");
+		} else if(isMockQuiz && !isConnectionAvailable) {
+			//Mock quiz and no Internet
+			showAlternativeTextForGraph("Thank you for completing the offline quiz! Your score will not be submitted.");
+		} else if(isMockQuiz && isConnectionAvailable) {
+			//Mock quiz and Internet
+			showAlternativeTextForGraph("Thank you for completing the offline quiz! You can try now real quiz in the Main Menu.");
 		}
-		/* else {
-		 *     TextView tvOffline = ....;
-		 *     llStats.addView(tvOffline);
-		 * }
-		 */
+		
 		playSounds((float) score / resultList.size());
 		
 	}
@@ -274,5 +288,17 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	@Override
 	public void onBackPressed() {
 		onMainMenuSelected(null);
+	}
+
+	public void showAlternativeTextForGraph(String textMessageToShow) {
+		TextView tvNoResult = new TextView(getApplicationContext());
+		tvNoResult.setText(textMessageToShow);
+		tvNoResult.setLayoutParams(new LayoutParams(
+		        LayoutParams.MATCH_PARENT,
+		        LayoutParams.WRAP_CONTENT));
+		tvNoResult.setTextSize(23);
+		tvNoResult.setTextColor(Color.BLACK);
+		tvNoResult.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+		llStats.addView(tvNoResult);
 	}
 }
