@@ -3,18 +3,21 @@ package com.flashmath.fragment;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.education.flashmath.R;
 import com.flashmath.util.ColorUtil;
+import com.jjoe64.graphview.CustomLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
-import com.jjoe64.graphview.CustomLabelFormatter;
 import com.jjoe64.graphview.GraphViewStyle;
 import com.jjoe64.graphview.LineGraphView;
 
@@ -39,21 +42,25 @@ public class LongGraphFragment extends Fragment{
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
 		llStats = (LinearLayout) getActivity().findViewById(R.id.llStats);
-		
-		GraphView graphView = new LineGraphView(getActivity(),"");
-		graphView.setCustomLabelFormatter(new CustomLabelFormatter.IntegerOnly());
-		GraphViewStyle style = new GraphViewStyle();
-		
-		style.setVerticalLabelsColor(Color.BLACK);
-		style.setHorizontalLabelsColor(Color.BLACK);
-		style.setGridColor(Color.GRAY);
-		GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(ColorUtil.subjectColorInt(subject), 5);
-		GraphViewSeries userData = new GraphViewSeries("Score", lineStyle, data);
-		graphView.addSeries(userData);
-		graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
-		graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
-		graphView.setGraphViewStyle(style);
-		llStats.addView(graphView); 
+
+		if (data.length > 1) {
+			GraphView graphView = new LineGraphView(getActivity(),"");
+			graphView.setCustomLabelFormatter(new CustomLabelFormatter.IntegerOnly());
+			GraphViewStyle style = new GraphViewStyle();
+			
+			style.setVerticalLabelsColor(Color.BLACK);
+			style.setHorizontalLabelsColor(Color.BLACK);
+			style.setGridColor(Color.GRAY);
+			GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(ColorUtil.subjectColorInt(subject), 5);
+			GraphViewSeries userData = new GraphViewSeries("Score", lineStyle, data);
+			graphView.addSeries(userData);
+			graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
+			graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
+			graphView.setGraphViewStyle(style);
+			llStats.addView(graphView);
+		} else {
+			showAlternativeTextForGraph("You need to take more tests before we can make you a graph!");
+		}
 		llStats.setVisibility(View.VISIBLE);
 	}
 	
@@ -73,5 +80,17 @@ public class LongGraphFragment extends Fragment{
 			llStats.addView(graphView);
 			llStats.setVisibility(View.VISIBLE);
 		}
+	}
+	
+	public void showAlternativeTextForGraph(String textMessageToShow) {
+		TextView tvNoResult = new TextView(getActivity());
+		tvNoResult.setText(textMessageToShow);
+		tvNoResult.setLayoutParams(new LayoutParams(
+		        LayoutParams.MATCH_PARENT,
+		        LayoutParams.WRAP_CONTENT));
+		tvNoResult.setTextSize(23);
+		tvNoResult.setTextColor(Color.BLACK);
+		tvNoResult.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+		llStats.addView(tvNoResult);
 	}
 }
