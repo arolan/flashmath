@@ -32,6 +32,7 @@ import com.flashmath.network.TwitterClient;
 import com.flashmath.util.ColorUtil;
 import com.flashmath.util.ConnectivityUtil;
 import com.flashmath.util.SoundUtil;
+import com.jjoe64.graphview.CustomLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
@@ -50,11 +51,14 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	private TextView tvTotal;
 	private TextView tvScore;
 	private TextView tvSubject;
+	private boolean wentThroughTwitterFlow = false;
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result);
+		wentThroughTwitterFlow = false;
 		llStats = (LinearLayout) findViewById(R.id.llStats);
 		tvTotal = (TextView) findViewById(R.id.tvTotal);
 		tvScore = (TextView) findViewById(R.id.tvScore);
@@ -99,8 +103,6 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		}
 		Button btnTweet = (Button) findViewById(R.id.btnTweet);
 		btnTweet.setBackground(ColorUtil.getButtonStyle(subject, this));
-		Button btnTryAgain = (Button) findViewById(R.id.btnTryAgain);
-		btnTryAgain.setBackground(ColorUtil.getButtonStyle(subject, this));
 		Button btnMainMenu = (Button) findViewById(R.id.btnMainMenu);
 		btnMainMenu.setBackground(ColorUtil.getButtonStyle(subject, this));
 		tvScore.setText(String.valueOf(score));
@@ -113,6 +115,8 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		tvSubject.setBackgroundColor(ColorUtil.subjectColorInt(subject));
 		tvSubject.setTextColor(Color.WHITE);
 		FlashMathClient client = FlashMathClient.getClient(this);
+		
+		// Check if quiz is legitimate
 		
 		if(ConnectivityUtil.isInternetConnectionAvailable(this.getApplicationContext())) {
 			client.putScore(subject, String.valueOf(score), new JsonHttpResponseHandler() {
@@ -130,6 +134,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 						}
 					}
 					GraphView graphView = new LineGraphView(ResultActivity.this, "");
+					graphView.setCustomLabelFormatter(new CustomLabelFormatter.IntegerOnly());
 					GraphViewStyle style = new GraphViewStyle();
 					style.setVerticalLabelsColor(Color.BLACK);
 					style.setHorizontalLabelsColor(Color.BLACK);
@@ -153,34 +158,26 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 			os.setTimeStampInSeconds(c.get(Calendar.SECOND));
 			ConnectivityUtil.setUnsentScore(os);
 			os.save();
-			
+			// Put this into llStats somehow
 			Toast.makeText(getApplicationContext(), "Your results will be submitted when internet connection is back", Toast.LENGTH_LONG).show();
 		}
+		/* else {
+		 *     TextView tvOffline = ....;
+		 *     llStats.addView(tvOffline);
+		 * }
+		 */
 		playSounds((float) score / resultList.size());
 		
 	}
-	
-
-	
-	
 	
 	public void tweetScore(View v) {
 		if (ConnectivityUtil.isInternetConnectionAvailable(this)) {
 			if (!getClient().isAuthenticated()) {
 				getClient().connect();
+				wentThroughTwitterFlow = true;
 			} else {
 				tweet();
 			}
-		} else {
-			Toast.makeText(this, ConnectivityUtil.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	//goes back to the first questions
-	public void onTryAgain(View v){
-		if (ConnectivityUtil.isInternetConnectionAvailable(this)) {
-			Intent i = new Intent(this, QuestionActivity.class);
-			startActivity(i);
 		} else {
 			Toast.makeText(this, ConnectivityUtil.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
 		}
@@ -231,6 +228,9 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 
 	@Override
 	public void onLoginSuccess() {
+		if (wentThroughTwitterFlow) {
+			Toast.makeText(this, "Success! You can tweet your score now!", Toast.LENGTH_LONG).show();
+		}
 	}
 
 	@Override
@@ -253,7 +253,6 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 
 	@Override
 	public void onBackPressed() {
-		//do not allow to go back to modify the last question's answer
+		onMainMenuSelected(null);
 	}
-	
 }
