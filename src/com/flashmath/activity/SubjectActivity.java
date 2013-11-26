@@ -1,10 +1,7 @@
 package com.flashmath.activity;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -12,11 +9,9 @@ import android.view.View.OnLongClickListener;
 import android.widget.Button;
 
 import com.education.flashmath.R;
-import com.flashmath.util.SoundUtility;
+import com.flashmath.util.SoundUtil;
 
 public class SubjectActivity extends Activity {
-
-	public static final String SUBJECT_BACKGROUND_INTENT_KEY = "subjectBackgroundId";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,110 +24,30 @@ public class SubjectActivity extends Activity {
 		Button button4 = (Button) findViewById(R.id.button4);
 		Button button5 = (Button) findViewById(R.id.button5);
 		Button button6 = (Button) findViewById(R.id.button6);
+		
+		OnLongClickListener subjectDetailListener = new OnLongClickListener() {
+			 @Override
+			    public boolean onLongClick(View v) {
+			        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
+			  		String tag = v.getTag().toString();
+			  		i.putExtra("subject", tag);
+			  		startActivity(i);
+			        return true;
+			    }
+		};
 	
-		button1.setOnLongClickListener(new OnLongClickListener() {
-
-		    @Override
-		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
-		  		String tag = v.getTag().toString();
-		  		i.putExtra("subject", tag);
-		  		//Log.d("DEBUG",tag);
-		  		startActivity(i);
-		        return true;
-		    }
-
-		});
+		button1.setOnLongClickListener(subjectDetailListener);
+		button2.setOnLongClickListener(subjectDetailListener);
+		button3.setOnLongClickListener(subjectDetailListener);
+		button4.setOnLongClickListener(subjectDetailListener);
+		button5.setOnLongClickListener(subjectDetailListener);
+		button6.setOnLongClickListener(subjectDetailListener);
 		
-		button2.setOnLongClickListener(new OnLongClickListener() {
-
-		    @Override
-		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
-		  		String tag = v.getTag().toString();
-		  		i.putExtra("subject", tag);
-		  		//Log.d("DEBUG",tag);
-		  		startActivity(i);
-		        return true;
-		    }
-
-		});
-		
-		button3.setOnLongClickListener(new OnLongClickListener() {
-
-		    @Override
-		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
-		  		String tag = v.getTag().toString();
-		  		i.putExtra("subject", tag);
-		  		//Log.d("DEBUG",tag);
-		  		startActivity(i);
-		        return true;
-		    }
-
-		});
-		
-		button4.setOnLongClickListener(new OnLongClickListener() {
-
-		    @Override
-		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
-		  		String tag = v.getTag().toString();
-		  		i.putExtra("subject", tag);
-		  		//Log.d("DEBUG",tag);
-		  		startActivity(i);
-		        return true;
-		    }
-
-		});
-		
-		button5.setOnLongClickListener(new OnLongClickListener() {
-
-		    @Override
-		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
-		  		String tag = v.getTag().toString();
-		  		i.putExtra("subject", tag);
-		  		//Log.d("DEBUG",tag);
-		  		startActivity(i);
-		        return true;
-		    }
-
-		});
-		
-		button6.setOnLongClickListener(new OnLongClickListener() {
-
-		    @Override
-		    public boolean onLongClick(View v) {
-		        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
-		  		String tag = v.getTag().toString();
-		  		i.putExtra("subject", tag);
-		  		//Log.d("DEBUG",tag);
-		  		startActivity(i);
-		        return true;
-		    }
-
-		});
-		
-		
-		prepareSounds();
+		SoundUtil.prepareSounds(this);
 	}
 	
 
-	private void prepareSounds() {
-		AssetFileDescriptor badSound = null;
-		AssetFileDescriptor averageSound = null;
-		AssetFileDescriptor excellentSound = null;
-		try {
-			badSound = getAssets().openFd("fail.mp3");
-			averageSound = getAssets().openFd("average.mp3");
-			excellentSound = getAssets().openFd("excellent.mp3");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		SoundUtility.initSounds(this);
-		SoundUtility.loadSounds(badSound,averageSound, excellentSound);
-	}
+	
 
 
 	@Override
@@ -148,28 +63,6 @@ public class SubjectActivity extends Activity {
 		String tag = v.getTag().toString();
 		
 		i.putExtra("subject", tag);
-
-		String backgroundColor = identifySubjectColor(tag);
-		i.putExtra(SUBJECT_BACKGROUND_INTENT_KEY, backgroundColor);
-		//Log.d("DEBUG",tag);
 		startActivity(i);
-	}
-	
-	private String identifySubjectColor(String tag) {
-		String color = null;
-		if (tag.equalsIgnoreCase("Addition")) {
-			color = String.valueOf(R.drawable.btn_blue);
-		} else if (tag.equalsIgnoreCase("Subtraction")) {
-			color = String.valueOf(R.drawable.btn_purple);
-		} else if (tag.equalsIgnoreCase("Multiplication")) {
-			color = String.valueOf(R.drawable.btn_green);
-		} else if (tag.equalsIgnoreCase("Fractions")) {
-			color = String.valueOf(R.drawable.btn_pink);
-		} else if (tag.equalsIgnoreCase("Division")) {
-			color = String.valueOf(R.drawable.btn_yellow);
-		} else if (tag.equalsIgnoreCase("Geometry")) {
-			color = String.valueOf(R.drawable.btn_orange);
-		}
-		return color;
 	}
 }

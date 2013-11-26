@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,8 +14,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -30,7 +27,8 @@ import com.education.flashmath.R;
 import com.flashmath.models.Question;
 import com.flashmath.network.FlashMathClient;
 import com.flashmath.network.TwitterClient;
-import com.flashmath.util.SoundUtility;
+import com.flashmath.util.ColorUtil;
+import com.flashmath.util.SoundUtil;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
@@ -49,10 +47,6 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	private TextView tvTotal;
 	private TextView tvScore;
 	private TextView tvSubject;
-	private String backgroundColor;
-	private static SoundPool soundPool;
-	private static HashMap soundPoolMap;
-	
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +59,6 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		if (savedInstanceState == null) {
 			resultList = (ArrayList<Question>) getIntent().getSerializableExtra("QUESTIONS_ANSWERED");
 			subject = getIntent().getStringExtra(SUBJECT_INTENT_KEY);
-			backgroundColor = getIntent().getStringExtra(SubjectActivity.SUBJECT_BACKGROUND_INTENT_KEY);
 			evaluate();
 		}
 		
@@ -74,11 +67,11 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 
 	private void playSounds(float pc) {
 		if (pc >= .8) {
-			SoundUtility.playSound(this, 3);
+			SoundUtil.playSound(this, 3);
 		} else if (pc >= .5) {
-			SoundUtility.playSound(this, 2);
+			SoundUtil.playSound(this, 2);
 		} else {
-			SoundUtility.playSound(this, 1);
+			SoundUtil.playSound(this, 1);
 		}
 		
 		
@@ -91,39 +84,10 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		return true;
 	}
 	
-	public Drawable getButton(){
-		if(subject.equals("addition")){
-			return getResources().getDrawable(R.drawable.btn_blue2);
-		} else if(subject.equals("subtraction")){
-			return getResources().getDrawable(R.drawable.btn_purple2);
-		} else if(subject.equals("multiplication")){
-			return getResources().getDrawable(R.drawable.btn_green2);
-		} else if(subject.equals("fractions")){
-			return getResources().getDrawable(R.drawable.btn_pink2);
-		} else {
-			return getResources().getDrawable(R.drawable.btn_yellow2);
-		}
-	}
-	
-
-	private Drawable getBarIcon() {
-		if(subject.equals("addition")){
-			return getResources().getDrawable(R.drawable.ic_action_plus);
-		} else if(subject.equals("subtraction")){
-			return getResources().getDrawable(R.drawable.ic_action_minus);
-		} else if(subject.equals("multiplication")){
-			return getResources().getDrawable(R.drawable.ic_action_times);
-		} else if(subject.equals("fractions")){
-			return getResources().getDrawable(R.drawable.ic_action_fraction);
-		} else {
-			return getResources().getDrawable(R.drawable.ic_action_divide);
-		}
-	}
-	
 	public void evaluate(){
 		//if (resultList != null) {
 		ActionBar ab = getActionBar();
-		ab.setIcon(getBarIcon());
+		ab.setIcon(ColorUtil.getBarIcon(subject, this));
 		for(int i = 0; i < resultList.size(); i++){
 			String correctAnswer = resultList.get(i).getCorrectAnswer();
 			if (resultList.get(i).getUserAnswer().equals(correctAnswer)){
@@ -131,19 +95,19 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 			}
 		}
 		Button btnTweet = (Button) findViewById(R.id.btnTweet);
-		btnTweet.setBackground(getButton());
+		btnTweet.setBackground(ColorUtil.getButtonStyle(subject, this));
 		Button btnTryAgain = (Button) findViewById(R.id.btnTryAgain);
-		btnTryAgain.setBackground(getButton());
+		btnTryAgain.setBackground(ColorUtil.getButtonStyle(subject, this));
 		Button btnMainMenu = (Button) findViewById(R.id.btnMainMenu);
-		btnMainMenu.setBackground(getButton());
+		btnMainMenu.setBackground(ColorUtil.getButtonStyle(subject, this));
 		tvScore.setText(String.valueOf(score));
-		tvScore.setTextColor(getScoreColor((float) score / resultList.size()));
+		tvScore.setTextColor(ColorUtil.getScoreColor((float) score / resultList.size()));
 		tvTotal.setText("/ " + String.valueOf(resultList.size()));
 		String subjectTitle = Character.toUpperCase(subject.charAt(0))+subject.substring(1);
 		ab.setTitle(subjectTitle + " Results");
 		
 		tvSubject.setText(" Score History for " + subjectTitle + " ");
-		tvSubject.setBackgroundColor(getColor());
+		tvSubject.setBackgroundColor(ColorUtil.subjectColorInt(subject));
 		tvSubject.setTextColor(Color.WHITE);
 		FlashMathClient client = FlashMathClient.getClient(this);
 		client.putScore(subject, String.valueOf(score), new JsonHttpResponseHandler() {
@@ -167,7 +131,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 				style.setGridColor(Color.GRAY);
 				style.setNumVerticalLabels(4);
 				style.setNumHorizontalLabels(2);
-				GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(getColor(), 5);
+				GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(ColorUtil.subjectColorInt(subject), 5);
 				graphView.addSeries(new GraphViewSeries("Scores", lineStyle, data));
 				graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
 				graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
@@ -211,12 +175,6 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	}
 	
 	
-	private InputStream getTestResourceFileAsInputStream() {
-		//testing with a local profile picture
-		InputStream is = getResources().openRawResource(R.drawable.ic_profile);
-		return is;
-	}
-	
 	private InputStream getScreenShotFile() {
 		// create bitmap screen capture
 		Bitmap bitmap;
@@ -241,32 +199,6 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 			return "I have brought shame to my family. I failed " + subject + " with a " + String.format("%.0f", pc * 100) + "%.";
 		}
 	}
-	
-	public int getColor(){
-		int color = 0;
-		if(subject.equals("addition")){
-			color = Color.parseColor("#7979FF");
-		} else if(subject.equals("subtraction")){
-			color = Color.parseColor("#D79BFA");
-		} else if(subject.equals("multiplication")){
-			color = Color.parseColor("#66b266");
-		} else if(subject.equals("fractions")){
-			color = Color.parseColor("#FA96D2");
-		} else if(subject.equals("division")){
-			color = Color.parseColor("#44B4D5");
-		}
-		return color;
-	}
-	
-	public int getScoreColor(float pc) {
-		if (pc >= .8) {
-			return Color.parseColor("#66FF66");
-		} else if (pc >= .5) {
-			return Color.parseColor("#E5E500");
-		} else {
-			return Color.parseColor("#FF0033");
-		}
-	}
 
 	@Override
 	public void onLoginSuccess() {
@@ -281,7 +213,6 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		Intent i = new Intent(this, QuestionActivity.class);
 		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtra(SUBJECT_INTENT_KEY, subject);
-		i.putExtra(SubjectActivity.SUBJECT_BACKGROUND_INTENT_KEY, backgroundColor);
 		startActivity(i);
 	}
 	

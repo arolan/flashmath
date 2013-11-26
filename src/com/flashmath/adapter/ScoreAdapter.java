@@ -2,10 +2,8 @@ package com.flashmath.adapter;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.TimeZone;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +12,7 @@ import android.widget.TextView;
 
 import com.education.flashmath.R;
 import com.flashmath.models.Score;
+import com.flashmath.util.ColorUtil;
 
 public class ScoreAdapter extends ArrayAdapter<Score>{
 	
@@ -37,7 +36,7 @@ public class ScoreAdapter extends ArrayAdapter<Score>{
 		TextView tvNumber = (TextView) view.findViewById(R.id.tvNumber);
 		tvNumber.setText(String.valueOf(getItem(position).att));
 		tvBigScore.setText(" "+score);
-		tvBigScore.setTextColor(getScoreColor(score));
+		tvBigScore.setTextColor(ColorUtil.getScoreColor(score));
 		tvScoreMsg.setText(getMsg(score));
 		tvTime.setText(timeDifference(getItem(position).date));
 		return view;
@@ -55,19 +54,8 @@ public class ScoreAdapter extends ArrayAdapter<Score>{
 		return msg;
 	}
 	
-	public int getScoreColor(int score) {
-		if (score == 3) {
-			return Color.parseColor("#66FF66");
-		} else if (score == 2) {
-			return Color.parseColor("#E5E500");
-		} else {
-			return Color.parseColor("#FF0033");
-		}
-	}
-	
 	public static String timeDifference(Date date) {
 		Date now = new Date();
-		TimeZone tz = TimeZone.getTimeZone("US/Pacific");
 		long diff = now.getTime() + (5 * 60 * 60 * 1000) + 75000 - date.getTime();
 		long val = diff / 1000; 
 		if (val < 0) {

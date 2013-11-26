@@ -18,7 +18,6 @@ public class Question implements Serializable {
 	
 	protected long questionId;
 	protected SubjectCategory subjectId;
-	protected Quiz quiz;
 	protected String questionText;
 	protected String correctAnswer;
 	protected String userAnswer;
@@ -72,9 +71,6 @@ public class Question implements Serializable {
 	public String getQuestionText() {
 		return questionText;
 	}
-	public Quiz getQuiz() {
-		return quiz;
-	}
 	public void setQuestionId(long questionId) {
 		this.questionId = questionId;
 	}
@@ -82,10 +78,6 @@ public class Question implements Serializable {
 		this.questionText = questionText;
 	}
 
-	public void setQuiz(Quiz quiz) {
-		this.quiz = quiz;
-	}
-	
 	public boolean verifyUserAnswerCorrectness() {
 		return this.correctAnswer.equals(this.userAnswer);
 	}

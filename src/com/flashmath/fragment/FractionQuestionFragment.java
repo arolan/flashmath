@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.education.flashmath.R;
-import com.flashmath.models.ArithmeticQuestion;
 import com.flashmath.models.FractionQuestion;
 
 public class FractionQuestionFragment extends QuestionFragment {

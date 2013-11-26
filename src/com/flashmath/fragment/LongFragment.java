@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,7 @@ import android.widget.ListView;
 import com.education.flashmath.R;
 import com.flashmath.adapter.ScoreAdapter;
 import com.flashmath.models.Score;
+import com.flashmath.util.ColorUtil;
 
 public class LongFragment extends Fragment{
 	
@@ -44,26 +44,12 @@ public class LongFragment extends Fragment{
 	    lvScores.setDivider(new ColorDrawable(Color.parseColor("#FFFFFF")));
 	    lvScores.setDividerHeight(1);
 		lvScores.setAdapter(adapter);
-		lvScores.setBackground(getListColor());
+		lvScores.setBackground(ColorUtil.getListStyle(subject, this));
 		lvScores.setVisibility(View.VISIBLE);
 	}
 	
 	public void clearScores() {
 		if (adapter != null)
 			adapter.clear();
-	}
-	
-	public Drawable getListColor(){
-		if(subject.equals("addition")){
-			return getResources().getDrawable(R.drawable.btn_blue4);
-		} else if(subject.equals("subtraction")){
-			return getResources().getDrawable(R.drawable.btn_purple4);
-		} else if(subject.equals("multiplication")){
-			return getResources().getDrawable(R.drawable.btn_green4);
-		} else if(subject.equals("fractions")){
-			return getResources().getDrawable(R.drawable.btn_pink4);
-		} else {
-			return getResources().getDrawable(R.drawable.btn_yellow4);
-		}
 	}
 }

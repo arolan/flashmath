@@ -12,7 +12,6 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spannable;
@@ -29,6 +28,7 @@ import com.flashmath.fragment.LongFragment;
 import com.flashmath.fragment.LongGraphFragment;
 import com.flashmath.models.Score;
 import com.flashmath.network.FlashMathClient;
+import com.flashmath.util.ColorUtil;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -61,16 +61,16 @@ public class LongActivity extends Activity {
 		
 		subject = getIntent().getStringExtra("subject");
 		ActionBar ab = getActionBar();
-		ab.setIcon(getBarIcon());
+		ab.setIcon(ColorUtil.getBarIcon(subject, this));
 	    Button btnClose = (Button) findViewById(R.id.btnClose);
-	    btnClose.setBackground(getButton());
+	    btnClose.setBackground(ColorUtil.getButtonStyle(subject, this));
 	    btnSwap = (Button) findViewById(R.id.btnSwap);
-	    btnSwap.setBackground(getButton());
+	    btnSwap.setBackground(ColorUtil.getButtonStyle(subject, this));
 		subjectTitle = Character.toUpperCase(subject.charAt(0))+subject.substring(1);
 		ab.setTitle(subjectTitle + " Details");
 		
 		tvSubject.setText("Score History for "+ subjectTitle);
-		tvSubject.setBackgroundColor(getColor());
+		tvSubject.setBackgroundColor(ColorUtil.subjectColorInt(subject));
 		tvSubject.setTextColor(Color.WHITE);
 		tvStudy.setText(subjectTitle);
 		
@@ -115,12 +115,12 @@ public class LongActivity extends Activity {
 					min_score = 0;
 				}
 				tvBest.setText(String.valueOf(max_score));
-				tvBest.setTextColor(getScoreColor((float) max_score / 3));
+				tvBest.setTextColor(ColorUtil.getScoreColor((float) max_score / 3));
 				tvWorst.setText(String.valueOf(min_score));
-				tvWorst.setTextColor(getScoreColor((float) min_score / 3));
+				tvWorst.setTextColor(ColorUtil.getScoreColor((float) min_score / 3));
 				float average = jsonScores.length() == 0 ? 0f : (float) total / jsonScores.length();
 				tvAverage.setText(String.format("%.1f", average));
-				tvAverage.setTextColor(getScoreColor(average / 3));
+				tvAverage.setTextColor(ColorUtil.getScoreColor(average / 3));
 				lg = new LongGraphFragment();
 				lg.setScores(data);
 				lg.setSubject(subject);
@@ -132,65 +132,6 @@ public class LongActivity extends Activity {
 				findViewById(R.id.pgLoad).setVisibility(View.GONE);
 			}
 		});
-	}
-
-
-	public int getColor(){
-		int color = 0;
-		if(subject.equals("addition")){
-			color = Color.parseColor("#7979FF");
-		} else if(subject.equals("subtraction")){
-			color = Color.parseColor("#D79BFA");
-		} else if(subject.equals("multiplication")){
-			color = Color.parseColor("#66b266");
-		} else if(subject.equals("fractions")){
-			color = Color.parseColor("#FA96D2");
-		} else if(subject.equals("division")){
-			color = Color.parseColor("#44B4D5");
-		}
-		return color;
-	}
-	
-	private Drawable getBarIcon() {
-		if(subject.equals("addition")){
-			return getResources().getDrawable(R.drawable.ic_action_plus);
-		} else if(subject.equals("subtraction")){
-			return getResources().getDrawable(R.drawable.ic_action_minus);
-		} else if(subject.equals("multiplication")){
-			return getResources().getDrawable(R.drawable.ic_action_times);
-		} else if(subject.equals("fractions")){
-			return getResources().getDrawable(R.drawable.ic_action_fraction);
-		} else {
-			return getResources().getDrawable(R.drawable.ic_action_divide);
-		}
-	}
-	
-	public Drawable getButton(){
-		if(subject.equals("addition")){
-			return getResources().getDrawable(R.drawable.btn_blue2);
-		} else if(subject.equals("subtraction")){
-			return getResources().getDrawable(R.drawable.btn_purple2);
-		} else if(subject.equals("multiplication")){
-			return getResources().getDrawable(R.drawable.btn_green2);
-		} else if(subject.equals("fractions")){
-			return getResources().getDrawable(R.drawable.btn_pink2);
-		} else {
-			return getResources().getDrawable(R.drawable.btn_yellow2);
-		}
-	}
-	
-	public Drawable getListColor(){
-		if(subject.equals("addition")){
-			return getResources().getDrawable(R.drawable.btn_blue4);
-		} else if(subject.equals("subtraction")){
-			return getResources().getDrawable(R.drawable.btn_purple4);
-		} else if(subject.equals("multiplication")){
-			return getResources().getDrawable(R.drawable.btn_green4);
-		} else if(subject.equals("fractions")){
-			return getResources().getDrawable(R.drawable.btn_pink4);
-		} else {
-			return getResources().getDrawable(R.drawable.btn_yellow4);
-		}
 	}
 	
 	//Close button
@@ -227,11 +168,11 @@ public class LongActivity extends Activity {
 	public void onClear(View v){
 		tvAttempts.setText("0 Attempts");
 		tvBest.setText("0");
-		tvBest.setTextColor(getScoreColor(0));
+		tvBest.setTextColor(ColorUtil.getScoreColor(0));
 		tvWorst.setText("0");
-		tvWorst.setTextColor(getScoreColor(0));
+		tvWorst.setTextColor(ColorUtil.getScoreColor(0));
 		tvAverage.setText("0.0");
-		tvAverage.setTextColor(getScoreColor(0));
+		tvAverage.setTextColor(ColorUtil.getScoreColor(0));
 		
 		lf.clearScores();
 		lg.clearScores();
@@ -244,17 +185,6 @@ public class LongActivity extends Activity {
 			}
 		});
 	}
-	
-	public int getScoreColor(float pc) {
-		if (pc >= .8) {
-			return Color.parseColor("#66FF66");
-		} else if (pc >= .5) {
-			return Color.parseColor("#E5E500");
-		} else {
-			return Color.parseColor("#FF0033");
-		}
-	}
-
 	
 	private void stripUnderlines(TextView textView) {
         Spannable s = (Spannable) new SpannableString(textView.getText());
