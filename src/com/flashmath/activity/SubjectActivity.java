@@ -38,7 +38,7 @@ public class SubjectActivity extends Activity {
 				        return true;
 				 	} else {
 				 		Toast.makeText(SubjectActivity.this, "Internet connection is not available", Toast.LENGTH_LONG).show();
-				 		return false;
+				 		return true;
 				 	}
 			    }
 		};
@@ -62,15 +62,10 @@ public class SubjectActivity extends Activity {
 	}
 	
 	public void onButtonClick(View v){
-	 	if (ConnectivityUtil.isInternetConnectionAvailable(this)) {
-			Intent i = new Intent(this, QuestionActivity.class);
-			String tag = v.getTag().toString();
-			i.putExtra(ResultActivity.SUBJECT_INTENT_KEY, tag);
-			i.putExtra(QuestionActivity.IS_MOCK_QUIZ_INTENT_KEY, false);
-			startActivity(i);
-	 	} else {
-	 		// construct a mock quiz and set the quiz flag to be offline mode
-	 		//i.putExtra(QuestionActivity.IS_MOCK_QUIZ_INTENT_KEY, true);
-	 	}
+		Intent i = new Intent(this, QuestionActivity.class);
+		String tag = v.getTag().toString();
+		i.putExtra(ResultActivity.SUBJECT_INTENT_KEY, tag);
+		i.putExtra(QuestionActivity.IS_MOCK_QUIZ_INTENT_KEY, !(ConnectivityUtil.isInternetConnectionAvailable(this)));
+		startActivity(i);
 	}
 }
