@@ -1,7 +1,6 @@
 package com.education.flashmath.utils;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.json.JSONArray;
 
@@ -16,7 +15,7 @@ import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 import com.education.flashmath.models.OfflineScore;
-import com.education.flashmath.network.FlashMathClient;
+import com.flashmath.network.FlashMathClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class ConnectivityUtility extends BroadcastReceiver {

@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SubjectActivity" >
-    
-    
 
     <TableLayout
         android:id="@+id/tbSubject"
@@ -15,8 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:layout_centerVertical="true" 
-        android:longClickable="true"
-        >
+        android:longClickable="true" >
 
         <TableRow
             android:id="@+id/tableRow1"
@@ -29,7 +26,7 @@
                 android:layout_height="150dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/btn_blue"
+                android:background="@drawable/subject_blue"
                 android:longClickable="true"
                 android:onClick="onButtonClick"
                 android:tag="addition"
@@ -43,7 +40,7 @@
                 android:id="@+id/button2"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:background="@drawable/btn_purple"
+                android:background="@drawable/subject_purple"
                 android:longClickable="true"
                 android:onClick="onButtonClick"
                 android:paddingBottom="5dp"
@@ -59,74 +56,76 @@
             android:id="@+id/tableRow2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-   	 <Button
-        android:id="@+id/button3"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignLeft="@+id/button1"
-		android:layout_below="@+id/button1"
-        android:text="×" 
-        android:tag="multiplication"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:paddingBottom="5dp"
-        android:textSize="100sp"
-        android:background="@drawable/btn_green"
-        android:onClick="onButtonClick"
-        android:longClickable="true"/>
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignRight="@+id/button3"
-        android:layout_below="@+id/button3"
-        android:text="÷"
-        android:tag="division"
-        android:textStyle="bold"
-        android:textSize="100sp"
-        android:paddingBottom="5dp"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/btn_yellow" 
-        android:onClick="onButtonClick"
-        android:longClickable="true"/>
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignLeft="@+id/button1"
+                android:layout_below="@+id/button1"
+                android:text="×" 
+                android:tag="multiplication"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:paddingBottom="5dp"
+                android:textSize="100sp"
+                android:background="@drawable/subject_green"
+                android:onClick="onButtonClick"
+                android:longClickable="true"/>
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignRight="@+id/button3"
+                android:layout_below="@+id/button3"
+                android:text="÷"
+                android:tag="division"
+                android:textStyle="bold"
+                android:textSize="100sp"
+                android:paddingBottom="5dp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/subject_yellow" 
+                android:onClick="onButtonClick"
+                android:longClickable="true"/>
+            
         </TableRow>
 
-     <TableRow
+        <TableRow
             android:id="@+id/tableRow3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-            
-		<Button
-			android:id="@+id/button4"
-			android:layout_width="150dp"
-			android:layout_height="150dp"
-			android:background="@drawable/btn_pink"
-			android:longClickable="true"
-			android:onClick="onButtonClick"
-			android:paddingBottom="5dp"
-			android:tag="fractions"
-			android:text="/"
-			android:textColor="#FFFFFF"
-			android:textSize="100sp"
-			android:textStyle="bold" />
-			
-        <Button
-	        android:id="@+id/button6"
-	        android:layout_width="150dp"
-	        android:layout_height="150dp"
-	        android:layout_alignLeft="@+id/button4"
-	        android:layout_below="@+id/button3"
-	        android:background="@drawable/btn_orange"
-	        android:tag="geometry"
-	        android:text="△"
-            android:textColor="#FFFFFF"
-            android:textSize="100sp"
-            android:textStyle="bold"
-	        android:paddingBottom="5dp"
-	        android:onClick="onButtonClick"
-	        android:longClickable="true"/>
-	        
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/subject_pink"
+                android:longClickable="true"
+                android:onClick="onButtonClick"
+                android:paddingBottom="5dp"
+                android:tag="fractions"
+                android:text="/"
+                android:textColor="#FFFFFF"
+                android:textSize="100sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignLeft="@+id/button4"
+                android:layout_below="@+id/button3"
+                android:background="@drawable/subject_orange"
+                android:tag="geometry"
+                android:text="△"
+                android:textColor="#FFFFFF"
+                android:textSize="100sp"
+                android:textStyle="bold"
+                android:paddingBottom="5dp"
+                android:onClick="onButtonClick"
+                android:longClickable="true"/>
+
         </TableRow>
-</TableLayout>
+    </TableLayout>
 </RelativeLayout>
