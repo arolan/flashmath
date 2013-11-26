@@ -24,7 +24,7 @@
         android:layout_toRightOf="@+id/tvNumber"
         android:text="1"
         android:layout_marginLeft="-15dp"
-        android:textSize="70sp"
+        android:textSize="40sp"
         android:textStyle="bold" />
 
     <TextView
