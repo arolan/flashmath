@@ -11,6 +11,7 @@ import org.json.JSONException;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
@@ -205,6 +206,13 @@ public class LongActivity extends Activity {
         }
         textView.setText(s);
     }
+	
+	@Override
+	public void onBackPressed() {
+		Intent i = new Intent(this, SubjectActivity.class);
+		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
+	}
 	
 	private class URLSpanNoUnderline extends URLSpan {
         public URLSpanNoUnderline(String url) {
