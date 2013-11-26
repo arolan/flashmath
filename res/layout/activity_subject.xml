@@ -26,7 +26,7 @@
                 android:layout_height="150dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/btn_blue"
+                android:background="@drawable/subject_blue"
                 android:longClickable="true"
                 android:onClick="onButtonClick"
                 android:tag="addition"
@@ -40,7 +40,7 @@
                 android:id="@+id/button2"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:background="@drawable/btn_purple"
+                android:background="@drawable/subject_purple"
                 android:longClickable="true"
                 android:onClick="onButtonClick"
                 android:paddingBottom="5dp"
@@ -69,7 +69,7 @@
                 android:textColor="#FFFFFF"
                 android:paddingBottom="5dp"
                 android:textSize="100sp"
-                android:background="@drawable/btn_green"
+                android:background="@drawable/subject_green"
                 android:onClick="onButtonClick"
                 android:longClickable="true"/>
 
@@ -85,7 +85,7 @@
                 android:textSize="100sp"
                 android:paddingBottom="5dp"
                 android:textColor="#FFFFFF"
-                android:background="@drawable/btn_yellow" 
+                android:background="@drawable/subject_yellow" 
                 android:onClick="onButtonClick"
                 android:longClickable="true"/>
             
@@ -100,7 +100,7 @@
                 android:id="@+id/button4"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:background="@drawable/btn_pink"
+                android:background="@drawable/subject_pink"
                 android:longClickable="true"
                 android:onClick="onButtonClick"
                 android:paddingBottom="5dp"
@@ -116,7 +116,7 @@
                 android:layout_height="150dp"
                 android:layout_alignLeft="@+id/button4"
                 android:layout_below="@+id/button3"
-                android:background="@drawable/btn_orange"
+                android:background="@drawable/subject_orange"
                 android:tag="geometry"
                 android:text="△"
                 android:textColor="#FFFFFF"

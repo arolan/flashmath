@@ -12,7 +12,7 @@
 	    android:layout_alignParentBottom="true"
 	    android:layout_marginBottom="12dp"
 	    android:visibility="invisible"
-	    android:background="@drawable/btn_blue4" >
+	    android:background="@drawable/list_blue" >
 	</ListView>
 	
 </RelativeLayout>
