@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,10 +25,12 @@ import android.widget.Toast;
 
 import com.codepath.oauth.OAuthLoginActivity;
 import com.education.flashmath.R;
+import com.flashmath.models.OfflineScore;
 import com.flashmath.models.Question;
 import com.flashmath.network.FlashMathClient;
 import com.flashmath.network.TwitterClient;
 import com.flashmath.util.ColorUtil;
+import com.flashmath.util.ConnectivityUtil;
 import com.flashmath.util.SoundUtil;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
@@ -110,51 +113,77 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		tvSubject.setBackgroundColor(ColorUtil.subjectColorInt(subject));
 		tvSubject.setTextColor(Color.WHITE);
 		FlashMathClient client = FlashMathClient.getClient(this);
-		client.putScore(subject, String.valueOf(score), new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(JSONArray jsonScores) {
-				GraphViewData[] data = new GraphViewData[jsonScores.length()];
-				int max_score = 1;
-				for (int i = 0; i < jsonScores.length(); i++) {
-					try {
-						int val = jsonScores.getJSONObject(i).getInt("value");
-						max_score = val > max_score ? val : max_score;
-						data[i] = (new GraphViewData(i + 1, val));
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-				GraphView graphView = new LineGraphView(ResultActivity.this, "");
-				GraphViewStyle style = new GraphViewStyle();
-				style.setVerticalLabelsColor(Color.BLACK);
-				style.setHorizontalLabelsColor(Color.BLACK);
-				style.setGridColor(Color.GRAY);
-				style.setNumVerticalLabels(4);
-				style.setNumHorizontalLabels(2);
-				GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(ColorUtil.subjectColorInt(subject), 5);
-				graphView.addSeries(new GraphViewSeries("Scores", lineStyle, data));
-				graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
-				graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
-				graphView.setGraphViewStyle(style);
-				llStats.addView(graphView);
-			}
-		});
 		
+		if(ConnectivityUtil.isInternetConnectionAvailable(this.getApplicationContext())) {
+			client.putScore(subject, String.valueOf(score), new JsonHttpResponseHandler() {
+				@Override
+				public void onSuccess(JSONArray jsonScores) {
+					GraphViewData[] data = new GraphViewData[jsonScores.length()];
+					int max_score = 1;
+					for (int i = 0; i < jsonScores.length(); i++) {
+						try {
+							int val = jsonScores.getJSONObject(i).getInt("value");
+							max_score = val > max_score ? val : max_score;
+							data[i] = (new GraphViewData(i + 1, val));
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+					GraphView graphView = new LineGraphView(ResultActivity.this, "");
+					GraphViewStyle style = new GraphViewStyle();
+					style.setVerticalLabelsColor(Color.BLACK);
+					style.setHorizontalLabelsColor(Color.BLACK);
+					style.setGridColor(Color.GRAY);
+					style.setNumVerticalLabels(4);
+					style.setNumHorizontalLabels(2);
+					GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(ColorUtil.subjectColorInt(subject), 5);
+					graphView.addSeries(new GraphViewSeries("Scores", lineStyle, data));
+					graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
+					graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
+					graphView.setGraphViewStyle(style);
+					llStats.addView(graphView);
+				}
+			});
+		} else {
+			OfflineScore os = new OfflineScore();
+			os.setScore(score);
+			os.setSubject(subject);
+			
+			Calendar c = Calendar.getInstance(); 
+			os.setTimeStampInSeconds(c.get(Calendar.SECOND));
+			ConnectivityUtil.setUnsentScore(os);
+			os.save();
+			
+			Toast.makeText(getApplicationContext(), "Your results will be submitted when internet connection is back", Toast.LENGTH_LONG).show();
+		}
 		playSounds((float) score / resultList.size());
+		
 	}
 	
+
+	
+	
+	
 	public void tweetScore(View v) {
-		if (!getClient().isAuthenticated()) {
-			getClient().connect();
+		if (ConnectivityUtil.isInternetConnectionAvailable(this)) {
+			if (!getClient().isAuthenticated()) {
+				getClient().connect();
+			} else {
+				tweet();
+			}
 		} else {
-			tweet();
+			Toast.makeText(this, ConnectivityUtil.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
 		}
 	}
 
 	//goes back to the first questions
 	public void onTryAgain(View v){
-		Intent i = new Intent(this, QuestionActivity.class);
-		startActivity(i);
+		if (ConnectivityUtil.isInternetConnectionAvailable(this)) {
+			Intent i = new Intent(this, QuestionActivity.class);
+			startActivity(i);
+		} else {
+			Toast.makeText(this, ConnectivityUtil.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
+		}
 	}
 	
 	private void tweet() {

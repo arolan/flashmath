@@ -22,6 +22,7 @@ import android.text.style.URLSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.education.flashmath.R;
 import com.flashmath.fragment.LongFragment;
@@ -29,6 +30,7 @@ import com.flashmath.fragment.LongGraphFragment;
 import com.flashmath.models.Score;
 import com.flashmath.network.FlashMathClient;
 import com.flashmath.util.ColorUtil;
+import com.flashmath.util.ConnectivityUtil;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -73,8 +75,7 @@ public class LongActivity extends Activity {
 		tvSubject.setBackgroundColor(ColorUtil.subjectColorInt(subject));
 		tvSubject.setTextColor(Color.WHITE);
 		tvStudy.setText(subjectTitle);
-		
-		tvLink.setText(Html.fromHtml("<a style='text-decoration:none' href=http://en.wikipedia.org/wiki/"+subject+"_(mathematics)>???"));
+		tvLink.setText(Html.fromHtml("<a style='text-decoration:none' href=http://en.wikipedia.org/wiki/"+subject+"_(mathematics)>↱"));
 		stripUnderlines(tvLink);
 		tvLink.setMovementMethod(LinkMovementMethod.getInstance());
 		
@@ -177,13 +178,19 @@ public class LongActivity extends Activity {
 		lf.clearScores();
 		lg.clearScores();
 		
-		FlashMathClient client = FlashMathClient.getClient(this);
-		client.clearScores(subject, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(JSONArray jsonScores) {
- 
-			}
-		});
+		if (ConnectivityUtil.isInternetConnectionAvailable(this)) {
+			FlashMathClient client = FlashMathClient.getClient(this);
+			
+			client.clearScores(subject, new JsonHttpResponseHandler() {
+				@Override
+				public void onSuccess(JSONArray jsonScores) {
+	 
+				}
+			});
+		} else {
+			Toast.makeText(this, ConnectivityUtil.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
+		}
+		
 	}
 	
 	private void stripUnderlines(TextView textView) {
