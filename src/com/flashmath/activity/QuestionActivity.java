@@ -59,7 +59,11 @@ public class QuestionActivity extends Activity {
 		btnClear.setBackground(ColorUtil.getButtonStyle(subject, this));
 		backgroundColor = ColorUtil.identifySubjectColor(subject);
 		tvQuestionProgress = (TextView) findViewById(R.id.tvQuestionProgress);
+		TextView tvQuestionSlash = (TextView) findViewById(R.id.tvQuestionSlash);
+		TextView tvQuestionTotal = (TextView) findViewById(R.id.tvQuestionTotal);
 		tvQuestionProgress.setTextColor(ColorUtil.subjectColorInt(subject));
+		tvQuestionSlash.setTextColor(ColorUtil.subjectColorInt(subject));
+		tvQuestionTotal.setTextColor(ColorUtil.subjectColorInt(subject));
 		ActionBar ab = getActionBar();
 		ab.setIcon(ColorUtil.getBarIcon(subject, this));
 		String subjectTitle = Character.toUpperCase(subject.charAt(0))+subject.substring(1);
@@ -113,7 +117,7 @@ public class QuestionActivity extends Activity {
 					((ArithmeticQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
 				}
 				
-				tvQuestionProgress.setText((currentQuestionIndex + 1) + "/" + questionList.size());
+				tvQuestionProgress.setText(String.valueOf(currentQuestionIndex + 1));
 			}
 		});
 	}
@@ -224,7 +228,7 @@ public class QuestionActivity extends Activity {
 	            qf.setBackgroundColor(backgroundColor);
 	            qf.setQuestion(this.questionList.get(currentQuestionIndex));
 	            getFragmentManager().beginTransaction().add(R.id.fragmentForQuestion, qf).commit();
-	            tvQuestionProgress.setText((currentQuestionIndex+1)+"/"+this.questionList.size());
+	            tvQuestionProgress.setText(String.valueOf(currentQuestionIndex + 1));
 			} else {
 				finalizeQuiz();
 			}
