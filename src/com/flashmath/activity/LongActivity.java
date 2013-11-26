@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
@@ -49,6 +50,7 @@ public class LongActivity extends Activity {
 	private LongFragment lf;
 	private LongGraphFragment lg;
 	private Boolean listOn;
+	private ColorStateList oldColors;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,13 +120,20 @@ public class LongActivity extends Activity {
 				if (min_score == -1) {
 					min_score = 0;
 				}
-				tvBest.setText(String.valueOf(max_score));
-				tvBest.setTextColor(ColorUtil.getScoreColor((float) max_score / 3));
-				tvWorst.setText(String.valueOf(min_score));
-				tvWorst.setTextColor(ColorUtil.getScoreColor((float) min_score / 3));
-				float average = jsonScores.length() == 0 ? 0f : (float) total / jsonScores.length();
-				tvAverage.setText(String.format("%.1f", average));
-				tvAverage.setTextColor(ColorUtil.getScoreColor(average / 3));
+				if (jsonScores.length() != 0) {
+					tvBest.setText(String.valueOf(max_score));
+					oldColors =  tvBest.getTextColors();
+					tvBest.setTextColor(ColorUtil.getScoreColor((float) max_score / 3));
+					tvWorst.setText(String.valueOf(min_score));
+					tvWorst.setTextColor(ColorUtil.getScoreColor((float) min_score / 3));
+					float average = jsonScores.length() == 0 ? 0f : (float) total / jsonScores.length();
+					tvAverage.setText(String.format("%.1f", average));
+					tvAverage.setTextColor(ColorUtil.getScoreColor(average / 3));
+				} else {
+					tvBest.setText("-");
+					tvWorst.setText("-");
+					tvAverage.setText("-");
+				}
 				lg = new LongGraphFragment();
 				lg.setScores(data);
 				lg.setSubject(subject);
@@ -214,12 +223,12 @@ public class LongActivity extends Activity {
 
 	            public void onClick(DialogInterface dialog, int whichButton) {
 	        		tvAttempts.setText("0 Attempts");
-	        		tvBest.setText("0");
-	        		tvBest.setTextColor(ColorUtil.getScoreColor(0));
-	        		tvWorst.setText("0");
-	        		tvWorst.setTextColor(ColorUtil.getScoreColor(0));
-	        		tvAverage.setText("0.0");
-	        		tvAverage.setTextColor(ColorUtil.getScoreColor(0));
+	        		tvBest.setText("-");
+	        		tvBest.setTextColor(oldColors);
+	        		tvWorst.setText("-");
+	        		tvWorst.setTextColor(oldColors);
+	        		tvAverage.setText("-");
+	        		tvAverage.setTextColor(oldColors);
 	        		
 	        		lf.clearScores();
 	        		lg.clearScores();
