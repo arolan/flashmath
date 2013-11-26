@@ -129,79 +129,78 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		boolean isConnectionAvailable = ConnectivityUtil.isInternetConnectionAvailable(this.getApplicationContext());
 		
 		//Real quiz && Internet is available
-		if(!isMockQuiz && isConnectionAvailable) {
-			setProgressBarIndeterminateVisibility(true);
-			btnMainMenu.setEnabled(false);
-			
-			client.putScore(subject, String.valueOf(score), new JsonHttpResponseHandler() {
-				@Override
-				public void onSuccess(JSONArray jsonScores) {
-					if (jsonScores != null && jsonScores.length() > 1) {
-						GraphViewData[] data = new GraphViewData[jsonScores.length()];
-						int max_score = 1;
-						for (int i = 0; i < jsonScores.length(); i++) {
-							try {
-								int val = jsonScores.getJSONObject(i).getInt("value");
-								max_score = val > max_score ? val : max_score;
-								data[i] = (new GraphViewData(i + 1, val));
-							} catch (JSONException e) {
-								e.printStackTrace();
+		if (!isMockQuiz) {
+			if (isConnectionAvailable) {
+				setProgressBarIndeterminateVisibility(true);
+				btnMainMenu.setEnabled(false);
+				
+				client.putScore(subject, String.valueOf(score), new JsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(JSONArray jsonScores) {
+						if (jsonScores != null && jsonScores.length() > 1) {
+							GraphViewData[] data = new GraphViewData[jsonScores.length()];
+							int max_score = 1;
+							for (int i = 0; i < jsonScores.length(); i++) {
+								try {
+									int val = jsonScores.getJSONObject(i).getInt("value");
+									max_score = val > max_score ? val : max_score;
+									data[i] = (new GraphViewData(i + 1, val));
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
 							}
+							GraphView graphView = new LineGraphView(ResultActivity.this, "");
+							graphView.setCustomLabelFormatter(new CustomLabelFormatter.IntegerOnly());
+							GraphViewStyle style = new GraphViewStyle();
+							style.setVerticalLabelsColor(Color.BLACK);
+							style.setHorizontalLabelsColor(Color.BLACK);
+							style.setGridColor(Color.GRAY);
+							style.setNumVerticalLabels(4);
+							style.setNumHorizontalLabels(2);
+							GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(ColorUtil.subjectColorInt(subject), 5);
+							graphView.addSeries(new GraphViewSeries("Scores", lineStyle, data));
+							graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
+							graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
+							graphView.setGraphViewStyle(style);
+							llStats.addView(graphView);
+						} else {
+							showAlternativeTextForGraph("Not enough scores to show graph. Please do the quiz one more time!");
 						}
-						GraphView graphView = new LineGraphView(ResultActivity.this, "");
-						graphView.setCustomLabelFormatter(new CustomLabelFormatter.IntegerOnly());
-						GraphViewStyle style = new GraphViewStyle();
-						style.setVerticalLabelsColor(Color.BLACK);
-						style.setHorizontalLabelsColor(Color.BLACK);
-						style.setGridColor(Color.GRAY);
-						style.setNumVerticalLabels(4);
-						style.setNumHorizontalLabels(2);
-						GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(ColorUtil.subjectColorInt(subject), 5);
-						graphView.addSeries(new GraphViewSeries("Scores", lineStyle, data));
-						graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
-						graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
-						graphView.setGraphViewStyle(style);
-						llStats.addView(graphView);
-					} else {
-						showAlternativeTextForGraph("Not enough scores to show graph. Please do the quiz one more time!");
+						
+						setProgressBarIndeterminateVisibility(false);
+						btnMainMenu.setEnabled(true);
 					}
 					
-					setProgressBarIndeterminateVisibility(false);
-					btnMainMenu.setEnabled(true);
-				}
+					@Override
+					public void onFailure(Throwable arg0, JSONObject errorResponse) {
+						super.onFailure(arg0, errorResponse);
+						setProgressBarIndeterminateVisibility(false);
+						btnMainMenu.setEnabled(true);
+						showAlternativeTextForGraph("Could not load historical data. Please try again later!");
+					}
+				});
+			} else {
+				// Real quiz but no Internet
+				OfflineScore os = new OfflineScore();
+				os.setScore(score);
+				os.setSubject(subject);
 				
-				@Override
-				public void onFailure(Throwable arg0, JSONObject errorResponse) {
-					super.onFailure(arg0, errorResponse);
-					setProgressBarIndeterminateVisibility(false);
-					btnMainMenu.setEnabled(true);
-					showAlternativeTextForGraph("Could not load historical data. Please try again later!");
-				}
-
-			});
-		
-		} else if(!isMockQuiz && !isConnectionAvailable) {
-			// Real quiz but no Internet
-			OfflineScore os = new OfflineScore();
-			os.setScore(score);
-			os.setSubject(subject);
-			
-			Calendar c = Calendar.getInstance(); 
-			os.setTimeStampInSeconds(c.get(Calendar.SECOND));
-			ConnectivityUtil.setUnsentScore(os);
-			os.save();
-
-			showAlternativeTextForGraph("Your results will be submitted when internet connection is back.");
-		} else if(isMockQuiz && !isConnectionAvailable) {
-			//Mock quiz and no Internet
-			showAlternativeTextForGraph("Thank you for completing the offline quiz! Your score will not be submitted.");
-		} else if(isMockQuiz && isConnectionAvailable) {
-			//Mock quiz and Internet
-			showAlternativeTextForGraph("Thank you for completing the offline quiz! You can try now real quiz in the Main Menu.");
+				Calendar c = Calendar.getInstance(); 
+				os.setTimeStampInSeconds(c.get(Calendar.SECOND));
+				//ConnectivityUtil.setUnsentScore(os);
+				os.save();
+				showAlternativeTextForGraph("Your results will be submitted when internet connection is back.");
+			}
+		} else {
+			if(!isConnectionAvailable) {
+				//Mock quiz and no Internet
+				showAlternativeTextForGraph("Thank you for completing the offline quiz! Your score will not be submitted.");
+			} else {
+				//Mock quiz and Internet
+				showAlternativeTextForGraph("Thank you for completing the offline quiz! You can try now real quiz in the Main Menu.");
+			}
 		}
-		
 		playSounds((float) score / resultList.size());
-		
 	}
 	
 	public void tweetScore(View v) {
