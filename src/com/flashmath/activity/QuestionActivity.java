@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -48,6 +49,10 @@ public class QuestionActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//we will use progress wheel when it's needed (e.g. network requests)
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
 		setContentView(R.layout.activity_question);
 		
 		btnVerifyAndNextQuestion = (Button) findViewById(R.id.btnVerifyAndNextQuestion);
@@ -73,6 +78,8 @@ public class QuestionActivity extends Activity {
 		} else {
 			qf = new ArithmeticQuestionFragment();
 		}
+		//disable the button until we have data loaded...
+		btnVerifyAndNextQuestion.setEnabled(false);
 		setupServerQuestions();
 		qf.setBackgroundColor(backgroundColor);
 		
@@ -81,6 +88,7 @@ public class QuestionActivity extends Activity {
 	}
 
 	private void setupServerQuestions() {
+		setProgressBarIndeterminateVisibility(true);
 		currentQuestionIndex = 0;
 		FlashMathClient client = FlashMathClient.getClient(this);
 		client.getQuestions(subject, new JsonHttpResponseHandler() {
@@ -116,6 +124,16 @@ public class QuestionActivity extends Activity {
 				}
 				
 				tvQuestionProgress.setText(String.valueOf(currentQuestionIndex + 1));
+				//data is loaded, we can enable the button
+				btnVerifyAndNextQuestion.setEnabled(true);
+				setProgressBarIndeterminateVisibility(false);
+			}
+			
+			@Override
+			public void onFailure(Throwable arg0, JSONObject errorResponse) {
+				super.onFailure(arg0, errorResponse);
+				btnVerifyAndNextQuestion.setEnabled(true);
+				setProgressBarIndeterminateVisibility(false);
 			}
 		});
 	}

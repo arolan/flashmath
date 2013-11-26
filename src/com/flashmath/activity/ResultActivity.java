@@ -18,6 +18,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,18 +52,24 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	private TextView tvTotal;
 	private TextView tvScore;
 	private TextView tvSubject;
+	private Button btnMainMenu;
 	private boolean wentThroughTwitterFlow = false;
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
 		setContentView(R.layout.activity_result);
 		wentThroughTwitterFlow = false;
 		llStats = (LinearLayout) findViewById(R.id.llStats);
 		tvTotal = (TextView) findViewById(R.id.tvTotal);
 		tvScore = (TextView) findViewById(R.id.tvScore);
 		tvSubject = (TextView) findViewById(R.id.tvSubject);
+		btnMainMenu = (Button) findViewById(R.id.btnMainMenu);
+		
 		if (savedInstanceState == null) {
 			resultList = (ArrayList<Question>) getIntent().getSerializableExtra("QUESTIONS_ANSWERED");
 			subject = getIntent().getStringExtra(SUBJECT_INTENT_KEY);
@@ -103,7 +110,6 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		}
 		Button btnTweet = (Button) findViewById(R.id.btnTweet);
 		btnTweet.setBackground(ColorUtil.getButtonStyle(subject, this));
-		Button btnMainMenu = (Button) findViewById(R.id.btnMainMenu);
 		btnMainMenu.setBackground(ColorUtil.getButtonStyle(subject, this));
 		tvScore.setText(String.valueOf(score));
 		tvScore.setTextColor(ColorUtil.getScoreColor((float) score / resultList.size()));
@@ -119,6 +125,9 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		// Check if quiz is legitimate
 		
 		if(ConnectivityUtil.isInternetConnectionAvailable(this.getApplicationContext())) {
+			setProgressBarIndeterminateVisibility(true);
+			btnMainMenu.setEnabled(false);
+			
 			client.putScore(subject, String.valueOf(score), new JsonHttpResponseHandler() {
 				@Override
 				public void onSuccess(JSONArray jsonScores) {
@@ -147,7 +156,18 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 					graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
 					graphView.setGraphViewStyle(style);
 					llStats.addView(graphView);
+					
+					setProgressBarIndeterminateVisibility(false);
+					btnMainMenu.setEnabled(true);
 				}
+				
+				@Override
+				public void onFailure(Throwable arg0, JSONObject errorResponse) {
+					super.onFailure(arg0, errorResponse);
+					setProgressBarIndeterminateVisibility(false);
+					btnMainMenu.setEnabled(true);
+				}
+
 			});
 		} else {
 			OfflineScore os = new OfflineScore();
