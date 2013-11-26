@@ -7,8 +7,10 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.education.flashmath.R;
+import com.flashmath.util.ConnectivityUtil;
 import com.flashmath.util.SoundUtil;
 
 public class SubjectActivity extends Activity {
@@ -28,11 +30,16 @@ public class SubjectActivity extends Activity {
 		OnLongClickListener subjectDetailListener = new OnLongClickListener() {
 			 @Override
 			    public boolean onLongClick(View v) {
-			        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
-			  		String tag = v.getTag().toString();
-			  		i.putExtra("subject", tag);
-			  		startActivity(i);
-			        return true;
+				 	if (ConnectivityUtil.isInternetConnectionAvailable(SubjectActivity.this)) {
+				        Intent i = new Intent(SubjectActivity.this, LongActivity.class);
+				  		String tag = v.getTag().toString();
+				  		i.putExtra("subject", tag);
+				  		startActivity(i);
+				        return true;
+				 	} else {
+				 		Toast.makeText(SubjectActivity.this, "Internet connection is not available", Toast.LENGTH_LONG).show();
+				 		return false;
+				 	}
 			    }
 		};
 	
@@ -46,10 +53,6 @@ public class SubjectActivity extends Activity {
 		SoundUtil.prepareSounds(this);
 	}
 	
-
-	
-
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -59,10 +62,14 @@ public class SubjectActivity extends Activity {
 	}
 	
 	public void onButtonClick(View v){
-		Intent i = new Intent(this, QuestionActivity.class);
-		String tag = v.getTag().toString();
-		
-		i.putExtra("subject", tag);
-		startActivity(i);
+	 	if (ConnectivityUtil.isInternetConnectionAvailable(this)) {
+			Intent i = new Intent(this, QuestionActivity.class);
+			String tag = v.getTag().toString();
+			
+			i.putExtra("subject", tag);
+			startActivity(i);
+	 	} else {
+	 		// construct a mock quiz and set the quiz flag to be offline mode
+	 	}
 	}
 }
