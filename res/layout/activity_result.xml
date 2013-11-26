@@ -55,7 +55,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginTop="60dp"
         android:layout_marginBottom="46dp"
-        android:layout_above="@+id/btnTryAgain"
+        android:layout_above="@+id/btnMainMenu"
         android:orientation="horizontal" />
 
     <ImageView
@@ -70,13 +70,13 @@
 
     <Button
         android:id="@+id/btnTweet"
-        android:layout_width="50dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:drawableLeft="@drawable/ic_tweet"
         android:onClick="tweetScore"
-        android:text=""
+        android:text="Tweet"
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
 
@@ -94,25 +94,14 @@
         android:text="/ 10" />
 
     <Button
-        android:id="@+id/btnTryAgain"
+        android:id="@+id/btnMainMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/btnTweet"
-        android:layout_toRightOf="@+id/btnMainMenu"
-        android:onClick="onTakeQuizAgain"
-        android:text="Take Again!"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btnMainMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnTweet"
-        android:layout_alignTop="@+id/btnTweet"
         android:layout_toRightOf="@+id/btnTweet"
         android:onClick="onMainMenuSelected"
+        android:layout_marginLeft="40dp"
         android:text="Main Menu"
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
