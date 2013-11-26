@@ -11,6 +11,8 @@ import org.json.JSONException;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -168,30 +170,8 @@ public class LongActivity extends Activity {
 	
 	//Clear button
 	public void onClear(View v){
-		tvAttempts.setText("0 Attempts");
-		tvBest.setText("0");
-		tvBest.setTextColor(ColorUtil.getScoreColor(0));
-		tvWorst.setText("0");
-		tvWorst.setTextColor(ColorUtil.getScoreColor(0));
-		tvAverage.setText("0.0");
-		tvAverage.setTextColor(ColorUtil.getScoreColor(0));
-		
-		lf.clearScores();
-		lg.clearScores();
-		
-		if (ConnectivityUtil.isInternetConnectionAvailable(this)) {
-			FlashMathClient client = FlashMathClient.getClient(this);
-			
-			client.clearScores(subject, new JsonHttpResponseHandler() {
-				@Override
-				public void onSuccess(JSONArray jsonScores) {
-	 
-				}
-			});
-		} else {
-			Toast.makeText(this, ConnectivityUtil.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
-		}
-		
+		AlertDialog diaBox = AskOption();
+		diaBox.show();
 	}
 	
 	private void stripUnderlines(TextView textView) {
@@ -223,4 +203,51 @@ public class LongActivity extends Activity {
             ds.setUnderlineText(false);
         }
     }
+	
+	private AlertDialog AskOption() {
+	    AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
+	        //set message, title, and icon
+	        .setTitle("Are you sure you want to clear your scores?") 
+	        .setMessage("They will be gone forever if you do, so make sure this is what you want!") 
+
+	        .setPositiveButton("Yes, clear my scores", new DialogInterface.OnClickListener() {
+
+	            public void onClick(DialogInterface dialog, int whichButton) {
+	        		tvAttempts.setText("0 Attempts");
+	        		tvBest.setText("0");
+	        		tvBest.setTextColor(ColorUtil.getScoreColor(0));
+	        		tvWorst.setText("0");
+	        		tvWorst.setTextColor(ColorUtil.getScoreColor(0));
+	        		tvAverage.setText("0.0");
+	        		tvAverage.setTextColor(ColorUtil.getScoreColor(0));
+	        		
+	        		lf.clearScores();
+	        		lg.clearScores();
+	        		
+	        		if (ConnectivityUtil.isInternetConnectionAvailable(LongActivity.this)) {
+	        			FlashMathClient client = FlashMathClient.getClient(LongActivity.this);
+	        			
+	        			client.clearScores(subject, new JsonHttpResponseHandler() {
+	        				@Override
+	        				public void onSuccess(JSONArray jsonScores) {
+	        	 
+	        				}
+	        			});
+	        		} else {
+	        			Toast.makeText(LongActivity.this, ConnectivityUtil.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
+	        		}
+	                dialog.dismiss();
+	            }
+	        })
+
+	        .setNegativeButton("No, I like my scores", new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int which) {
+
+	                dialog.dismiss();
+
+	            }
+	        })
+	        .create();
+	        return myQuittingDialogBox;
+	}
 }
