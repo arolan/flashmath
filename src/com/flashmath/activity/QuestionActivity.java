@@ -44,6 +44,7 @@ public class QuestionActivity extends Activity {
 	private Button btnVerifyAndNextQuestion;
 	private String subject;
 	private String backgroundColor;
+	private boolean questionDisplayed;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class QuestionActivity extends Activity {
 		
 		
 		getFragmentManager().beginTransaction().add(R.id.fragmentForQuestion, qf).commit();
+		questionDisplayed = true;
 	}
 
 	private void setupServerQuestions() {
@@ -130,11 +132,14 @@ public class QuestionActivity extends Activity {
 	public void onVerifyAndNextQuestionPressed(View v) {
 		if (btnVerifyAndNextQuestion.getText().toString().equals(VERIFY_ANSWER_BTN_TITLE)) {
 			onVerifyQuestionAnswer(v);
+			questionDisplayed = false;
 		} else if (btnVerifyAndNextQuestion.getText().toString().equals(NEXT_QUESTION_BTN_TITLE)){
 			onNextQuestion(v);
+			questionDisplayed = true;
 		} else {
 			qf.saveUserAnswer();
 			finalizeQuiz();
+			questionDisplayed = false;
 		}
 	}
 	
@@ -239,5 +244,15 @@ public class QuestionActivity extends Activity {
 		i.putExtra(QUESTIONS_ANSWERED_INTENT_KEY, this.questionList);
 		i.putExtra("subject", subject);
 		startActivity(i);
+	}
+
+	@Override
+	public void onBackPressed() {
+		//allow to go back only on the first question AND when the answer is not displayed yet
+		//this is to prevent user from changing the question answers. On the first question
+		//the user can go back to the main menu (if he did not answer the question yet).
+		if (currentQuestionIndex == 0 && questionDisplayed) {
+			super.onBackPressed();
+		}
 	}
 }
