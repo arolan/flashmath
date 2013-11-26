@@ -11,7 +11,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
@@ -109,7 +108,6 @@ public class QuestionActivity extends Activity {
 						questionList.addAll(ArithmeticQuestion.fromJSONArray(jsonResults, subject));
 					}
 					
-					Log.d("DEBUG", questionList.toString());
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
