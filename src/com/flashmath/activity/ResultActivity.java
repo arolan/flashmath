@@ -164,7 +164,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 							graphView.setGraphViewStyle(style);
 							llStats.addView(graphView);
 						} else {
-							showAlternativeTextForGraph("Not enough scores to show graph. Please do the quiz one more time!");
+							showAlternativeTextForGraph("You need to take more tests before we can make you a graph!");
 						}
 						
 						setProgressBarIndeterminateVisibility(false);
