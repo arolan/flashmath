@@ -1,9 +1,11 @@
 package com.flashmath.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.Button;
@@ -14,7 +16,7 @@ import com.flashmath.util.ConnectivityUtil;
 import com.flashmath.util.SoundUtil;
 
 public class SubjectActivity extends Activity {
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,4 +70,10 @@ public class SubjectActivity extends Activity {
 		i.putExtra(QuestionActivity.IS_MOCK_QUIZ_INTENT_KEY, !(ConnectivityUtil.isInternetConnectionAvailable(this)));
 		startActivity(i);
 	}
+	
+	public void showAboutSupportPage(MenuItem mi) {
+		Intent aboutIntent = new Intent(this, AboutSupportActivity.class);
+		startActivity(aboutIntent);
+	}
+
 }

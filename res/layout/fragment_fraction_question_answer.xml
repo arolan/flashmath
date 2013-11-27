@@ -60,7 +60,7 @@
         android:id="@+id/leftLine"
         android:layout_width="fill_parent"
         android:layout_height="5dip"
-        android:layout_toLeftOf="@+id/textView4"
+        android:layout_toLeftOf="@+id/tvSpecialThanks"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
@@ -70,14 +70,14 @@
         android:id="@+id/rightLine"
         android:layout_width="fill_parent"
         android:layout_height="5dip"
-        android:layout_toRightOf="@+id/textView4"
+        android:layout_toRightOf="@+id/tvSpecialThanks"
         android:layout_centerVertical="true"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="10dp"
         android:background="#FFFFFF" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tvSpecialThanks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
