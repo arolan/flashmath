@@ -11,7 +11,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
@@ -23,9 +22,12 @@ import com.flashmath.fragment.ArithmeticQuestionAnswerFragment;
 import com.flashmath.fragment.ArithmeticQuestionFragment;
 import com.flashmath.fragment.FractionQuestionAnswerFragment;
 import com.flashmath.fragment.FractionQuestionFragment;
+import com.flashmath.fragment.GeometryQuestionAnswerFragment;
+import com.flashmath.fragment.GeometryQuestionFragment;
 import com.flashmath.fragment.QuestionFragment;
 import com.flashmath.models.ArithmeticQuestion;
 import com.flashmath.models.FractionQuestion;
+import com.flashmath.models.GeometryQuestion;
 import com.flashmath.models.Question;
 import com.flashmath.network.FlashMathClient;
 import com.flashmath.util.ColorUtil;
@@ -79,6 +81,8 @@ public class QuestionActivity extends Activity {
 		
 		if (subject.equalsIgnoreCase("Fractions")) {
 			qf = new FractionQuestionFragment();
+		} else if (subject.equalsIgnoreCase("Geometry")) {
+			qf = new GeometryQuestionFragment();
 		} else {
 			qf = new ArithmeticQuestionFragment();
 		}
@@ -93,6 +97,8 @@ public class QuestionActivity extends Activity {
 			
 			if (subject.equalsIgnoreCase("Fractions")) {
 				questionList.addAll(FractionQuestion.fromJSONArray(jsonQuestions, subject));
+			} else if (subject.equalsIgnoreCase("Geometry")) {
+				questionList.addAll(GeometryQuestion.fromJSONArray(jsonQuestions, subject));
 			} else {
 				questionList.addAll(ArithmeticQuestion.fromJSONArray(jsonQuestions, subject));
 			}
@@ -125,6 +131,8 @@ public class QuestionActivity extends Activity {
 					
 					if (subject.equalsIgnoreCase("Fractions")) {
 						questionList.addAll(FractionQuestion.fromJSONArray(jsonResults, subject));
+					} else if (subject.equalsIgnoreCase("Geometry")) {
+						questionList.addAll(GeometryQuestion.fromJSONArray(jsonResults, subject));
 					} else {
 						questionList.addAll(ArithmeticQuestion.fromJSONArray(jsonResults, subject));
 					}
@@ -151,6 +159,10 @@ public class QuestionActivity extends Activity {
 			((FractionQuestionFragment) qf).setupFractionQuestion();
 			qaf = new FractionQuestionAnswerFragment();
 			((FractionQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
+		} else if (subject.equalsIgnoreCase("Geometry")) {
+			((GeometryQuestionFragment) qf).setupGeometryQuestion();
+			qaf = new GeometryQuestionAnswerFragment();
+			((GeometryQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
 		} else {
 			((ArithmeticQuestionFragment) qf).setupArithmeticQuestion();
 			qaf = new ArithmeticQuestionAnswerFragment();
@@ -191,48 +203,29 @@ public class QuestionActivity extends Activity {
 		if (subject.equalsIgnoreCase("Fractions")) {
 			((FractionQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
 
-			// Create and commit a new fragment transaction that adds the fragment for the back of
-			// the card, uses custom animations, and is part of the fragment manager's back stack.
 			getFragmentManager().beginTransaction()
-			// Replace the default fragment animations with animator resources representing
-			// rotations when switching to the back of the card, as well as animator
-			// resources representing rotations when flipping back to the front (e.g. when
-			// the system Back button is pressed).
 			.setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out,
 								 R.animator.card_flip_left_in, R.animator.card_flip_left_out)
-			// Replace any fragments currently in the container view with a fragment
-			// representing the next page (indicated by the just-incremented currentPage
-			// variable).
 			.replace(R.id.fragmentForQuestion, (FractionQuestionAnswerFragment) qaf)
-			// Add this transaction to the back stack, allowing users to press Back
-			// to get to the front of the card.
 			.addToBackStack(null)
-			// Commit the transaction.
+			.commit();
+		} else if (subject.equalsIgnoreCase("Geometry")) {
+			((GeometryQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
+			getFragmentManager().beginTransaction()
+			.setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+								 R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+			.replace(R.id.fragmentForQuestion, (GeometryQuestionAnswerFragment) qaf)
+			.addToBackStack(null)
 			.commit();
 		} else {
 			((ArithmeticQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
-
-			// Create and commit a new fragment transaction that adds the fragment for the back of
-			// the card, uses custom animations, and is part of the fragment manager's back stack.
 			getFragmentManager().beginTransaction()
-			// Replace the default fragment animations with animator resources representing
-			// rotations when switching to the back of the card, as well as animator
-			// resources representing rotations when flipping back to the front (e.g. when
-			// the system Back button is pressed).
 			.setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out,
 								 R.animator.card_flip_left_in, R.animator.card_flip_left_out)
-			// Replace any fragments currently in the container view with a fragment
-			// representing the next page (indicated by the just-incremented currentPage
-			// variable).
 			.replace(R.id.fragmentForQuestion, (ArithmeticQuestionAnswerFragment) qaf)
-			// Add this transaction to the back stack, allowing users to press Back
-			// to get to the front of the card.
 			.addToBackStack(null)
-			// Commit the transaction.
 			.commit();
 		}
-		
-		
 		
 		//we reached end of questions, remove the Next Question button and 
 		//let user use End Quiz button
@@ -259,8 +252,10 @@ public class QuestionActivity extends Activity {
 	            getFragmentManager().beginTransaction().remove(qf).commit();
 	            if (this.subject.equalsIgnoreCase("Fractions")) {
 	            	qf = new FractionQuestionFragment();
-	            } else {
-	            	qf = new ArithmeticQuestionFragment();
+	            } else if (this.subject.equalsIgnoreCase("Geometry")) {
+	            	qf = new GeometryQuestionFragment();
+				} else {
+					qf = new ArithmeticQuestionFragment();
 				}
 	            
 	            qf.setBackgroundColor(backgroundColor);
