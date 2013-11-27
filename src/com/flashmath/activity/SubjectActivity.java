@@ -76,4 +76,9 @@ public class SubjectActivity extends Activity {
 		startActivity(aboutIntent);
 	}
 
+	public void showSettingsPage(MenuItem mi) {
+		Intent settingsIntent = new Intent(this, SettingsActivity.class);
+		startActivity(settingsIntent);
+	}
+
 }

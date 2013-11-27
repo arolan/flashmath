@@ -15,21 +15,23 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.activeandroid.query.Select;
 import com.codepath.oauth.OAuthLoginActivity;
 import com.education.flashmath.R;
 import com.flashmath.models.OfflineScore;
 import com.flashmath.models.Question;
+import com.flashmath.models.UserSetting;
 import com.flashmath.network.FlashMathClient;
 import com.flashmath.network.TwitterClient;
 import com.flashmath.util.ColorUtil;
@@ -57,6 +59,8 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	private TextView tvScore;
 	private TextView tvSubject;
 	private Button btnMainMenu;
+	private ImageView ivProfilePicture;
+	private UserSetting currentUserSettings;
 	private boolean wentThroughTwitterFlow = false;
 	private boolean isMockQuiz;
 	
@@ -74,6 +78,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		tvScore = (TextView) findViewById(R.id.tvScore);
 		tvSubject = (TextView) findViewById(R.id.tvSubject);
 		btnMainMenu = (Button) findViewById(R.id.btnMainMenu);
+		ivProfilePicture = (ImageView) findViewById(R.id.ivProfile);
 		
 		if (savedInstanceState == null) {
 			resultList = (ArrayList<Question>) getIntent().getSerializableExtra("QUESTIONS_ANSWERED");
@@ -83,6 +88,21 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		}
 		
 		
+		setupUserProfilePicture();
+		
+	}
+
+	public void setupUserProfilePicture() {
+		ArrayList<UserSetting> currentUserSettingsObjects = new Select().from(UserSetting.class).execute();
+		if (currentUserSettingsObjects != null && currentUserSettingsObjects.size() > 0) {
+			currentUserSettings = currentUserSettingsObjects.get(0);
+		} 
+		
+		if (currentUserSettings != null && currentUserSettings.getUserProfileImageBitmapURI() != null) {
+				ivProfilePicture.setImageURI(Uri.parse(currentUserSettings.getUserProfileImageBitmapURI()));
+				//set user name when we put the field here
+		//			etProfileName.setText(currentUserSettings.getUserName());
+		}
 	}
 
 	private void playSounds(float pc) {

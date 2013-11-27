@@ -11,8 +11,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
-    <application
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<application
         android:name="com.flashmath.FlashMathApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -65,6 +70,10 @@
         <activity
             android:name="com.flashmath.activity.AboutSupportActivity"
             android:label="@string/title_activity_about_support" >
+        </activity>
+        <activity
+            android:name="com.flashmath.activity.SettingsActivity"
+            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 
