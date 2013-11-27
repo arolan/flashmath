@@ -38,6 +38,8 @@ public class ColorUtil {
 			color = Color.parseColor("#FA96D2");
 		} else if(subject.equals("division")){
 			color = Color.parseColor("#44B4D5");
+		} else if(subject.equals("geometry")){
+			color = Color.parseColor("#FABB4E");
 		}
 		return color;
 	}
@@ -61,8 +63,10 @@ public class ColorUtil {
 			return context.getResources().getDrawable(R.drawable.ic_action_times);
 		} else if(subject.equals("fractions")){
 			return context.getResources().getDrawable(R.drawable.ic_action_fraction);
-		} else {
+		} else if(subject.equals("division")){
 			return context.getResources().getDrawable(R.drawable.ic_action_divide);
+		} else {
+			return context.getResources().getDrawable(R.drawable.ic_action_geometry);
 		}
 	}
 
@@ -75,8 +79,10 @@ public class ColorUtil {
 			return context.getResources().getDrawable(R.drawable.btn_green);
 		} else if(subject.equals("fractions")){
 			return context.getResources().getDrawable(R.drawable.btn_pink);
-		} else {
+		} else if(subject.equals("division")){
 			return context.getResources().getDrawable(R.drawable.btn_yellow);
+		} else {
+			return context.getResources().getDrawable(R.drawable.btn_orange);
 		}
 	}
 
@@ -89,8 +95,10 @@ public class ColorUtil {
 			return context.getResources().getDrawable(R.drawable.list_green);
 		} else if(subject.equals("fractions")){
 			return context.getResources().getDrawable(R.drawable.list_pink);
-		} else {
+		} else if(subject.equals("division")){
 			return context.getResources().getDrawable(R.drawable.list_yellow);
+		} else {
+			return context.getResources().getDrawable(R.drawable.list_orange);
 		}
 	}
 }

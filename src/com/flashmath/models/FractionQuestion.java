@@ -20,11 +20,10 @@ public class FractionQuestion extends Question {
 
 	public FractionQuestion(JSONObject json, String subject) {
 		super(json);
-		String tempQuestion = this.questionText.replace('(', ' ').replace(')', ' ').replaceAll("'", "");
-		String[] operandsArray = tempQuestion.split(",");
-		this.operand1 = Integer.valueOf(operandsArray[0].trim());
-		this.operand2 = Integer.valueOf(operandsArray[1].trim());
-		this.operand3 = Integer.valueOf(operandsArray[2].trim());
+		String[] operandsArray = this.questionText.split(" ");
+		this.operand1 = Integer.valueOf(operandsArray[0]);
+		this.operand2 = Integer.valueOf(operandsArray[1]);
+		this.operand3 = Integer.valueOf(operandsArray[2]);
 		this.subjectId = identifySubjectFromSubjectString(subject);
 	}
 	

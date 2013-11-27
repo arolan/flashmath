@@ -22,10 +22,9 @@ public class ArithmeticQuestion extends Question {
 	public ArithmeticQuestion(JSONObject json, String subject) {
 		
 		super(json);
-		String tempQuestion = this.questionText.replace('(', ' ').replace(')', ' ').replaceAll("'", "");
-		String[] operandsArray = tempQuestion.split(",");
-		this.operand1 = Integer.valueOf(operandsArray[0].trim());
-		this.operand2 = Integer.valueOf(operandsArray[1].trim());
+		String[] operandsArray = this.questionText.split(" ");
+		this.operand1 = Integer.valueOf(operandsArray[0]);
+		this.operand2 = Integer.valueOf(operandsArray[1]);
 		this.subjectId = identifySubjectFromSubjectString(subject);
 		setupOperator(this.subjectId);
 	}
