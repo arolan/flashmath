@@ -34,6 +34,8 @@ import com.flashmath.network.FlashMathClient;
 import com.flashmath.network.TwitterClient;
 import com.flashmath.util.ColorUtil;
 import com.flashmath.util.ConnectivityUtil;
+import com.flashmath.util.Constants;
+import com.flashmath.util.ResultUtil;
 import com.flashmath.util.SoundUtil;
 import com.jjoe64.graphview.CustomLabelFormatter;
 import com.jjoe64.graphview.GraphView;
@@ -164,7 +166,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 							graphView.setGraphViewStyle(style);
 							llStats.addView(graphView);
 						} else {
-							showAlternativeTextForGraph("You need to take more tests before we can make you a graph!");
+							ResultUtil.showAlternativeTextForGraph(Constants.NEED_TO_TAKE_MORE_TESTS, getApplicationContext(), llStats);
 						}
 						
 						setProgressBarIndeterminateVisibility(false);
@@ -176,7 +178,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 						super.onFailure(arg0, errorResponse);
 						setProgressBarIndeterminateVisibility(false);
 						btnMainMenu.setEnabled(true);
-						showAlternativeTextForGraph("Could not load historical data. Please try again later!");
+						ResultUtil.showAlternativeTextForGraph("Could not load historical data. Please try again later!", getApplicationContext(), llStats);
 					}
 				});
 			} else {
@@ -189,15 +191,15 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 				os.setTimeStampInSeconds(c.get(Calendar.SECOND));
 				//ConnectivityUtil.setUnsentScore(os);
 				os.save();
-				showAlternativeTextForGraph("Your results will be submitted when internet connection is back.");
+				ResultUtil.showAlternativeTextForGraph("Your results will be submitted when internet connection is back.", getApplicationContext(), llStats);
 			}
 		} else {
 			if(!isConnectionAvailable) {
 				//Mock quiz and no Internet
-				showAlternativeTextForGraph("Thank you for completing the offline quiz! Your score will not be submitted.");
+				ResultUtil.showAlternativeTextForGraph("Thank you for completing the offline quiz! Your score will not be submitted.", getApplicationContext(), llStats);
 			} else {
 				//Mock quiz and Internet
-				showAlternativeTextForGraph("Thank you for completing the offline quiz! You can try a real quiz in the Main Menu.");
+				ResultUtil.showAlternativeTextForGraph("Thank you for completing the offline quiz! You can try a real quiz in the Main Menu.", getApplicationContext(), llStats);
 			}
 		}
 		playSounds((float) score / resultList.size());
@@ -289,15 +291,4 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		onMainMenuSelected(null);
 	}
 
-	public void showAlternativeTextForGraph(String textMessageToShow) {
-		TextView tvNoResult = new TextView(getApplicationContext());
-		tvNoResult.setText(textMessageToShow);
-		tvNoResult.setLayoutParams(new LayoutParams(
-		        LayoutParams.MATCH_PARENT,
-		        LayoutParams.WRAP_CONTENT));
-		tvNoResult.setTextSize(23);
-		tvNoResult.setTextColor(Color.BLACK);
-		tvNoResult.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
-		llStats.addView(tvNoResult);
-	}
 }

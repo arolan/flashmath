@@ -1,6 +1,7 @@
 package com.flashmath.fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout.LayoutParams;
 
 import com.education.flashmath.R;
 import com.flashmath.util.ColorUtil;
+import com.flashmath.util.ResultUtil;
 import com.jjoe64.graphview.CustomLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
@@ -33,6 +35,10 @@ public class LongGraphFragment extends Fragment{
 	
 	public void setScores(GraphViewData[] data) {
 		this.data = data;
+	}
+	
+	public GraphViewData[] getScores() {
+		return this.data;
 	}
 	
 	public void setSubject(String subject) {
@@ -59,7 +65,7 @@ public class LongGraphFragment extends Fragment{
 			graphView.setGraphViewStyle(style);
 			llStats.addView(graphView);
 		} else {
-			showAlternativeTextForGraph("You need to take more tests before we can make you a graph!");
+			ResultUtil.showAlternativeTextForGraph("You need to take more tests before we can make you a graph!", getActivity(), llStats);
 		}
 		llStats.setVisibility(View.VISIBLE);
 	}
@@ -82,15 +88,5 @@ public class LongGraphFragment extends Fragment{
 		}
 	}
 	
-	public void showAlternativeTextForGraph(String textMessageToShow) {
-		TextView tvNoResult = new TextView(getActivity());
-		tvNoResult.setText(textMessageToShow);
-		tvNoResult.setLayoutParams(new LayoutParams(
-		        LayoutParams.MATCH_PARENT,
-		        LayoutParams.WRAP_CONTENT));
-		tvNoResult.setTextSize(23);
-		tvNoResult.setTextColor(Color.BLACK);
-		tvNoResult.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
-		llStats.addView(tvNoResult);
-	}
+	
 }
