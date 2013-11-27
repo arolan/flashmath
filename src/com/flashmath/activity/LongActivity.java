@@ -222,29 +222,31 @@ public class LongActivity extends Activity {
 	        .setPositiveButton("Yes, clear my scores", new DialogInterface.OnClickListener() {
 
 	            public void onClick(DialogInterface dialog, int whichButton) {
-	        		tvAttempts.setText("0 Attempts");
-	        		tvBest.setText("-");
-	        		tvBest.setTextColor(oldColors);
-	        		tvWorst.setText("-");
-	        		tvWorst.setTextColor(oldColors);
-	        		tvAverage.setText("-");
-	        		tvAverage.setTextColor(oldColors);
-	        		
-	        		lf.clearScores();
-	        		lg.clearScores();
-	        		
-	        		if (ConnectivityUtil.isInternetConnectionAvailable(LongActivity.this)) {
-	        			FlashMathClient client = FlashMathClient.getClient(LongActivity.this);
-	        			
-	        			client.clearScores(subject, new JsonHttpResponseHandler() {
-	        				@Override
-	        				public void onSuccess(JSONArray jsonScores) {
-	        	 
-	        				}
-	        			});
-	        		} else {
-	        			Toast.makeText(LongActivity.this, ConnectivityUtil.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
-	        		}
+	            	if(lg.getScores().length > 0) {
+	            		tvAttempts.setText("0 Attempts");
+	            		tvBest.setText("-");
+	            		tvBest.setTextColor(oldColors);
+	            		tvWorst.setText("-");
+	            		tvWorst.setTextColor(oldColors);
+	            		tvAverage.setText("-");
+	            		tvAverage.setTextColor(oldColors);
+
+	            		lf.clearScores();
+	            		lg.clearScores();
+
+	            		if (ConnectivityUtil.isInternetConnectionAvailable(LongActivity.this)) {
+	            			FlashMathClient client = FlashMathClient.getClient(LongActivity.this);
+
+	            			client.clearScores(subject, new JsonHttpResponseHandler() {
+	            				@Override
+	            				public void onSuccess(JSONArray jsonScores) {
+
+	            				}
+	            			});
+	            		} else {
+	            			Toast.makeText(LongActivity.this, ConnectivityUtil.INTERNET_CONNECTION_IS_NOT_AVAILABLE, Toast.LENGTH_SHORT).show();
+	            		}
+	            	}
 	                dialog.dismiss();
 	            }
 	        })
