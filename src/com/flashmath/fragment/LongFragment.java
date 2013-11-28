@@ -6,14 +6,11 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.LinearLayout.LayoutParams;
 
 import com.education.flashmath.R;
 import com.flashmath.adapter.ScoreAdapter;
