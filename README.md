@@ -1,4 +1,4 @@
-# flashmath
+# Flash Math
 
 This repository contains the source code for the Flash Math Android app. The app has a (very poorly built) backend [here](https://github.com/whoshuu/flashmathserver).
 
