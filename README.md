@@ -2,7 +2,7 @@
 
 This repository contains the source code for the Flash Math Android app. The app has a (very poorly built) backend [here](https://github.com/whoshuu/flashmathserver).
 
-[![FlashMath](http://i.imgur.com/BhiuWgv.png)](http://github.com/arolan/flashmath) [![FlashMath](http://i.imgur.com/40qRQkK.png)](http://github.com/arolan/flashmath) [![FlashMath](http://i.imgur.com/Sjibrd4.png)](http://github.com/arolan/flashmath) [![FlashMath](http://i.imgur.com/IlT7TO4.png)](http://github.com/arolan/flashmath)
+[![FlashMath](http://i.imgur.com/BhiuWgv.png)](http://github.com/arolan/flashmath) [![FlashMath](http://i.imgur.com/40qRQkK.png)](http://github.com/arolan/flashmath) [![FlashMath](http://i.imgur.com/Sjibrd4.png)](http://github.com/arolan/flashmath)
 
 ## License
 
