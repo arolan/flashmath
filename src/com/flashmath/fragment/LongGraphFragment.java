@@ -53,9 +53,13 @@ public class LongGraphFragment extends Fragment{
 			GraphView graphView = new LineGraphView(getActivity(),"");
 			graphView.setCustomLabelFormatter(new CustomLabelFormatter.IntegerOnly());
 			GraphViewStyle style = new GraphViewStyle();
-			
 			style.setVerticalLabelsColor(Color.BLACK);
 			style.setHorizontalLabelsColor(Color.BLACK);
+			int datapoints = data.length;
+			while (datapoints >= 10) {
+				datapoints /= 2;
+			}
+			style.setNumHorizontalLabels(Math.max(2, datapoints));
 			style.setGridColor(Color.GRAY);
 			GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(ColorUtil.subjectColorInt(subject), 5);
 			GraphViewSeries userData = new GraphViewSeries("Score", lineStyle, data);
@@ -79,6 +83,7 @@ public class LongGraphFragment extends Fragment{
 			style.setHorizontalLabelsColor(Color.BLACK);
 			style.setGridColor(Color.GRAY);
 			style.setNumVerticalLabels(4);
+			style.setNumHorizontalLabels(2);
 			graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));
 			graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(2, 3) }));
 			graphView.setGraphViewStyle(style);
