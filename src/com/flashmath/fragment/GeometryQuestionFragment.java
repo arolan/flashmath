@@ -30,10 +30,15 @@ public class GeometryQuestionFragment extends QuestionFragment {
 	public View onCreateView(LayoutInflater inf, ViewGroup parent, Bundle savedInstanceState ) {
 		return inf.inflate(R.layout.fragment_geometry_question, parent, false);	
 	}
+	
+	@Override
+	public void onResume() {
+		setupParameters();
+		super.onResume();
+	}
 
 	public void onActivityCreated(Bundle savedInstanceState){ 
 		super.onActivityCreated(savedInstanceState);
-		setupParameters();
 	}
 
 	public void setupParameters() {

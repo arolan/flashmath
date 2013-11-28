@@ -39,7 +39,12 @@ public class ArithmeticQuestionAnswerFragment extends Fragment {
 
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+	}
+	
+	@Override
+	public void onResume() {
 		verifyUserAnswerForQuestion();
+		super.onResume();
 	}
 	
 	public void verifyUserAnswerForQuestion() {

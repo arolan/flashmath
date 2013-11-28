@@ -24,9 +24,14 @@ public class ArithmeticQuestionFragment extends QuestionFragment {
 		return inf.inflate(R.layout.fragment_arithmetic_question, parent, false);	
 	}
 
+	@Override
+	public void onResume() {
+		setupParameters();
+		super.onResume();
+	}
+	
 	public void onActivityCreated(Bundle savedInstanceState){ 
 		super.onActivityCreated(savedInstanceState);
-		setupParameters();
 	}
 
 	public void setupParameters() {

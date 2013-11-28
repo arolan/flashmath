@@ -36,10 +36,15 @@ public class FractionQuestionAnswerFragment extends Fragment {
 	public View onCreateView(LayoutInflater inf, ViewGroup parent, Bundle savedInstanceState ) {
 		return inf.inflate(R.layout.fragment_fraction_question_answer, parent, false);	
 	}
+	
+	@Override
+	public void onResume() {
+		verifyUserAnswerForQuestion();
+		super.onResume();
+	}
 
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		verifyUserAnswerForQuestion();
 	}
 	
 	public void verifyUserAnswerForQuestion() {

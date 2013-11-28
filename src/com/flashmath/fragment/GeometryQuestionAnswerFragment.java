@@ -39,10 +39,15 @@ public class GeometryQuestionAnswerFragment extends QuestionFragment {
 	public View onCreateView(LayoutInflater inf, ViewGroup parent, Bundle savedInstanceState ) {
 		return inf.inflate(R.layout.fragment_geometry_question_answer, parent, false);	
 	}
+	
+	@Override
+	public void onResume() {
+		verifyUserAnswerForQuestion();
+		super.onResume();
+	}
 
 	public void onActivityCreated(Bundle savedInstanceState){ 
 		super.onActivityCreated(savedInstanceState);
-		verifyUserAnswerForQuestion();
 	}
 
 	public void verifyUserAnswerForQuestion() {
