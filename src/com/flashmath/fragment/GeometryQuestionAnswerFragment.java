@@ -70,11 +70,6 @@ public class GeometryQuestionAnswerFragment extends QuestionFragment {
 			final Path hypotheneuse = new Path();
 			final Path topCorner = new Path();
 			final Path rightCorner = new Path();
-			if(gq.verifyUserAnswerCorrectness()) {
-				paint.setColor(Color.parseColor("#66FF66"));
-			} else {
-				paint.setColor(Color.parseColor("#FF0033"));
-			}
 			paint.setFlags(Paint.ANTI_ALIAS_FLAG);
 			paint.setStrokeWidth(10f);
 			paint.setStyle(Style.FILL);
@@ -140,28 +135,14 @@ public class GeometryQuestionAnswerFragment extends QuestionFragment {
 				rl.addView(vSquare);
 			}
 			if(gq.verifyUserAnswerCorrectness()) {
-				int correct = Color.parseColor("#66FF66");
-				tvType.setTextColor(correct);
-				tvShape.setTextColor(correct);
-				tvOperand1.setTextColor(correct);
-				tvOperand2.setTextColor(correct);
-				tvOperand3.setTextColor(correct);
-				tvRectOperand1.setTextColor(correct);
-				tvAnswer.setTextColor(correct);
+				tvAnswer.setTextColor(Color.parseColor("#66FF66"));
 				Drawable d = getResources().getDrawable(R.drawable.btn_correct);
 				tvAnswer.setText(""+gq.getUserAnswer());
 				if (rl != null) {
 					rl.setBackground(d);
 				}
 			} else {
-				int incorrect = Color.parseColor("#FF0033");
-				tvType.setTextColor(incorrect);
-				tvShape.setTextColor(incorrect);
-				tvOperand1.setTextColor(incorrect);
-				tvOperand2.setTextColor(incorrect);
-				tvOperand3.setTextColor(incorrect);
-				tvRectOperand1.setTextColor(incorrect);
-				tvAnswer.setTextColor(incorrect);
+				tvAnswer.setTextColor(Color.parseColor("#FF0033"));
 				Drawable d = getResources().getDrawable(R.drawable.btn_incorrect);
 				tvAnswer.setText(""+gq.getCorrectAnswer());
 				if (rl != null) {
