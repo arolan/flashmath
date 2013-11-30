@@ -1,8 +1,21 @@
 # Flash Math
 
-This repository contains the source code for the Flash Math Android app. The app has a (very poorly built) backend [here](https://github.com/whoshuu/flashmathserver).
+A flashcard Android application that grows in difficulty with the user.
 
 [![FlashMath](http://i.imgur.com/BhiuWgv.png)](http://github.com/arolan/flashmath) [![FlashMath](http://i.imgur.com/40qRQkK.png)](http://github.com/arolan/flashmath) [![FlashMath](http://i.imgur.com/Sjibrd4.png)](http://github.com/arolan/flashmath)
+
+This repository contains the source code for the Flash Math Android app. The app has a (very poorly built) backend [here](https://github.com/whoshuu/flashmathserver).
+
+## Features
+
+* Questions are procedurally generated in the cloud
+* The difficulty of the questions scales based on your proficiency in a subject
+* Users can track their progress since results are saved to the cloud
+
+## In the works
+
+* Open platform for building custom quizzes
+* A 'marketplace' for searching and taking custom quizzes
 
 ## License
 
