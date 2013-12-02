@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.education.flashmath.R;
+import com.flashmath.R;
 import com.flashmath.models.GeometryQuestion;
 
 public class GeometryQuestionFragment extends QuestionFragment {

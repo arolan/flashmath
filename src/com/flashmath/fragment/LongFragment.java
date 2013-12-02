@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import com.education.flashmath.R;
+import com.flashmath.R;
 import com.flashmath.adapter.ScoreAdapter;
 import com.flashmath.models.Score;
 import com.flashmath.util.ColorUtil;

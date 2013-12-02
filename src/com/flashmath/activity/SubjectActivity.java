@@ -11,7 +11,7 @@ import android.view.View.OnLongClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.education.flashmath.R;
+import com.flashmath.R;
 import com.flashmath.util.ConnectivityUtil;
 import com.flashmath.util.SoundUtil;
 

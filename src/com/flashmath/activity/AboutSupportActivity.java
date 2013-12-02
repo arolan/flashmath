@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 
-import com.education.flashmath.R;
+import com.flashmath.R;
 
 public class AboutSupportActivity extends Activity {
 	

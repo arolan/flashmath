@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.activeandroid.query.Select;
-import com.education.flashmath.R;
+import com.flashmath.R;
 import com.flashmath.models.UserSetting;
 import com.flashmath.util.ImageUtility;
 

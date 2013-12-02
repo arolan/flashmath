@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.education.flashmath.R;
+import com.flashmath.R;
 import com.flashmath.util.ColorUtil;
 import com.flashmath.util.ResultUtil;
 import com.jjoe64.graphview.CustomLabelFormatter;

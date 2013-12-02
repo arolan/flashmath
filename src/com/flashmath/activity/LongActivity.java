@@ -28,7 +28,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.education.flashmath.R;
+import com.flashmath.R;
 import com.flashmath.fragment.LongFragment;
 import com.flashmath.fragment.LongGraphFragment;
 import com.flashmath.models.Score;

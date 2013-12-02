@@ -17,7 +17,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.education.flashmath.R;
+import com.flashmath.R;
 import com.flashmath.fragment.ArithmeticQuestionAnswerFragment;
 import com.flashmath.fragment.ArithmeticQuestionFragment;
 import com.flashmath.fragment.FractionQuestionAnswerFragment;

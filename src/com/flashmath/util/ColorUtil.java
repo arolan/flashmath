@@ -5,7 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
-import com.education.flashmath.R;
+import com.flashmath.R;
 
 public class ColorUtil {
 	public static String identifySubjectColor(String subject) {

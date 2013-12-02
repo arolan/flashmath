@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.education.flashmath.R;
+import com.flashmath.R;
 import com.flashmath.models.GeometryQuestion;
 import com.flashmath.models.Question;
 

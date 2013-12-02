@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.education.flashmath.R;
+import com.flashmath.R;
 import com.flashmath.models.Score;
 import com.flashmath.util.ColorUtil;
 

@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 import com.codepath.oauth.OAuthLoginActivity;
-import com.education.flashmath.R;
+import com.flashmath.R;
 import com.flashmath.models.OfflineScore;
 import com.flashmath.models.Question;
 import com.flashmath.models.UserSetting;
@@ -69,6 +69,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Toast.makeText(this, this.getPackageName(), Toast.LENGTH_LONG).show();
 		
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
