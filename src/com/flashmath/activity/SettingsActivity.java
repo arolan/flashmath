@@ -9,17 +9,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.Gravity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.activeandroid.query.Select;
 import com.education.flashmath.R;
@@ -31,30 +30,23 @@ public class SettingsActivity extends Activity {
 	private ImageView ivProfileImage;
 	private UserSetting currentUserSettings;
 	private EditText etProfileName;
-	private TextView tvProfileImageSectionTitle;
-	private TextView tvProfileNameTitle;
+	private ImageView ivChangeName;
+	private String originalName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-		
-		tvProfileImageSectionTitle =  (TextView) findViewById(R.id.tvProfilePictureTitle);
-		tvProfileImageSectionTitle.setBackgroundColor(Color.parseColor("#7979FF"));
-		tvProfileImageSectionTitle.setTextColor(Color.WHITE);
-		tvProfileImageSectionTitle.setGravity(Gravity.CENTER_HORIZONTAL| Gravity.CENTER_VERTICAL);
-		
-		tvProfileNameTitle =  (TextView) findViewById(R.id.tvProfileName);
-		tvProfileNameTitle.setBackgroundColor(Color.parseColor("#7979FF"));
-		tvProfileNameTitle.setTextColor(Color.WHITE);
-		tvProfileNameTitle.setGravity(Gravity.CENTER_HORIZONTAL| Gravity.CENTER_VERTICAL);
 
-		
 		ActionBar ab = getActionBar();
 		ab.setTitle("Settings");
+		originalName = "";
 		
 		ivProfileImage = (ImageView) findViewById(R.id.ivProfilePicture);
 		etProfileName = (EditText) findViewById(R.id.etProfileName);
+		ivChangeName = (ImageView) findViewById(R.id.ivChangeName);
+		
+		
 		
 		ArrayList<UserSetting> currentUserSettingsObjects = new Select().from(UserSetting.class).execute();
 		if (currentUserSettingsObjects != null && currentUserSettingsObjects.size() > 0) {
@@ -69,10 +61,36 @@ public class SettingsActivity extends Activity {
 			if(currentUserSettings.getUserProfileImageBitmapURI() != null) {
 				ivProfileImage.setImageURI(Uri.parse(currentUserSettings.getUserProfileImageBitmapURI()));
 			}
-			etProfileName.setText(currentUserSettings.getUserName());
+			originalName = currentUserSettings.getUserName();
+			etProfileName.setText(originalName);
 		}
 		
-		
+		etProfileName.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start,
+					int before, int count) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				if (etProfileName.getText().toString().equals(originalName)) {
+					ivChangeName.setBackground(
+							SettingsActivity.this.getResources().getDrawable(R.drawable.ic_action_change_name));
+				} else {
+					ivChangeName.setBackground(
+							SettingsActivity.this.getResources().getDrawable(R.drawable.ic_action_change_name_dirty));
+				}
+			}
+		});
 	}
 
 	@Override
@@ -84,8 +102,11 @@ public class SettingsActivity extends Activity {
 	
 	
 	public void saveName(View v) {
-		currentUserSettings.setUserName(etProfileName.getText().toString());
+		originalName = etProfileName.getText().toString();
+		currentUserSettings.setUserName(originalName);
 		currentUserSettings.save();
+		ivChangeName.setBackground(
+				this.getResources().getDrawable(R.drawable.ic_action_change_name));
 		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(etProfileName.getWindowToken(), 0);
 	}
@@ -99,15 +120,15 @@ public class SettingsActivity extends Activity {
 	    AlertDialog pictureSourceDialog = new AlertDialog.Builder(this)
 	        //set message, title, and icon
 	        .setTitle("Picture Source") 
-	        .setMessage("How would you like to change your picture?") 
-	        .setPositiveButton("Using Camera", new DialogInterface.OnClickListener() {
+	        .setMessage("Where is your picture?") 
+	        .setPositiveButton("Camera", new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int whichButton) {
 	        		Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 	        		startActivityForResult(takePicture, 0);
 	                dialog.dismiss();
 	            }
 	        })
-	        .setNeutralButton("From Gallery", new DialogInterface.OnClickListener() {
+	        .setNeutralButton("Gallery", new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int which) {
 	            	Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 	            	startActivityForResult(pickPhoto , 1);
