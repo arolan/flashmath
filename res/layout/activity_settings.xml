@@ -6,69 +6,106 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:clipToPadding="false"
     tools:context=".SettingsActivity" >
 
-    <EditText
-        android:id="@+id/etProfileName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvProfileName"
-        android:layout_below="@+id/ivProfilePicture"
-        android:layout_marginTop="123dp"
-        android:layout_toLeftOf="@+id/btnChangeName"
-        android:ems="10"
-        android:hint="Profile Name" >
-
-        <requestFocus />
-    </EditText>
-
-    <TextView
-        android:id="@+id/tvProfilePictureTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/rlPicture"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="Profile Picture"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_marginLeft="-20dp"
+        android:layout_marginRight="-20dp"
+        android:background="@drawable/btn_blue" >
+        
+        <TextView
+            android:id="@+id/tvProfilePictureTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:text="Profile Picture"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <ImageView
+            android:id="@+id/ivChangePicture"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_action_picture"
+            android:layout_alignParentRight="true"
+            android:onClick="changePicture"
+            android:layout_marginRight="20dp" />
+            <!--<a href="http://thenounproject.com/noun/camera/#icon-No6879" target="_blank">
+                    Camera
+                </a>
+                    designed by
+                <a href="http://thenounproject.com/alexis.gaillard.77" target="_blank">
+                    Alexis Gaillard
+                </a> from The Noun Project-->
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/btnChangePicture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/etProfileName"
-        android:layout_alignParentRight="true"
-        android:onClick="changePicture"
-        android:text="Change Picture" />
-
-    <TextView
-        android:id="@+id/tvProfileName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnChangeName"
+    <RelativeLayout
+        android:id="@+id/rlName"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:text="Profile Name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_below="@+id/ivProfilePicture"
+        android:layout_marginLeft="-20dp"
+        android:layout_marginRight="-20dp"
+        android:background="@drawable/btn_blue" >
+        
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:text="Profile Name"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/btnChangeName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/etProfileName"
-        android:layout_alignBottom="@+id/etProfileName"
-        android:layout_alignLeft="@+id/btnChangePicture"
-        android:layout_alignRight="@+id/tvProfileName"
-        android:onClick="saveName"
-        android:text="Save Name" />
+        <ImageView
+            android:id="@+id/ivChangeName"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_action_change_name"
+            android:layout_alignParentRight="true"
+            android:onClick="saveName"
+            android:layout_marginRight="20dp" />
+        <!--<a href="http://thenounproject.com/noun/check-mark/#icon-No2784" target="_blank">
+                Check Mark
+            </a>
+                designed by
+            <a href="http://thenounproject.com/somerandomdude" target="_blank">
+                P.J. Onori
+            </a> from The Noun Project-->
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/ivProfilePicture"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_alignLeft="@+id/tvProfilePictureTitle"
-        android:layout_below="@+id/tvProfilePictureTitle"
-        android:layout_marginTop="5dp"
+        android:layout_below="@+id/rlPicture"
         android:src="@drawable/ic_user" />
+
+    <EditText
+        android:id="@+id/etProfileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlName"
+        android:ems="10"
+        android:hint="Profile Name" >
+    </EditText>
 
 </RelativeLayout>
