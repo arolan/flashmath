@@ -13,4 +13,11 @@
         android:showAsAction="never"
         android:onClick="showAboutSupportPage"
         android:title="@string/action_about"/>
+
+    <item
+        android:id="@+id/action_rate"
+        android:orderInCategory="300"
+        android:showAsAction="never"
+        android:onClick="launchRate"
+        android:title="@string/action_rate"/>
 </menu>
