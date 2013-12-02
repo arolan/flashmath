@@ -176,11 +176,14 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 							GraphView graphView = new LineGraphView(ResultActivity.this, "");
 							graphView.setCustomLabelFormatter(new CustomLabelFormatter.IntegerOnly());
 							GraphViewStyle style = new GraphViewStyle();
+							int datapoints = data.length;
+							while (datapoints >= 10) {
+								datapoints /= 2;
+							}
+							style.setNumHorizontalLabels(Math.max(2, datapoints));
 							style.setVerticalLabelsColor(Color.BLACK);
 							style.setHorizontalLabelsColor(Color.BLACK);
 							style.setGridColor(Color.GRAY);
-							style.setNumVerticalLabels(4);
-							style.setNumHorizontalLabels(2);
 							GraphViewSeriesStyle lineStyle = new GraphViewSeriesStyle(ColorUtil.subjectColorInt(subject), 5);
 							graphView.addSeries(new GraphViewSeries("Scores", lineStyle, data));
 							graphView.addSeries(new GraphViewSeries(new GraphViewData[] { new GraphViewData(1, 0) }));

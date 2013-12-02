@@ -73,6 +73,7 @@ public class LongActivity extends Activity {
 	    btnClose.setBackground(ColorUtil.getButtonStyle(subject, this));
 	    btnSwap = (Button) findViewById(R.id.btnSwap);
 	    btnSwap.setBackground(ColorUtil.getButtonStyle(subject, this));
+	    btnSwap.setEnabled(false);
 		subjectTitle = Character.toUpperCase(subject.charAt(0))+subject.substring(1);
 		ab.setTitle(subjectTitle + " Details");
 		
@@ -143,6 +144,7 @@ public class LongActivity extends Activity {
 				getFragmentManager().beginTransaction().add(R.id.frameStats, lf).commit();
 				listOn = true;
 				findViewById(R.id.pgLoad).setVisibility(View.GONE);
+			    btnSwap.setEnabled(true);
 			}
 		});
 	}
