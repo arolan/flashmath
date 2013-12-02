@@ -156,15 +156,15 @@ public class QuestionActivity extends Activity {
 	protected void postQuestionLoaded() {
 		qf.setQuestion(questionList.get(currentQuestionIndex));
 		if (subject.equalsIgnoreCase("Fractions")) {
-			((FractionQuestionFragment) qf).setupFractionQuestion();
+			((FractionQuestionFragment) qf).setupParameters();
 			qaf = new FractionQuestionAnswerFragment();
 			((FractionQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
 		} else if (subject.equalsIgnoreCase("Geometry")) {
-			((GeometryQuestionFragment) qf).setupGeometryQuestion();
+			((GeometryQuestionFragment) qf).setupParameters();
 			qaf = new GeometryQuestionAnswerFragment();
 			((GeometryQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
 		} else {
-			((ArithmeticQuestionFragment) qf).setupArithmeticQuestion();
+			((ArithmeticQuestionFragment) qf).setupParameters();
 			qaf = new ArithmeticQuestionAnswerFragment();
 			((ArithmeticQuestionAnswerFragment) qaf).setQuestion(questionList.get(currentQuestionIndex));
 		}

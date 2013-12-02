@@ -26,32 +26,70 @@ public class QuestionUtil {
 			if (subject.equalsIgnoreCase("Addition")) {
 				int x = getRandomInt(5, 20);
 				int y = getRandomInt(5, 20);
-				questionText = "('" + String.valueOf(x) + "', '" + String.valueOf(y) + "')";
+				questionText = String.valueOf(x) + " " + String.valueOf(y);
 				answer = String.valueOf(x + y);
 			} else if (subject.equalsIgnoreCase("Subtraction")) {
 				int x = getRandomInt(5, 20);
 				int y = getRandomInt(3, x - 1);
-				questionText = "('" + String.valueOf(x) + "', '" + String.valueOf(y) + "')";
+				questionText =String.valueOf(x) + " " + String.valueOf(y);
 				answer = String.valueOf(x - y);
 			} else if (subject.equalsIgnoreCase("Multiplication")) {
 				int x = getRandomInt(3, 7);
 				int y = getRandomInt(3, 7);
-				questionText = "('" + String.valueOf(x) + "', '" + String.valueOf(y) + "')";
+				questionText = String.valueOf(x) + " " + String.valueOf(y);
 				int a = x * y;
 				answer = String.valueOf(a);
 			} else if (subject.equalsIgnoreCase("Division")) {
 				int a = getRandomInt(3, 7);
 				int y = getRandomInt(3, 7);
 				int x = a * y;
-				questionText = "('" + String.valueOf(x) + "', '" + String.valueOf(y) + "')";
+				questionText = String.valueOf(x) + " " + String.valueOf(y);
 				answer = String.valueOf(a);
-			} else if (subject.equalsIgnoreCase("Fraction")) {
+			} else if (subject.equalsIgnoreCase("Fractions")) {
 				int m = getRandomInt(3, 5);
 				int n = getRandomInt(1, 4);
 				int d = getRandomInt(n + 1, 8);
 				int ad = d * m;
-				questionText = "('" + String.valueOf(n) + "', '" + String.valueOf(d) + "', '" + String.valueOf(ad) + "')";
+				questionText = String.valueOf(n) + " " + String.valueOf(d) + " " + String.valueOf(ad);
 				answer = String.valueOf(n * m);
+			} else if (subject.equalsIgnoreCase("Geometry")) {
+				int x = getRandomInt(3, 9);
+				// 1: Area
+				// 2: Perimeter
+				int a = getRandomInt(1, 2);
+				// 1: Square
+				// 2: Rectangle
+				int s = getRandomInt(1, 2);
+
+				if (s == 1) {
+					if (a == 1) {
+						answer = String.valueOf(x * x);
+						questionText = "Square " + "Area " + String.valueOf(x);
+					} else {
+						answer = String.valueOf(4 * x);
+						questionText = "Square " + "Perimeter " + String.valueOf(x);
+					}
+				} else {
+					int y = x;
+					while (y == x) {
+						y = getRandomInt(3, 9);
+					}
+					if (a == 1) {
+						answer = String.valueOf(x * y);
+						if (y > x) {
+							questionText = "Rectangle " + "Area " + String.valueOf(x) + " " + String.valueOf(y);
+						} else {
+							questionText = "Rectangle " + "Area " + String.valueOf(y) + " " + String.valueOf(x);
+						}
+					} else {
+						answer = String.valueOf(2 * (x + y));
+						if (y > x) {
+							questionText = "Rectangle " + "Perimeter " + String.valueOf(x) + " " + String.valueOf(y);
+						} else {
+							questionText = "Rectangle " + "Perimeter " + String.valueOf(y) + " " + String.valueOf(x);
+						}
+					}
+				}
 			}
 			
 			question.put("explanation", " ");
