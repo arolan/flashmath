@@ -12,12 +12,12 @@
     <string name="title_activity_long">LongActivity</string>
     <string name="title_activity_class">ClassActivity</string>
     <string name="title_activity_about_support">AboutSupportActivity</string>
-    <string name="description_about_app">Flash Math is a new educational mobile app that helps kids to learn math better and faster! There are many fun math subjects!</string>
-    <string name="description_credits_l1_app">Team: Huu Nguyen, Joohee Yoo, and Rolan Abdukalykov.</string>
+    <string name="description_about_app">Flash Math is an educational mobile app that helps kids learn math better and faster! There are many fun math subjects!</string>
+    <string name="description_credits_l1_app">Team: Huu Nguyen, Joohee Yoo, and Rolan Abdukalykov</string>
     <string name="description_credits_l2_app">Special thanks to: Nathan Esquenazi, Tim Lee, CodePath</string>
     <string name="title_credits_section">Credits</string>
     <string name="title_support_contact_section">Support</string>
-    <string name="description_support_contact">Questions, Need Help, Feedback: flashmathdev@gmail.com</string>
+    <string name="description_support_contact">Send your questions, comments, and feedback to flashmathdev@gmail.com</string>
     <string name="title_about_section">About</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
