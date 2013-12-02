@@ -90,11 +90,11 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		}
 		
 		
-		setupUserProfilePicture();
+		retrieveUserProfileDetails();
 		
 	}
 
-	public void setupUserProfilePicture() {
+	public void retrieveUserProfileDetails() {
 		ArrayList<UserSetting> currentUserSettingsObjects = new Select().from(UserSetting.class).execute();
 		if (currentUserSettingsObjects != null && currentUserSettingsObjects.size() > 0) {
 			currentUserSettings = currentUserSettingsObjects.get(0);
