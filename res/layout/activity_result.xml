@@ -60,12 +60,12 @@
 
     <ImageView
         android:id="@+id/ivProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:src="@drawable/kid" />
 
     <Button
@@ -117,5 +117,16 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="50sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvProfileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvScore"
+        android:layout_alignTop="@+id/ivProfile"
+        android:text=""
+        android:textSize="15sp"
+        android:textStyle="bold"
+         />
 
 </RelativeLayout>

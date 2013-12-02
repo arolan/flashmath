@@ -63,6 +63,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	private UserSetting currentUserSettings;
 	private boolean wentThroughTwitterFlow = false;
 	private boolean isMockQuiz;
+	private TextView etProfileName;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -79,6 +80,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		tvSubject = (TextView) findViewById(R.id.tvSubject);
 		btnMainMenu = (Button) findViewById(R.id.btnMainMenu);
 		ivProfilePicture = (ImageView) findViewById(R.id.ivProfile);
+		etProfileName = (TextView) findViewById(R.id.tvProfileName);
 		
 		if (savedInstanceState == null) {
 			resultList = (ArrayList<Question>) getIntent().getSerializableExtra("QUESTIONS_ANSWERED");
@@ -88,20 +90,22 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		}
 		
 		
-		setupUserProfilePicture();
+		retrieveUserProfileDetails();
 		
 	}
 
-	public void setupUserProfilePicture() {
+	public void retrieveUserProfileDetails() {
 		ArrayList<UserSetting> currentUserSettingsObjects = new Select().from(UserSetting.class).execute();
 		if (currentUserSettingsObjects != null && currentUserSettingsObjects.size() > 0) {
 			currentUserSettings = currentUserSettingsObjects.get(0);
 		} 
 		
 		if (currentUserSettings != null && currentUserSettings.getUserProfileImageBitmapURI() != null) {
-				ivProfilePicture.setImageURI(Uri.parse(currentUserSettings.getUserProfileImageBitmapURI()));
-				//set user name when we put the field here
-		//			etProfileName.setText(currentUserSettings.getUserName());
+			//set the picture of the user here
+			ivProfilePicture.setImageURI(Uri.parse(currentUserSettings.getUserProfileImageBitmapURI()));
+		} else if(currentUserSettings != null && currentUserSettings.getUserName() != null && !currentUserSettings.getUserName().isEmpty())  {
+			//set user name if it has been set
+			etProfileName.setText(currentUserSettings.getUserName());
 		}
 	}
 
