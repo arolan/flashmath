@@ -101,9 +101,11 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		} 
 		
 		if (currentUserSettings != null && currentUserSettings.getUserProfileImageBitmapURI() != null) {
-				ivProfilePicture.setImageURI(Uri.parse(currentUserSettings.getUserProfileImageBitmapURI()));
-				//set user name when we put the field here
-				etProfileName.setText(currentUserSettings.getUserName());
+			//set the picture of the user here
+			ivProfilePicture.setImageURI(Uri.parse(currentUserSettings.getUserProfileImageBitmapURI()));
+		} else if(currentUserSettings != null && currentUserSettings.getUserName() != null && !currentUserSettings.getUserName().isEmpty())  {
+			//set user name if it has been set
+			etProfileName.setText(currentUserSettings.getUserName());
 		}
 	}
 
