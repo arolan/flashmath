@@ -69,7 +69,6 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Toast.makeText(this, this.getPackageName(), Toast.LENGTH_LONG).show();
 		
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
