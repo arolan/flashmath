@@ -26,31 +26,31 @@ public class QuestionUtil {
 			if (subject.equalsIgnoreCase("Addition")) {
 				int x = getRandomInt(5, 20);
 				int y = getRandomInt(5, 20);
-				questionText = "('" + String.valueOf(x) + "', '" + String.valueOf(y) + "')";
+				questionText = String.valueOf(x) + " " + String.valueOf(y);
 				answer = String.valueOf(x + y);
 			} else if (subject.equalsIgnoreCase("Subtraction")) {
 				int x = getRandomInt(5, 20);
 				int y = getRandomInt(3, x - 1);
-				questionText = "('" + String.valueOf(x) + "', '" + String.valueOf(y) + "')";
+				questionText =String.valueOf(x) + " " + String.valueOf(y);
 				answer = String.valueOf(x - y);
 			} else if (subject.equalsIgnoreCase("Multiplication")) {
 				int x = getRandomInt(3, 7);
 				int y = getRandomInt(3, 7);
-				questionText = "('" + String.valueOf(x) + "', '" + String.valueOf(y) + "')";
+				questionText = String.valueOf(x) + " " + String.valueOf(y);
 				int a = x * y;
 				answer = String.valueOf(a);
 			} else if (subject.equalsIgnoreCase("Division")) {
 				int a = getRandomInt(3, 7);
 				int y = getRandomInt(3, 7);
 				int x = a * y;
-				questionText = "('" + String.valueOf(x) + "', '" + String.valueOf(y) + "')";
+				questionText = String.valueOf(x) + " " + String.valueOf(y);
 				answer = String.valueOf(a);
 			} else if (subject.equalsIgnoreCase("Fraction")) {
 				int m = getRandomInt(3, 5);
 				int n = getRandomInt(1, 4);
 				int d = getRandomInt(n + 1, 8);
 				int ad = d * m;
-				questionText = "('" + String.valueOf(n) + "', '" + String.valueOf(d) + "', '" + String.valueOf(ad) + "')";
+				questionText = String.valueOf(n) + " " + String.valueOf(d) + " " + String.valueOf(ad);
 				answer = String.valueOf(n * m);
 			}
 			
