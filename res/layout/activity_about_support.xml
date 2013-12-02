@@ -6,36 +6,92 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:clipToPadding="false"
     tools:context=".AboutSupportActivity" >
-
-    <TextView
-        android:id="@+id/tvCreditsSectionTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    
+    <RelativeLayout
+        android:id="@+id/rlAbout"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="-20dp"
+        android:layout_marginRight="-20dp"
+        android:background="@drawable/btn_blue" >
+        
+        <TextView
+            android:id="@+id/tvAboutTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:text="@string/title_about_section"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlCredits"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/tvAppDescription"
-        android:layout_marginTop="38dp"
-        android:text="@string/title_credits_section"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_marginLeft="-20dp"
+        android:layout_marginRight="-20dp"
+        android:background="@drawable/btn_yellow" >
+        
+        <TextView
+            android:id="@+id/tvCreditsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:text="@string/title_credits_section"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/tvSupportTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlSupport"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/tvSpecialThanks"
-        android:layout_marginTop="19dp"
-        android:text="@string/title_support_contact_section"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_marginLeft="-20dp"
+        android:layout_marginRight="-20dp"
+        android:background="@drawable/btn_green" >
+        
+        <TextView
+            android:id="@+id/tvSupportTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:text="@string/title_support_contact_section"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tvDevTeam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvCreditsSectionTitle"
-        android:layout_below="@+id/tvCreditsSectionTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rlCredits"
         android:text="@string/description_credits_l1_app"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -43,37 +99,27 @@
         android:id="@+id/tvSpecialThanks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvDevTeam"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvDevTeam"
         android:text="@string/description_credits_l2_app"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvSupportTitle"
-        android:layout_below="@+id/tvSupportTitle"
-        android:text="@string/description_support_contact"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/tvAboutSection"
+        android:id="@+id/tvSupport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/title_about_section"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_below="@+id/rlSupport"
+        android:text="@string/description_support_contact"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/tvAppDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvCreditsSectionTitle"
-        android:layout_below="@+id/tvAboutSection"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rlAbout"
         android:text="@string/description_about_app"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

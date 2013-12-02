@@ -60,13 +60,13 @@
 
     <ImageView
         android:id="@+id/ivProfile"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/kid" />
+        android:layout_alignBottom="@+id/tvTotal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="-20dp"
+        android:src="@drawable/ic_user" />
 
     <Button
         android:id="@+id/btnTweet"
@@ -84,8 +84,8 @@
         android:id="@+id/tvTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/llStats"
-        android:layout_marginBottom="-10dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="60dp"
         android:layout_toRightOf="@+id/tvScore"
         android:layout_marginLeft="25dp"
         android:textSize="30sp"
@@ -122,11 +122,11 @@
         android:id="@+id/tvProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvScore"
-        android:layout_alignTop="@+id/ivProfile"
-        android:text=""
+        android:layout_above="@+id/ivProfile"
+        android:layout_alignLeft="@+id/ivProfile"
+        android:singleLine="true"
+        android:text="Your Name"
         android:textSize="15sp"
-        android:textStyle="bold"
-         />
+        android:textStyle="bold" />
 
 </RelativeLayout>

@@ -34,6 +34,10 @@
         android:drawableLeft="@drawable/ic_line"
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
+        <!--<a href="http://thenounproject.com/noun/line-graph/#icon-No23453" target="_blank">Line Graph</a>
+            designed by <a href="http://thenounproject.com/hayley.warren.3726" target="_blank">
+                Hayley Warren
+            </a> from The Noun Project-->
 
     <Button
         android:id="@+id/btnClose"
