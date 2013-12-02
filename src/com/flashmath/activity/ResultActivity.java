@@ -63,6 +63,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 	private UserSetting currentUserSettings;
 	private boolean wentThroughTwitterFlow = false;
 	private boolean isMockQuiz;
+	private TextView etProfileName;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -79,6 +80,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		tvSubject = (TextView) findViewById(R.id.tvSubject);
 		btnMainMenu = (Button) findViewById(R.id.btnMainMenu);
 		ivProfilePicture = (ImageView) findViewById(R.id.ivProfile);
+		etProfileName = (TextView) findViewById(R.id.tvProfileName);
 		
 		if (savedInstanceState == null) {
 			resultList = (ArrayList<Question>) getIntent().getSerializableExtra("QUESTIONS_ANSWERED");
@@ -101,7 +103,7 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 		if (currentUserSettings != null && currentUserSettings.getUserProfileImageBitmapURI() != null) {
 				ivProfilePicture.setImageURI(Uri.parse(currentUserSettings.getUserProfileImageBitmapURI()));
 				//set user name when we put the field here
-		//			etProfileName.setText(currentUserSettings.getUserName());
+				etProfileName.setText(currentUserSettings.getUserName());
 		}
 	}
 
