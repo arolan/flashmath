@@ -124,6 +124,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvScore"
         android:layout_alignTop="@+id/ivProfile"
-        android:text="User Name" />
+        android:text="User Name"
+        android:textSize="15sp"
+        android:textStyle="bold"
+         />
 
 </RelativeLayout>
