@@ -72,6 +72,7 @@ public class GeometryQuestionAnswerFragment extends QuestionFragment {
 			final Path rightCorner = new Path();
 			paint.setFlags(Paint.ANTI_ALIAS_FLAG);
 			paint.setStrokeWidth(10f);
+			paint.setColor(Color.WHITE);
 			paint.setStyle(Style.FILL);
 			if (shape.equals("Square")) {
 				tvOperand1.setText(String.valueOf(gq.getOperand1()));
