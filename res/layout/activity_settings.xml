@@ -69,6 +69,6 @@
         android:layout_alignLeft="@+id/tvProfilePictureTitle"
         android:layout_below="@+id/tvProfilePictureTitle"
         android:layout_marginTop="5dp"
-        android:src="@drawable/kid" />
+        android:src="@drawable/ic_user" />
 
 </RelativeLayout>
