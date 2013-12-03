@@ -13,6 +13,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 public class FlashMathClient {
+	public static final int SERVER_CONNECTION_TIMEOUT = 5000;
 	private static FlashMathClient flashMathClient;
 	private RequestParams auth;
 	private AsyncHttpClient client;
@@ -24,6 +25,8 @@ public class FlashMathClient {
                 Secure.ANDROID_ID); 
 		auth.put("token", encryptPassword(android_id));
 		client = new AsyncHttpClient();
+		//default timeout, 5 seconds
+//    	client.setTimeout(SERVER_CONNECTION_TIMEOUT);
 	}
 	
 	public static FlashMathClient getClient(Context context) {
@@ -45,7 +48,9 @@ public class FlashMathClient {
 
 	public void clearScores(String subject, AsyncHttpResponseHandler handler) {
 		String url = "http://flashmathapi.herokuapp.com/scores/" + subject + "/clear";
-    	client.get(url, auth, handler);
+    	//no need for a timeout
+//    	client.setTimeout(0);
+		client.get(url, auth, handler);
 	}
 	
 	public void putScore(String subject, String score, AsyncHttpResponseHandler handler) {
