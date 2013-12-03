@@ -5,11 +5,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,10 +24,6 @@ public class GeometryQuestionAnswerFragment extends QuestionFragment {
 	private RelativeLayout rl;
 	private TextView tvType;
 	private TextView tvShape;
-	private TextView tvOperand1;
-	private TextView tvOperand2;
-	private TextView tvOperand3;
-	private TextView tvRectOperand1;
 	private Question question;
 	private TextView tvAnswer;
 	
@@ -53,10 +52,6 @@ public class GeometryQuestionAnswerFragment extends QuestionFragment {
 	public void verifyUserAnswerForQuestion() {
 		tvType = (TextView) getActivity().findViewById(R.id.tvType);
 		tvShape = (TextView) getActivity().findViewById(R.id.tvShape);
-		tvOperand1 = (TextView) getActivity().findViewById(R.id.tvOperand1);
-		tvOperand2 = (TextView) getActivity().findViewById(R.id.tvOperand2);
-		tvOperand3 = (TextView) getActivity().findViewById(R.id.tvOperand3);
-		tvRectOperand1 = (TextView) getActivity().findViewById(R.id.tvRectOperand1);
 		tvAnswer = (TextView) getActivity().findViewById(R.id.tvAnswer);
 		rl = (RelativeLayout) getActivity().findViewById(R.id.rlFragmentAdditionQuestion);
 		
@@ -75,12 +70,21 @@ public class GeometryQuestionAnswerFragment extends QuestionFragment {
 			paint.setColor(Color.WHITE);
 			paint.setStyle(Style.FILL);
 			if (shape.equals("Square")) {
-				tvOperand1.setText(String.valueOf(gq.getOperand1()));
-				tvOperand2.setText(String.valueOf(gq.getOperand1()));
+				final TextView tvFirst = getNumber(String.valueOf(gq.getOperand1()));
+				final TextView tvSecond = getNumber(String.valueOf(gq.getOperand1()));
 				View vSquare = new View(getActivity()) {
 					@Override
 					protected void onDraw(Canvas canvas) {
 						int w = canvas.getWidth();
+						RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(60, LayoutParams.WRAP_CONTENT);
+						params.leftMargin = 20;
+						params.topMargin = w / 2 - 40;
+						RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(60, LayoutParams.WRAP_CONTENT);
+						params2.leftMargin = w / 2 - 25;
+						params2.topMargin = w - 120;
+						tvFirst.setLayoutParams(params);
+						tvFirst.setGravity(Gravity.RIGHT);
+						tvSecond.setLayoutParams(params2);
 						canvas.drawLine(100, 85, w - 100, 85, paint);
 						canvas.drawLine(100, w - 125, w - 100, w - 125, paint);
 						canvas.drawLine(105, 80, 105, w - 120, paint);
@@ -88,13 +92,24 @@ public class GeometryQuestionAnswerFragment extends QuestionFragment {
 					}
 				};
 				rl.addView(vSquare);
+				rl.addView(tvFirst);
+				rl.addView(tvSecond);
 			} else if (shape.equals("Rectangle")) {
-				tvRectOperand1.setText(String.valueOf(gq.getOperand1()));
-				tvOperand2.setText(String.valueOf(gq.getOperand2()));
+				final TextView tvFirst = getNumber(String.valueOf(gq.getOperand1()));
+				final TextView tvSecond = getNumber(String.valueOf(gq.getOperand2()));
 				View vSquare = new View(getActivity()) {
 					@Override
 					protected void onDraw(Canvas canvas) {
 						int w = canvas.getWidth();
+						RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(60, LayoutParams.WRAP_CONTENT);
+						params.leftMargin = 20;
+						params.topMargin = w / 2 + 30;
+						RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(60, LayoutParams.WRAP_CONTENT);
+						params2.leftMargin = w / 2 - 25;
+						params2.topMargin = w - 70;
+						tvFirst.setLayoutParams(params);
+						tvFirst.setGravity(Gravity.RIGHT);
+						tvSecond.setLayoutParams(params2);
 						canvas.drawLine(100, 85, w - 100, 85, paint);
 						canvas.drawLine(100, w - 75, w - 100, w - 75, paint);
 						canvas.drawLine(105, 80, 105, w - 80, paint);
@@ -102,16 +117,32 @@ public class GeometryQuestionAnswerFragment extends QuestionFragment {
 					}
 				};
 				rl.addView(vSquare);
+				rl.addView(tvFirst);
+				rl.addView(tvSecond);
 			} else if (shape.equals("Triangle")) {
-				tvRectOperand1.setText(String.valueOf(gq.getOperand1()));
-				tvOperand2.setText(String.valueOf(gq.getOperand2()));
+				final TextView tvFirst = getNumber(String.valueOf(gq.getOperand1()));
+				final TextView tvSecond = getNumber(String.valueOf(gq.getOperand2()));
+				final TextView tvThird = getNumber("");
 				if (type.equals("Perimeter")) {
-					tvOperand3.setText(String.valueOf(gq.getOperand3()));
+					tvThird.setText(String.valueOf(gq.getOperand3()));
 				}
 				View vSquare = new View(getActivity()) {
 					@Override
 					protected void onDraw(Canvas canvas) {
 						int w = canvas.getWidth();
+						RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(60, LayoutParams.WRAP_CONTENT);
+						params.leftMargin = 20;
+						params.topMargin = w / 2 + 30;
+						RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(60, LayoutParams.WRAP_CONTENT);
+						params2.leftMargin = w / 2 - 25;
+						params2.topMargin = w - 70;
+						RelativeLayout.LayoutParams params3 = new RelativeLayout.LayoutParams(60, LayoutParams.WRAP_CONTENT);
+						params3.leftMargin = w / 2 - 5;
+						params3.topMargin = w / 2 + 30;
+						tvFirst.setLayoutParams(params);
+						tvFirst.setGravity(Gravity.RIGHT);
+						tvSecond.setLayoutParams(params2);
+						tvThird.setLayoutParams(params3);
 						canvas.drawLine(100, w - 75, w - 100, w - 75, paint);
 						canvas.drawLine(105, 80, 105, w - 80, paint);
 						paint.setStrokeWidth(1f);
@@ -134,6 +165,8 @@ public class GeometryQuestionAnswerFragment extends QuestionFragment {
 					}
 				};
 				rl.addView(vSquare);
+				rl.addView(tvFirst);
+				rl.addView(tvSecond);
 			}
 			if(gq.verifyUserAnswerCorrectness()) {
 				tvAnswer.setTextColor(Color.parseColor("#66FF66"));
@@ -153,4 +186,12 @@ public class GeometryQuestionAnswerFragment extends QuestionFragment {
 		}
 	}
 	
+	private TextView getNumber(String text) {
+		TextView tvNum = new TextView(getActivity());
+		tvNum.setText(text);
+		tvNum.setTextColor(Color.WHITE);
+		tvNum.setTextSize(30f);
+		tvNum.setTypeface(Typeface.DEFAULT_BOLD);
+		return tvNum;
+	}
 }
