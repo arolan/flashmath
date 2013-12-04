@@ -19,7 +19,7 @@ This repository contains the source code for the Flash Math Android app. The app
 
 ## License
 
-* [MIT License](https://github.com/arolan/flashmath/blob/master/LICENSE)
+* [MIT License](https://github.com/arolan/flashmath/blob/master/LICENSE.txt)
 
 ## Building
 
