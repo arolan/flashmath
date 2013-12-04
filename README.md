@@ -1,4 +1,4 @@
-# Flash Math
+# Flash Math [![Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_45.png)](https://play.google.com/store/apps/details?id=com.flashmath)
 
 A flashcard Android application that grows in difficulty with the user.
 
