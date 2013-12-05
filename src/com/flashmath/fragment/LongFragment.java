@@ -49,7 +49,7 @@ public class LongFragment extends Fragment{
 		    lvScores.setDivider(new ColorDrawable(Color.parseColor("#FFFFFF")));
 		    lvScores.setDividerHeight(1);
 			lvScores.setAdapter(adapter);
-			lvScores.setBackground(ColorUtil.getListStyle(subject, this));
+			lvScores.setBackgroundDrawable(ColorUtil.getListStyle(subject, this));
 			lvScores.setVisibility(View.VISIBLE);
 		} else {
 			ResultUtil.showAlternativeTextForGraph(Constants.NO_RESULTS_AVAILABLE, getActivity(), rlScoreList);

@@ -64,7 +64,7 @@ public class FractionQuestionAnswerFragment extends Fragment {
 				tvAnswer.setText(""+aq.getUserAnswer());
 				RelativeLayout rlFragmentAdditionQuestion = (RelativeLayout) getActivity().findViewById(R.id.rlFragmentAdditionQuestion);
 				if (rlFragmentAdditionQuestion != null) {
-					rlFragmentAdditionQuestion.setBackground(d);
+					rlFragmentAdditionQuestion.setBackgroundDrawable(d);
 				}
 			} else {
 				tvAnswer.setTextColor(Color.parseColor("#FF0033"));
@@ -72,7 +72,7 @@ public class FractionQuestionAnswerFragment extends Fragment {
 				tvAnswer.setText(""+aq.getCorrectAnswer());
 				RelativeLayout rlFragmentAdditionQuestion = (RelativeLayout) getActivity().findViewById(R.id.rlFragmentAdditionQuestion);
 				if (rlFragmentAdditionQuestion != null) {
-					rlFragmentAdditionQuestion.setBackground(d);
+					rlFragmentAdditionQuestion.setBackgroundDrawable(d);
 				}
 			}
 		}

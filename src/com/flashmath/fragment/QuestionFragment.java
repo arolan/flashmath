@@ -17,7 +17,6 @@ public class QuestionFragment extends Fragment{
 
 	public Question question;
 	protected EditText etUserAnswer;
-	public TextView tvExplanation;
 	protected String backgroundColor;
 	
 	public Question getQuestion() {
@@ -30,7 +29,6 @@ public class QuestionFragment extends Fragment{
 
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
-		tvExplanation = (TextView) getActivity().findViewById(R.id.tvExplanation);
 		
 		if (backgroundColor != null) {
 			setupBackground();
@@ -50,7 +48,7 @@ public class QuestionFragment extends Fragment{
 			Drawable d = getResources().getDrawable(Integer.valueOf(backgroundColor));
 			RelativeLayout rlFragmentQuestion = (RelativeLayout) getActivity().findViewById(R.id.rlFragmentQuestion);
 			if (rlFragmentQuestion != null) {
-				rlFragmentQuestion.setBackground(d);
+				rlFragmentQuestion.setBackgroundDrawable(d);
 			}
 		}
 	}

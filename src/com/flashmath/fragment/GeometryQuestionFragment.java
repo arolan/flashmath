@@ -59,7 +59,7 @@ public class GeometryQuestionFragment extends QuestionFragment {
 			Drawable d = getResources().getDrawable(Integer.valueOf(backgroundColor));
 			rl = (RelativeLayout) getActivity().findViewById(R.id.rlFragmentAdditionQuestion);
 			if (rl != null) {
-				rl.setBackground(d);
+				rl.setBackgroundDrawable(d);
 			}
 		}
 	}

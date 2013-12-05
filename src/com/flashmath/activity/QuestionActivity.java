@@ -64,9 +64,9 @@ public class QuestionActivity extends Activity {
 		btnVerifyAndNextQuestion.setVisibility(View.VISIBLE);
 		subject = getIntent().getStringExtra("subject");
 		isMockQuiz = getIntent().getBooleanExtra(IS_MOCK_QUIZ_INTENT_KEY, true);
-		btnVerifyAndNextQuestion.setBackground(ColorUtil.getButtonStyle(subject, this));
+		btnVerifyAndNextQuestion.setBackgroundDrawable(ColorUtil.getButtonStyle(subject, this));
 		Button btnClear = (Button) findViewById(R.id.btnClear);
-		btnClear.setBackground(ColorUtil.getButtonStyle(subject, this));
+		btnClear.setBackgroundDrawable(ColorUtil.getButtonStyle(subject, this));
 		backgroundColor = ColorUtil.identifySubjectColor(subject);
 		tvQuestionProgress = (TextView) findViewById(R.id.tvQuestionProgress);
 		TextView tvQuestionSlash = (TextView) findViewById(R.id.tvQuestionSlash);

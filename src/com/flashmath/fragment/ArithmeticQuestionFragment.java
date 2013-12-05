@@ -53,7 +53,7 @@ public class ArithmeticQuestionFragment extends QuestionFragment {
 			Drawable d = getResources().getDrawable(Integer.valueOf(backgroundColor));
 			RelativeLayout rlFragmentAdditionQuestion = (RelativeLayout) getActivity().findViewById(R.id.rlFragmentAdditionQuestion);
 			if (rlFragmentAdditionQuestion != null) {
-				rlFragmentAdditionQuestion.setBackground(d);
+				rlFragmentAdditionQuestion.setBackgroundDrawable(d);
 			}
 		}
 	}

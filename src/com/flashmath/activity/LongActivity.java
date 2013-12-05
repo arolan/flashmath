@@ -64,15 +64,15 @@ public class LongActivity extends Activity {
 	    tvBest = (TextView) findViewById(R.id.tvBest);
 	    tvWorst = (TextView) findViewById(R.id.tvWorst);
 	    tvAverage = (TextView) findViewById(R.id.tvAverage);
-	    btnClear.setBackground(getResources().getDrawable(R.drawable.btn_red));
+	    btnClear.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_red));
 		
 		subject = getIntent().getStringExtra("subject");
 		ActionBar ab = getActionBar();
 		ab.setIcon(ColorUtil.getBarIcon(subject, this));
 	    Button btnClose = (Button) findViewById(R.id.btnClose);
-	    btnClose.setBackground(ColorUtil.getButtonStyle(subject, this));
+	    btnClose.setBackgroundDrawable(ColorUtil.getButtonStyle(subject, this));
 	    btnSwap = (Button) findViewById(R.id.btnSwap);
-	    btnSwap.setBackground(ColorUtil.getButtonStyle(subject, this));
+	    btnSwap.setBackgroundDrawable(ColorUtil.getButtonStyle(subject, this));
 	    btnSwap.setEnabled(false);
 		subjectTitle = Character.toUpperCase(subject.charAt(0))+subject.substring(1);
 		ab.setTitle(subjectTitle + " Details");

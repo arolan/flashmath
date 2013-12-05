@@ -83,10 +83,10 @@ public class SettingsActivity extends Activity {
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 				if (etProfileName.getText().toString().equals(originalName)) {
-					ivChangeName.setBackground(
+					ivChangeName.setBackgroundDrawable(
 							SettingsActivity.this.getResources().getDrawable(R.drawable.ic_action_change_name));
 				} else {
-					ivChangeName.setBackground(
+					ivChangeName.setBackgroundDrawable(
 							SettingsActivity.this.getResources().getDrawable(R.drawable.ic_action_change_name_dirty));
 				}
 			}
@@ -105,7 +105,7 @@ public class SettingsActivity extends Activity {
 		originalName = etProfileName.getText().toString();
 		currentUserSettings.setUserName(originalName);
 		currentUserSettings.save();
-		ivChangeName.setBackground(
+		ivChangeName.setBackgroundDrawable(
 				this.getResources().getDrawable(R.drawable.ic_action_change_name));
 		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(etProfileName.getWindowToken(), 0);

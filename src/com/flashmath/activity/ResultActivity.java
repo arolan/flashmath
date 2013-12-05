@@ -140,8 +140,8 @@ public class ResultActivity extends OAuthLoginActivity<TwitterClient> {
 			}
 		}
 		Button btnTweet = (Button) findViewById(R.id.btnTweet);
-		btnTweet.setBackground(ColorUtil.getButtonStyle(subject, this));
-		btnMainMenu.setBackground(ColorUtil.getButtonStyle(subject, this));
+		btnTweet.setBackgroundDrawable(ColorUtil.getButtonStyle(subject, this));
+		btnMainMenu.setBackgroundDrawable(ColorUtil.getButtonStyle(subject, this));
 		tvScore.setText(String.valueOf(score));
 		tvScore.setTextColor(ColorUtil.getScoreColor((float) score / resultList.size()));
 		tvTotal.setText("/ " + String.valueOf(resultList.size()));

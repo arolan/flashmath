@@ -173,14 +173,14 @@ public class GeometryQuestionAnswerFragment extends QuestionFragment {
 				Drawable d = getResources().getDrawable(R.drawable.btn_correct);
 				tvAnswer.setText(""+gq.getUserAnswer());
 				if (rl != null) {
-					rl.setBackground(d);
+					rl.setBackgroundDrawable(d);
 				}
 			} else {
 				tvAnswer.setTextColor(Color.parseColor("#FF0033"));
 				Drawable d = getResources().getDrawable(R.drawable.btn_incorrect);
 				tvAnswer.setText(""+gq.getCorrectAnswer());
 				if (rl != null) {
-					rl.setBackground(d);
+					rl.setBackgroundDrawable(d);
 				}
 			}
 		}
