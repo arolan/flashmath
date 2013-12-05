@@ -26,20 +26,6 @@
         android:text=""
         android:textSize="19sp"
         android:textStyle="bold" />
-
-    <si.solarb.flowlayout.FlowLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:flowlayout="http://schemas.android.com/apk/res/si.solarb.flowlayout"
-        android:id="@+id/flQuestion"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/tvSubject"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/tvQuestionTitle"
-        android:textAlignment="center"
-        android:gravity="start|top" /> 
-
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
