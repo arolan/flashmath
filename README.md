@@ -1,4 +1,4 @@
-# Flash Math
+# Flash Math [![Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_45.png)](https://play.google.com/store/apps/details?id=com.flashmath)
 
 A flashcard Android application that grows in difficulty with the user.
 
@@ -19,7 +19,7 @@ This repository contains the source code for the Flash Math Android app. The app
 
 ## License
 
-* [MIT License](https://github.com/arolan/flashmath/blob/master/LICENSE)
+* [MIT License](https://github.com/arolan/flashmath/blob/master/LICENSE.txt)
 
 ## Building
 
