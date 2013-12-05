@@ -71,6 +71,22 @@ public class SubjectActivity extends Activity {
 		startActivity(i);
 	}
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+	        case R.id.action_settings:
+	        	showSettingsPage(item);
+	        	break;
+	        case R.id.action_about:
+	        	showAboutSupportPage(item);
+	        	break;
+	        case R.id.action_rate:
+	        	launchRate(item);
+	        	break;
+		}
+		return true;
+	}
+	
 	public void showAboutSupportPage(MenuItem mi) {
 		Intent aboutIntent = new Intent(this, AboutSupportActivity.class);
 		startActivity(aboutIntent);
